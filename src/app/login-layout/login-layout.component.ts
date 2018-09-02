@@ -24,10 +24,10 @@ export interface Tile {
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './login-layout.component.html',
+  styleUrls: ['./login-layout.component.css']
 })
-export class HomeComponent implements AfterViewInit {
+export class LoginLayoutComponent implements AfterViewInit {
 
   loading ;
   constructor(private router: Router,private route: ActivatedRoute) { 

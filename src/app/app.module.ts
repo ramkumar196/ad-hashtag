@@ -19,6 +19,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 
@@ -26,7 +27,7 @@ import {MatCardModule} from '@angular/material/card';
 
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { LoginLayoutComponent } from './login-layout/login-layout.component';
 import { RouterModule, Routes} from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { HeaderComponent } from './shared/frontend-layout/header/header.component';
@@ -38,38 +39,49 @@ import { JwtService } from './services/jwt.service';
 
 
 
-import { HomeModule } from './home/home.module';
+import { LoginLayoutModule } from './login-layout/login-layout.module';
 import { LoginComponent } from './login/login.component';
 import { PostAdComponent } from './post-ad/post-ad.component';
 
 import { polyfill as keyboardEventKeyPolyfill } from 'keyboardevent-key-polyfill';
 import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { DefaultLayoutComponent } from './default-layout/default-layout.component';
+import { LoggedLayoutComponent } from './logged-layout/logged-layout.component';
 
 keyboardEventKeyPolyfill();
 
 
 const routes: Routes = [
   {
-    path: '',
-    component: HomeComponent,
+    path: 'user',
+    component: LoginLayoutComponent,
     children: [ 
       {path: 'signup',component: RegisterComponent},
       {path: 'login',component: LoginComponent},
-      {path: 'post-ad',component: PostAdComponent},
+      {path: 'post-ad',component: PostAdComponent}
       ]
     },
-    {path: '**', component: HomeComponent}
+    {path: 'sas', component: LoggedLayoutComponent},
+        {path: '', component: DefaultLayoutComponent,
+    children: [ 
+      {path: '**',component: WelcomeComponent}
+      ]
+    },
   ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    LoginLayoutComponent,
     RegisterComponent,
     HeaderComponent,
     FooterComponent,
     LoginComponent,
-    PostAdComponent
+    PostAdComponent,
+    WelcomeComponent,
+    DefaultLayoutComponent,
+    LoggedLayoutComponent
     ],
   imports: [
     BrowserModule,
@@ -90,7 +102,8 @@ const routes: Routes = [
     TextInputAutocompleteModule,
     MatDividerModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    MatSidenavModule
     ],
   providers: [ApiService,UserService,JwtService],
   bootstrap: [AppComponent]

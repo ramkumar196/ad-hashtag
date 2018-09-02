@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { HomeComponent } from './home.component';
+import { LoginLayoutComponent } from './login-layout.component';
 import { RegisterComponent } from '../register/register.component';
 import { ApiService } from '../services/api.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -15,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 const homeRouting: ModuleWithProviders = RouterModule.forChild([
   {
     path: '/',
-    component: HomeComponent,
+    component: LoginLayoutComponent,
     children: [ 
       {
         path: 'signup',
@@ -35,7 +35,7 @@ const homeRouting: ModuleWithProviders = RouterModule.forChild([
     HttpClientModule
   ],
   declarations: [
-    HomeComponent,
+    LoginLayoutComponent,
     RegisterComponent,
     MatProgressBarModule,
     MatSnackBarModule,
@@ -45,4 +45,4 @@ const homeRouting: ModuleWithProviders = RouterModule.forChild([
   ApiService
   ]
 })
-export class HomeModule {}
+export class LoginLayoutModule {}
