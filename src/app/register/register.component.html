@@ -1,0 +1,36 @@
+<div class="tiny-form  rounded  text-center">
+    <mat-toolbar class="" color="primary">
+      <span>Sign Up</span>
+    </mat-toolbar>
+    <form [formGroup]="signUpForm" class="mt-1" (ngSubmit)="SubmitSignup()">
+    	<mat-form-field class="full-width"> 
+    	<input minlength="3" maxlength="15" matInput placeholder="User Name" formControlName="username">
+    	<mat-error align="start" *ngIf="signUpForm.controls['username'].hasError('required') && signUpForm.controls['username'].touched " class="form__error">Username is required</mat-error>
+    	<mat-error align="start" *ngIf="errors.username" class="form__error">{{ errors.username }}</mat-error> 
+    	</mat-form-field>
+    	<mat-form-field class="full-width">
+    	<input minlength="10" maxlength="50" matInput placeholder="Email" formControlName="email">
+    	<mat-error align="start" *ngIf="signUpForm.controls['email'].hasError('required') && signUpForm.controls['email'].touched " class="form__error">Your Email is required</mat-error>
+    	<mat-error align="start" *ngIf="signUpForm.controls['email'].valid && signUpForm.controls['email'].touched " class="form__error">Your email is not valid</mat-error>
+        <mat-error align="start" *ngIf="errors.email" class="form__error">{{ errors.email }}</mat-error>
+    	</mat-form-field>
+
+    	<mat-form-field class="full-width">
+    	<input minlength="6" maxlength="15" matInput placeholder="Mobile" formControlName="phone">
+    	<mat-error align="start" *ngIf="signUpForm.controls['phone'].hasError('required') && signUpForm.controls['phone'].touched " class="form__error">Your Mobile Number is required</mat-error>
+    	<mat-error align="start" *ngIf="errors.phone" class="form__error">{{ errors.phone }}</mat-error>
+    	</mat-form-field>
+
+    	<mat-form-field class="full-width">
+    	<input minlength="8" maxlength="15" matInput placeholder="Password" type="password" formControlName="password">
+    	<mat-error align="start" *ngIf="signUpForm.controls['password'].hasError('required') && signUpForm.controls['password'].touched " class="form__error">Your Password is required</mat-error>
+    	<mat-error align="start" *ngIf="errors.password" class="form__error">{{ errors.password }}</mat-error>
+    	</mat-form-field>
+
+    	<div class="button-row mt-5">
+    	  <button mat-raised-button  [disabled]="!signUpForm.valid" type="submit" color="primary">Sign up</button>
+    	</div>
+
+    </form>
+    </div>
+	

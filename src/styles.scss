@@ -1,0 +1,124 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load  single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$candy-app-primary: mat-palette($mat-teal);
+$candy-app-accent:  mat-palette($mat-grey,900);
+
+// The warn palette is optional (defaults to red).
+$candy-app-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($candy-app-theme);
+@import '~bootstrap/dist/css/bootstrap.css';
+
+body
+{
+   font-size:15px;
+}
+
+.header
+{
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
+.toolbar
+{
+	width: 100%;
+	height:200px
+}
+.image-upload > input
+{
+    display: none;
+}
+
+.image-upload-icon
+{
+	 background-image: url("./assets/upload-icon.png");
+	 background-size:contain;
+	 width:50px;
+	 height:50px;
+	 float:left
+}
+
+.login-icon
+{
+	float:right;
+}
+
+.full-width
+{
+	width:100%;
+	margin:0px 5px;
+}
+.signup-background
+{
+ background-image: url("./assets/signup-background.jpg");
+ background-size:contain;
+ background-blend-mode:screen;
+}
+.tiny-form
+{
+	background: white;
+	padding:5px 10px;
+	border: solid 1px;
+	margin : 10px;
+}
+
+.postad-form
+{
+	background: white;
+	padding:5px 10px;
+	margin : 10px;
+}
+
+.form__error
+{
+	padding:5px;
+	background-color:#f5f2f2;
+	margin:2px;
+	font-weight:500
+
+}
+
+.ad-logo
+{
+	background-image: url("./assets/logo.png");
+	background-size:cover;
+	width:100px;
+	height:56px;
+	padding:10px
+}
+
+.imgwrapper {
+   width: 80%;
+}
+
+.dropdown-menu li a
+{
+	font-size:16px;
+	color:#004d40;
+	font-weight:500;
+}

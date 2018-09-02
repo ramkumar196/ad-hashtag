@@ -1,0 +1,20 @@
+<div class="tiny-form rounded text-center">
+	<mat-toolbar class="" color="primary">
+	  <span>Login Ad Hashtag</span>
+	</mat-toolbar>
+	<form [formGroup]="loginForm" class="mt-1" (ngSubmit)="SubmitLogin()">
+		<mat-form-field class="full-width">
+		<input minlength="6" maxlength="15" matInput placeholder="Username or Phone" formControlName="username">
+		<mat-error align="start" *ngIf="loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched " class="form__error">Your Username is required</mat-error>
+		</mat-form-field>
+		<mat-form-field class="full-width">
+		<input minlength="8" maxlength="15" matInput type="password" placeholder="Password" formControlName="password">
+		<mat-error align="start" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched " class="form__error">Password is required</mat-error>
+		</mat-form-field>
+
+
+		<div class="button-row mt-5">
+		  <button mat-raised-button [disabled]="!loginForm.valid" type="submit" color="primary">Login</button>
+		</div>
+	</form>
+</div>

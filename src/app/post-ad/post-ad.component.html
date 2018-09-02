@@ -1,0 +1,61 @@
+<div class="tiny-form  rounded  text-center">
+
+<form [formGroup]="postAdForm" class="mt-1" (ngSubmit)="postAd()">
+<mat-form-field class="full-width">
+<mwl-text-input-autocomplete-container class="dropdown-hashtag">
+<textarea  matInput class="rounded" 
+maxlength="256"
+placeholder=""
+#message
+rows="10" columns="10"
+mwlTextInputAutocomplete
+formControlName="adtextarea"
+[findChoices]="findChoices"
+[triggerCharacter]="'#'"
+name="adtextarea"
+[getChoiceLabel]="getChoiceLabel">
+</textarea>
+</mwl-text-input-autocomplete-container>
+<mat-hint align="start"><strong>Ads must contain a hashtag</strong> </mat-hint>
+<mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+</mat-form-field>
+<mat-error align="start" *ngIf="postAdForm.controls['adtextarea'].hasError('required') && postAdForm.controls['adtextarea'].touched " class="form__error">Ad is required</mat-error>
+<mat-error align="start" *ngIf="errors.adtextarea" class="form__error">{{ errors.adtextarea }}</mat-error>
+<mat-grid-list rows="1" cols="4" rowHeight="100px">
+  <mat-grid-tile  cols="1" *ngFor="let item of imageUrl">
+<div class="imgwrapper">
+<img [src]="item"  class="img-thumbnail">
+</div>
+<button type="button" (click)="removeImage(item)" class="close float-right" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button> 
+</mat-grid-tile>
+</mat-grid-list>
+<!-- 
+<div class="row">
+
+<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 thumb" *ngFor="let item of imageUrl">
+<button type="button" (click)="removeImage(item)" class="close" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button> 
+<div class="imgwrapper">
+<img [src]="item"  class="img-thumbnail">
+</div>
+</div>
+</div> -->
+<div class="image-upload">
+    <input #fileInput multiple type="file" (change)="onFileChanged($event)"/>
+</div>
+<div class="button-row">
+<button class="m-2" (click)="fileInput.click()" title="Upload Images" mat-fab color="accent">
+<mat-icon  aria-label="icon-button with a heart icon">cloud_upload</mat-icon>
+</button>
+<button class="m-2" title="Add Links" mat-fab color="accent">
+<mat-icon aria-label="icon-button with a heart icon">link</mat-icon>
+</button>
+<button class="m-2" mat-fab title="Post Ad"  [disabled]="!postAdForm.valid" type="submit" color="accent">
+<mat-icon aria-label="icon-button with a heart icon">publish</mat-icon>
+</button>
+</div>
+</form>
+</div>
