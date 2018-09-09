@@ -2,6 +2,8 @@
     <mat-toolbar class="" color="primary">
       <span>Sign Up</span>
     </mat-toolbar>
+    <mat-divider></mat-divider>
+
     <form [formGroup]="signUpForm" class="mt-1" (ngSubmit)="SubmitSignup()">
     	<mat-form-field class="full-width"> 
     	<input minlength="3" maxlength="15" matInput placeholder="User Name" formControlName="username">
@@ -28,7 +30,7 @@
     	</mat-form-field>
 
     	<div class="button-row mt-5">
-    	  <button mat-raised-button  [disabled]="!signUpForm.valid" type="submit" color="primary">Sign up</button>
+    	  <button mat-raised-button  [disabled]="!signUpForm.valid" type="submit" color="accent">Sign up</button>
     	</div>
 
     </form>

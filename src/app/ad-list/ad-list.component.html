@@ -1,0 +1,38 @@
+<mat-grid-list cols="3" gutterSize="5px" rowHeight="400px">
+<mat-grid-tile [colspan]="deviceCols" *ngFor="let ad of adList">
+<mat-card class="ad-card" >
+  <mat-card-header class="m-2">
+    <img [src]="ad.profileImage"  class="border" mat-card-avatar>
+    <mat-card-title>{{ad.username}}</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+ <img class="mt-2"  class="img-thumbnail" [src]="ad.ad_image_1" alt="Photo of a Shiba Inu">
+  <mat-card-content>
+    <p>
+      {{ad.ad_text}}
+    </p>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+<button mat-icon-button>
+    <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">visibility</mat-icon>
+  </button>
+   <button mat-icon-button>
+  <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">email</mat-icon>
+  </button>
+   <button mat-icon-button>
+    <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">flag</mat-icon>
+  </button>
+  <button (click)="editAd(ad._id)" mat-icon-button>
+    <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
+  </button>
+   <button (click)="deleteAd(ad._id)"  mat-icon-button>
+    <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+  </button>
+  </mat-card-actions>
+</mat-card>
+</mat-grid-tile>
+</mat-grid-list>

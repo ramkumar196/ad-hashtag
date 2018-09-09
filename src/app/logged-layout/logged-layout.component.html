@@ -1,31 +1,7 @@
 <header class="header">
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-  	<button mat-icon-button (click)="drawer.toggle()">
-    <mat-icon aria-label="Example icon-button with a heart icon">menu</mat-icon>
-  </button>
-    <span class="ad-logo"></span>
-    <span class="toolbar-spacer"></span>
- 	 <a [routerLink]="['/user/login']"routerLinkActive="active"><button class="float-right mr-2" mat-raised-button color="accent">Login</button></a>
- 	 <a [routerLink]="['/user/signup']"routerLinkActive="active"><button class="float-right mr-2" mat-raised-button color="accent">Signup</button></a>
- 	 <a [routerLink]="['/user/post-ad']"routerLinkActive="active"><button class="float-right mr-2" mat-raised-button color="accent">Post Ad</button></a>
-  </mat-toolbar-row>
-</mat-toolbar></header>
-<mat-sidenav-container class="example-container" >
-  <mat-sidenav mode="push" #drawer style="width:20%">
-
-  </mat-sidenav>
-  <mat-sidenav-content>
-  	<router-outlet>
-  	<mat-grid-list cols="12" rowHeight="100px" class="">
-	  <mat-grid-tile colspan="12" rowspan="1" style="background:red"></mat-grid-tile>
-	  <mat-grid-tile colspan="12" rowspan="1" style="background:green"></mat-grid-tile>
-	  <mat-grid-tile colspan="12" rowspan="1" style="background:yellow"></mat-grid-tile>
-	  <mat-grid-tile colspan="12" rowspan="3" style="background:blue"></mat-grid-tile>
-</mat-grid-list>
-  	</router-outlet>
-</mat-sidenav-content>
-</mat-sidenav-container>
-<footer>
+<app-header></app-header>
+</header>
+<router-outlet></router-outlet>
+<footer class="footer">
 <app-footer></app-footer>
 </footer>

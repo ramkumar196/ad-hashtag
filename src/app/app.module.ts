@@ -20,6 +20,10 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 
 
@@ -36,6 +40,8 @@ import { FooterComponent } from './shared/frontend-layout/footer/footer.componen
 import { ApiService } from './services/api.service';
 import { UserService } from './services/user.service';
 import { JwtService } from './services/jwt.service';
+import { AuthguardService } from './services/authguard.service';
+
 
 
 
@@ -48,25 +54,38 @@ import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { DefaultLayoutComponent } from './default-layout/default-layout.component';
 import { LoggedLayoutComponent } from './logged-layout/logged-layout.component';
+import { AdListComponent } from './ad-list/ad-list.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SidebarComponent } from './shared/frontend-layout/sidebar/sidebar.component';
+import { EditAdComponent } from './edit-ad/edit-ad.component';
+
 
 keyboardEventKeyPolyfill();
 
 
 const routes: Routes = [
   {
-    path: 'user',
+    path: 'auth',
     component: LoginLayoutComponent,
     children: [ 
-      {path: 'signup',component: RegisterComponent},
-      {path: 'login',component: LoginComponent},
-      {path: 'post-ad',component: PostAdComponent}
+      {path: 'signup',component: RegisterComponent,data: {title: 'Signup'}},
+      {path: 'login',component: LoginComponent,data: {title: 'Login'}},
+      {path: 'post-ad',component: PostAdComponent,canActivate: [AuthguardService],data: {title: 'Post Ad'}},
+      {path: 'profile',component: UserProfileComponent,canActivate: [AuthguardService],data: {title: 'Edit Profile'}}
       ]
     },
-    {path: 'sas', component: LoggedLayoutComponent},
-        {path: '', component: DefaultLayoutComponent,
-    children: [ 
-      {path: '**',component: WelcomeComponent}
+    {path: 'user', component: LoggedLayoutComponent,
+     canActivate: [AuthguardService],
+     children: [ 
+      {path: 'ad-list',component: AdListComponent,data: {title: 'Ad List'}},
+      {path: 'notifications',component: PostAdComponent,data: {title: 'Notifications'}},
+      { path: 'ad-edit/:id', component: EditAdComponent,data: {title: 'Edit Ad'} },
+
       ]
+    },
+    {path: '', component: DefaultLayoutComponent,
+     children: [ 
+      {path: '',component: WelcomeComponent,data: {title: 'Welcome'}}]
     },
   ];
 
@@ -81,7 +100,11 @@ const routes: Routes = [
     PostAdComponent,
     WelcomeComponent,
     DefaultLayoutComponent,
-    LoggedLayoutComponent
+    LoggedLayoutComponent,
+    AdListComponent,
+    UserProfileComponent,
+    SidebarComponent,
+    EditAdComponent
     ],
   imports: [
     BrowserModule,
@@ -103,10 +126,16 @@ const routes: Routes = [
     MatDividerModule,
     MatListModule,
     MatCardModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatMenuModule,
+    MatBadgeModule,
+    MatDialogModule
     ],
-  providers: [ApiService,UserService,JwtService],
-  bootstrap: [AppComponent]
+  providers: [ApiService,UserService,JwtService,AuthguardService],
+  bootstrap: [AppComponent],
+  exports:[
+    RouterModule
+  ]
 })
 export class AppModule { 
 

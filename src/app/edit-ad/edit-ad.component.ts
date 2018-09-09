@@ -1,24 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,OnDestroy} from '@angular/core';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSnackBar} from '@angular/material';
 
-
-
 import {ApiService} from '../services/api.service';
 import {AdsService} from '../services/ads.service';
 import { JwtService } from '../services/jwt.service';
-
-
 @Component({
-  selector: 'app-post-ad',
-  templateUrl: './post-ad.component.html',
-  styleUrls: ['./post-ad.component.css']
+  selector: 'app-edit-ad',
+  templateUrl: './edit-ad.component.html',
+  styleUrls: ['./edit-ad.component.css']
 })
-export class PostAdComponent  implements OnInit {
+export class EditAdComponent implements OnInit, OnDestroy {
 
-  formControlValue = '';
+formControlValue = '';
   postAdForm :FormGroup;
   isSubmitting;
   errors = {};
@@ -26,9 +22,11 @@ export class PostAdComponent  implements OnInit {
   imageUrl=[];
   imageno=0;
   hashtags = ['sale','property','website'];
+  id: number;
+  private sub: any;
   
 
-  constructor(private fb: FormBuilder,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
+  constructor(private route: ActivatedRoute,private fb: FormBuilder,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
   	    this.createForm();
   }
 
@@ -96,7 +94,7 @@ export class PostAdComponent  implements OnInit {
     const inputdata = this.postAdForm.value;
     inputdata.adImages = this.imageUrl;
     this.adsService
-    .createAd(inputdata)
+    .editAd(inputdata,this.id)
     .subscribe(
       data => {
         console.log("data",data);
@@ -127,6 +125,49 @@ export class PostAdComponent  implements OnInit {
     );  }
 
   ngOnInit() {
+  	this.sub = this.route.params.subscribe(params => {
+       this.id = params['id']; // (+) converts string 'id' to a number
+
+       console.log('params',params);
+
+       this.adsService.adDetails(this.id)
+      .subscribe( data => {
+
+        if(data.details.ad_image_1 != '')
+        {
+        	this.imageUrl.push(data.details.ad_image_1)
+        }
+        if(data.details.ad_image_2 != '')
+        {
+        	this.imageUrl.push(data.details.ad_image_2)
+        }
+        if(data.details.ad_image_3 != '')
+        {
+        	this.imageUrl.push(data.details.ad_image_3)
+        }
+        if(data.details.ad_image_4 != '')
+        {
+        	this.imageUrl.push(data.details.ad_image_4)
+        }
+        
+        data.details.adtextarea = data.details.ad_text;
+        data.details.adImages = '';
+        delete data.details._id;
+        delete data.details.ad_text;
+        delete data.details.created_date;
+        delete data.details.ad_image_1;
+        delete data.details.ad_image_2;
+        delete data.details.ad_image_3;
+        delete data.details.ad_image_4;
+        delete data.details.username;
+        delete data.details.profileImage;
+        this.postAdForm.setValue(data.details);
+
+      })
+
+       // In a real app: dispatch action to load the details here.
+    });
+  	
   }
 
   findChoices(searchText: string) {
@@ -143,5 +184,8 @@ export class PostAdComponent  implements OnInit {
     this.snackBar.open(msg)
     }
 
+     ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
 }

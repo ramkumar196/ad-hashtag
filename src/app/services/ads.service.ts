@@ -13,7 +13,7 @@ import { throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class AdsService {
 
   constructor(    private apiService: ApiService
 ) { }
@@ -22,30 +22,28 @@ export class UserService {
      return throwError(error);
   }
 
-  signup(data): Observable<UserModel> {
-    return this.apiService.post('/user/signup',data).pipe(
+  createAd(data): Observable<UserModel> {
+    return this.apiService.post('/ad/create',data).pipe(
   	 catchError(this.formatErrors))
    } 
 
-   login(data): Observable<UserModel> {
-    return this.apiService.post('/user/login',data).pipe(
+   editAd(data,id): Observable<UserModel> {
+    return this.apiService.post('/ad/edit/'+id,data).pipe(
+     catchError(this.formatErrors))
+   }  
+
+    userAdList(data){
+    return this.apiService.post('/ad/list',data).pipe(
      catchError(this.formatErrors))
    }
 
-   updateProfile(data): Observable<UserModel> {
-    return this.apiService.post('/user/update-profile',data).pipe(
+    adDetails(id){
+    return this.apiService.post('/ad/detail/'+id).pipe(
      catchError(this.formatErrors))
    }
-
-   profile(){
-    return this.apiService.post('/user/profile').pipe(
+    deleteAd(id){
+    return this.apiService.delete('/ad/delete/'+id).pipe(
   	 catchError(this.formatErrors))
    }
-
-    checklogin(): Boolean {
-      if(window.localStorage['jwtToken'])
-      return true;
-      else
-      return false;
-    }
 }
+

@@ -21,9 +21,10 @@ export class ApiService {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     };
+    console.log('jwt token',this.jwtService.getToken());
 
     if (this.jwtService.getToken()) {
-      headersConfig['Authorization'] = `Token ${this.jwtService.getToken()}`;
+      headersConfig['Authorization'] = `${this.jwtService.getToken()}`;
     }
     return new HttpHeaders(headersConfig);
   }
@@ -34,7 +35,6 @@ export class ApiService {
 
   get(path: string, params: URLSearchParams = new URLSearchParams()): Observable<any> {
     return this.http.get(`${environment.api_url}${path}`, { headers: this.setHeaders() }).pipe(
-  map((res: Response) => res.json()),
   catchError(this.formatErrors));
   }
 
@@ -63,7 +63,6 @@ export class ApiService {
       { headers: this.setHeaders() }
     )
     .pipe(
-	  map((res: Response) => res.json()),
 	  catchError(this.formatErrors)
 	  );
   }

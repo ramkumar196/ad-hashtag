@@ -11,7 +11,7 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$candy-app-primary: mat-palette($mat-teal);
+$candy-app-primary: mat-palette($mat-grey,100);
 $candy-app-accent:  mat-palette($mat-grey,900);
 
 // The warn palette is optional (defaults to red).
@@ -25,6 +25,12 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 // that you are using.
 @include angular-material-theme($candy-app-theme);
 @import '~bootstrap/dist/css/bootstrap.css';
+
+$custom-typography: mat-typography-config(
+    $font-family: 'Roboto'
+);
+
+@include mat-core($custom-typography);
 
 body
 {
@@ -73,6 +79,16 @@ body
 	width:100%;
 	margin:0px 5px;
 }
+.sidenav
+{
+	width:30%;
+	padding:0px 10px;
+}
+.sidenav-container
+{
+	width:100%;
+	padding:10px
+}
 .signup-background
 {
  background-image: url("./assets/signup-background.jpg");
@@ -106,9 +122,8 @@ body
 .ad-logo
 {
 	background-image: url("./assets/logo.png");
-	background-size:cover;
 	width:100px;
-	height:56px;
+	height:37px;
 	padding:10px
 }
 
@@ -121,4 +136,36 @@ body
 	font-size:16px;
 	color:#004d40;
 	font-weight:500;
+}
+
+.ad-card
+{
+max-width:400px;
+background-color:whitesmoke
+}
+
+.ad-card img
+{
+max-height:200px;
+}
+
+.size-1
+{
+width:10%
+}
+.size-2
+{
+width:20%
+}
+.size-3
+{
+width:30%
+}
+.size-4
+{
+width:40%
+}
+.size-5
+{
+width:50%
 }
