@@ -1,9 +1,32 @@
-<mat-grid-list cols="3" gutterSize="5px" rowHeight="450px" style="background-color:#b8c0c7">
-<mat-grid-tile [colspan]="deviceCols" *ngFor="let ad of adList">
+
+<mat-grid-list cols="3" gutterSize="5px" rowHeight="110px" style="background-color:#b8c0c7">
+<mat-grid-tile [colspan]="3"  [rowspan]="2">
+<mat-card  class="profile-card">
+  <mat-card-header class="m-2 float-left">
+    <img [src]="userdetails.profileImage"  class="rounded-circle" mat-card-lg-image>
+  </mat-card-header>
+  <mat-card-content class="float-left">
+<mat-list role="list">
+  <mat-list-item role="listitem">
+  	<mat-icon mat-list-icon>account_box</mat-icon>
+    <h4 mat-line>{{userdetails.username | titlecase}}</h4>
+  </mat-list-item>
+  <mat-list-item role="listitem">
+  	<mat-icon mat-list-icon>description</mat-icon>
+    <span mat-line>{{userdetails.description | titlecase}}</span>
+  </mat-list-item>  <mat-list-item role="listitem">
+  	<mat-icon mat-list-icon>description</mat-icon>
+    <span mat-line>{{userdetails.description | titlecase}}</span>
+  </mat-list-item>
+</mat-list>
+  </mat-card-content>
+ </mat-card>
+</mat-grid-tile>
+<mat-grid-tile [colspan]="deviceCols" [rowspan]="4" *ngFor="let ad of adList">
 <mat-card class="ad-card rounded"  >
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar>
-    <mat-card-title>{{ad.username}}</mat-card-title>
+    <mat-card-title>{{ad.username | titlecase}}</mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>
  <img class="img-thumbnail mt-2" [src]="ad.ad_image_1" alt="">

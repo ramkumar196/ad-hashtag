@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
   logout()
   {
     this.jwtService.destroyToken();
-    this.router.navigate(['/auth/login'];
+    this.router.navigate(['/auth/login']);
   }
 
     Gotologin()

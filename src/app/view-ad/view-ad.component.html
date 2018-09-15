@@ -1,0 +1,55 @@
+<mat-grid-list cols="3" gutterSize="5px" rowHeight="100px" style="background-color:#b8c0c7">
+<mat-grid-tile [colspan]="3" [rowspan]="rowSpan">
+<mat-card class="view-ad-card rounded"  >
+  <mat-card-header class="m-2">
+    <img [src]="ad.profileImage"  class="border" mat-card-avatar/>
+    <mat-card-title>{{ad.username}}</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+<ngb-carousel >
+  <ng-template ngbSlide *ngIf="ad.ad_image_1 != ''">
+    <img class="img-thumbnail mt-2" mat-card-image [src]="ad.ad_image_1"  alt="Random first slide">
+    <div class="carousel-caption">
+ <!--      <h3>First slide label</h3>
+      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> -->
+    </div>
+  </ng-template>
+  <ng-template ngbSlide *ngIf="ad.ad_image_2 != ''">
+    <img class="img-thumbnail mt-2" mat-card-image [src]="ad.ad_image_2"  alt="Random second slide">
+    <div class="carousel-caption">
+   <!--    <h3>Second slide label</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> -->
+    </div>
+  </ng-template>
+  <ng-template ngbSlide *ngIf="ad.ad_image_3 != ''">
+    <img class="img-thumbnail mt-2" mat-card-image [src]="ad.ad_image_3"  alt="Random third slide">
+    <div class="carousel-caption">
+  <!--     <h3>Third slide label</h3>
+      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p> -->
+    </div>
+  </ng-template>
+</ngb-carousel>
+
+  <mat-card-content>
+    <p>
+      {{ad.ad_text}}
+    </p>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+<button mat-icon-button>
+    <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">visibility</mat-icon>
+  </button>
+   <button mat-icon-button>
+  <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">email</mat-icon>
+  </button>
+   <button mat-icon-button>
+    <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">flag</mat-icon>
+  </button>
+  </mat-card-actions>
+</mat-card>
+</mat-grid-tile>
+</mat-grid-list>

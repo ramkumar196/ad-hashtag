@@ -24,6 +24,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatDialogModule} from '@angular/material/dialog';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -58,6 +59,8 @@ import { AdListComponent } from './ad-list/ad-list.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SidebarComponent } from './shared/frontend-layout/sidebar/sidebar.component';
 import { EditAdComponent } from './edit-ad/edit-ad.component';
+import { ViewAdComponent } from './view-ad/view-ad.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 
 keyboardEventKeyPolyfill();
@@ -71,16 +74,22 @@ const routes: Routes = [
       {path: 'signup',component: RegisterComponent,data: {title: 'Signup'}},
       {path: 'login',component: LoginComponent,data: {title: 'Login'}},
       {path: 'post-ad',component: PostAdComponent,canActivate: [AuthguardService],data: {title: 'Post Ad'}},
+      { path: 'ad-edit/:id', component: EditAdComponent,data: {title: 'Edit Ad'} },
       {path: 'profile',component: UserProfileComponent,canActivate: [AuthguardService],data: {title: 'Edit Profile'}}
       ]
     },
     {path: 'user', component: LoggedLayoutComponent,
      canActivate: [AuthguardService],
      children: [ 
-      {path: 'ad-list',component: AdListComponent,data: {title: 'Ad List'}},
-      {path: 'notifications',component: PostAdComponent,data: {title: 'Notifications'}},
-      { path: 'ad-edit/:id', component: EditAdComponent,data: {title: 'Edit Ad'} },
-
+      {path: 'list',component: UserListComponent,data: {title: 'List'}},
+      {path: 'notifications',component: PostAdComponent,data: {title: 'Notifications'}}
+      ]
+    },
+    {path: 'ad', component: LoggedLayoutComponent,
+     canActivate: [AuthguardService],
+     children: [ 
+      {path: 'list',component: AdListComponent,data: {title: 'Ad List'}},
+      {path: 'view/:id',component: ViewAdComponent,data: {title: 'View Ad'}}
       ]
     },
     {path: '', component: DefaultLayoutComponent,
@@ -104,7 +113,9 @@ const routes: Routes = [
     AdListComponent,
     UserProfileComponent,
     SidebarComponent,
-    EditAdComponent
+    EditAdComponent,
+    ViewAdComponent,
+    UserListComponent
     ],
   imports: [
     BrowserModule,
@@ -129,7 +140,8 @@ const routes: Routes = [
     MatSidenavModule,
     MatMenuModule,
     MatBadgeModule,
-    MatDialogModule
+    MatDialogModule,
+    NgbModule
     ],
   providers: [ApiService,UserService,JwtService,AuthguardService],
   bootstrap: [AppComponent],

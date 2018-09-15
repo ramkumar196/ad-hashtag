@@ -4,21 +4,23 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import {MatSnackBar} from '@angular/material';
 import {ApiService} from '../services/api.service';
+import {UserService} from '../services/user.service';
 import {AdsService} from '../services/ads.service';
 import { JwtService } from '../services/jwt.service';
 
 @Component({
-  selector: 'app-ad-list',
-  templateUrl: './ad-list.component.html',
-  styleUrls: ['./ad-list.component.css']
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.css']
 })
-export class AdListComponent implements OnInit {
+export class UserListComponent implements OnInit {
 
  filterDate = [];
  adList;
  deviceCols = 1;
+ userdetails = {};
 
-  constructor(private adservice :AdsService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog) { }
+  constructor(private adservice :AdsService,private userservice :UserService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog) { }
 
   detectDevice() { 
    if( navigator.userAgent.match(/Android/i)
@@ -85,6 +87,11 @@ export class AdListComponent implements OnInit {
       {
         this.deviceCols = 1;
       }
+
+       this.userservice.profile()
+      .subscribe( data => {
+        this.userdetails = data.details;
+      })
   }
  
 }

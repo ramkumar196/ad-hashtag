@@ -149,6 +149,10 @@ background-color:whitesmoke
 max-height:200px;
 }
 
+.view-ad-card
+{
+	width:90%
+}
 .size-1
 {
 width:10%
@@ -168,4 +172,29 @@ width:40%
 .size-5
 {
 width:50%
+}
+.profile-container
+{
+	width:98%;
+}
+.profile-card
+{
+width:100%;
+background-color:whitesmoke
+
+}
+.profileimage-box
+{
+	margin:5px;
+	float:left;
+	width:20%;
+	height:auto
+}
+.hashtags
+{
+	color:blue;
+}
+.profileimage-content
+{
+	margin:5px
 }

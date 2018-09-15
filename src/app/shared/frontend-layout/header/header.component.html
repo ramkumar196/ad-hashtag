@@ -8,18 +8,27 @@
  	 <a *ngIf="!loginStatus()" [routerLink]="['/auth/login']"routerLinkActive="active"><button class="float-right mr-2" mat-raised-button color="accent">Login</button></a>
  	 <a *ngIf="!loginStatus()" [routerLink]="['/auth/signup']"routerLinkActive="active"><button class="float-right mr-2" mat-raised-button color="accent">Signup</button></a>
  	 <a *ngIf="loginStatus()" [routerLink]="['/auth/post-ad']"routerLinkActive="active"><button class="float-right mr-2" mat-raised-button color="accent">Post Ad</button></a>
-   <button mat-icon-button [matMenuTriggerFor]="menu">
-  <mat-icon>more_vert</mat-icon>
+   <button *ngIf="loginStatus()" mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>menu</mat-icon>
 </button>
 <mat-menu #menu="matMenu">
+   <a *ngIf="loginStatus()" [routerLink]="['/auth/profile']"routerLinkActive="active">
   <button mat-menu-item>
-    <a *ngIf="loginStatus()" [routerLink]="['/auth/profile']"routerLinkActive="active"><mat-icon>account_circle</mat-icon>
-    <span>Profile</span></a>
+    <mat-icon>account_circle</mat-icon>
+    <span>Profile</span>
   </button> 
+  </a>
+  <a *ngIf="loginStatus()" [routerLink]="['/user/list']"routerLinkActive="active">
+  <button mat-menu-item>
+    <mat-icon>list</mat-icon>
+    <span>Your Listing</span>
+  </button> </a>
+   <a *ngIf="loginStatus()" >
   <button mat-menu-item (click)="logout()">
-    <a *ngIf="loginStatus()" ><mat-icon>logout</mat-icon>
-    <span>logout</span></a>
+   <mat-icon>logout</mat-icon>
+    <span>logout</span>
   </button>
+  </a>
 </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
