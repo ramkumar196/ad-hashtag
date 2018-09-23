@@ -2,23 +2,56 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
+import {FormControl} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {switchMap, debounceTime, tap, finalize} from 'rxjs/operators';
+import {Observable} from 'rxjs'
+
 import {MatSnackBar} from '@angular/material';
 import {ApiService} from '../services/api.service';
 import {AdsService} from '../services/ads.service';
 import { JwtService } from '../services/jwt.service';
+
+export interface Listing {
+  show_text: string;
+}
 
 @Component({
   selector: 'app-ad-list',
   templateUrl: './ad-list.component.html',
   styleUrls: ['./ad-list.component.css']
 })
+
+
+
 export class AdListComponent implements OnInit {
 
  filterDate = [];
  adList;
  deviceCols = 1;
+ usersForm: FormGroup;
+ isLoading = false;
 
-  constructor(private adservice :AdsService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog) { }
+
+ searchCtrl = new FormControl();
+ filteredHashtags: Observable<void |any []>;
+
+
+  constructor(private adservice :AdsService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog ,private fb: FormBuilder) { 
+  }
+
+ // filterStates(value: string){
+
+ //  const filterValue = value.toLowerCase();
+
+ //  this.adservice.SearchAdList(this.filterDate)
+ //      .subscribe( data => {
+ //        //this.adList = data.details;
+ //       return this.filteredHashtags =data.details;
+
+ //    });
+
+ //  }
 
   detectDevice() { 
    if( navigator.userAgent.match(/Android/i)
@@ -72,11 +105,29 @@ export class AdListComponent implements OnInit {
     }
 
   ngOnInit() {
-  	 this.adservice.userAdList(this.filterDate)
+  	 this.adservice.SearchAdList(this.filterDate)
       .subscribe( data => {
         this.adList = data.details;
+        this.filteredHashtags = data.details;
 
       })
+    this.usersForm = this.fb.group({
+      userInput: null
+    })
+
+      this.usersForm
+      .get('userInput')
+      .valueChanges
+      .pipe(
+        debounceTime(300),
+        tap(() => this.isLoading = true),
+        switchMap(value => this.adservice.SearchAdList({hashtags: value})
+        .pipe(
+          finalize(() => this.isLoading = false),
+          )
+        )
+      )
+      .subscribe(data => this.adList = data.details);
       if(this.detectDevice())
       {
         this.deviceCols = 3

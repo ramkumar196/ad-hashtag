@@ -1,36 +1,43 @@
 
-<mat-grid-list cols="3" gutterSize="5px" rowHeight="110px" style="background-color:#b8c0c7">
-<mat-grid-tile [colspan]="3"  [rowspan]="2">
-<mat-card  class="profile-card">
+<!-- <mat-grid-list cols="3" gutterSize="5px" rowHeight="110px" style="background-color:#b8c0c7">
+<mat-grid-tile [colspan]="3"  [rowspan]="2"> -->
+  <div class="row">
+<mat-card  class="col-sm jumbotron">
   <mat-card-header class="m-2 float-left">
     <img [src]="userdetails.profileImage"  class="rounded-circle" mat-card-lg-image>
   </mat-card-header>
   <mat-card-content class="float-left">
-<mat-list role="list">
-  <mat-list-item role="listitem">
+<!-- <mat-list role="list" class="list-group">
+  <mat-list-item role="listitem" class="list-group-item d-flex justify-content-between align-items-center">
   	<mat-icon mat-list-icon>account_box</mat-icon>
     <h4 mat-line>{{userdetails.username | titlecase}}</h4>
   </mat-list-item>
-  <mat-list-item role="listitem">
+  <mat-list-item role="listitem" class="list-group-item d-flex justify-content-between align-items-center">
   	<mat-icon mat-list-icon>description</mat-icon>
     <span mat-line>{{userdetails.description | titlecase}}</span>
-  </mat-list-item>  <mat-list-item role="listitem">
+  </mat-list-item>  <mat-list-item role="listitem" class="list-group-item d-flex justify-content-between align-items-center">
   	<mat-icon mat-list-icon>description</mat-icon>
     <span mat-line>{{userdetails.description | titlecase}}</span>
   </mat-list-item>
-</mat-list>
+</mat-list> -->
+  <h6 class="display-4">{{userdetails.username | titlecase}}</h6>
+  <p class="lead">{{userdetails.description | titlecase}}</p>
+  <hr class="my-4">
+  <p>{{userdetails.address | titlecase}}</p>
   </mat-card-content>
  </mat-card>
-</mat-grid-tile>
-<mat-grid-tile [colspan]="deviceCols" [rowspan]="4" *ngFor="let ad of adList">
-<mat-card class="ad-card rounded"  >
+</div>
+<!-- </mat-grid-tile>
+<mat-grid-tile [colspan]="deviceCols" [rowspan]="4" *ngFor="let ad of adList"> -->
+  <div class="row">
+<mat-card class="ad-card rounded col-sm-4 m-3"  *ngFor="let ad of adList">
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar>
     <mat-card-title>{{ad.username | titlecase}}</mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>
  <img class="img-thumbnail mt-2" [src]="ad.ad_image_1" alt="">
-  <mat-card-content>
+  <mat-card-content class="m-2">
     <p [innerHtml]="ad.show_text">
     </p>
   </mat-card-content>
@@ -57,5 +64,6 @@
   <button class="float-right mr-2"  (click)="viewAd(ad._id)"  mat-raised-button color="accent">View</button>
   </mat-card-actions>
 </mat-card>
-</mat-grid-tile>
-</mat-grid-list>
+<!-- </mat-grid-tile>
+</mat-grid-list> -->
+</div>

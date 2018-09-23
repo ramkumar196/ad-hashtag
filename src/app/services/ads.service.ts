@@ -37,6 +37,11 @@ export class AdsService {
      catchError(this.formatErrors))
    }
 
+    SearchAdList(data){
+    return this.apiService.post('/ad/list',data).pipe(
+     catchError(this.formatErrors))
+   }
+
     adDetails(id){
     return this.apiService.post('/ad/detail/'+id).pipe(
      catchError(this.formatErrors))

@@ -26,6 +26,9 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 @include angular-material-theme($candy-app-theme);
 @import '~bootstrap/dist/css/bootstrap.css';
 
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '~bootstrap/scss/bootstrap-grid';
+
 $custom-typography: mat-typography-config(
     $font-family: 'Roboto'
 );

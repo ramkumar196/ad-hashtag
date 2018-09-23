@@ -25,11 +25,12 @@ export class PostAdComponent  implements OnInit {
   files='';
   imageUrl=[];
   imageno=0;
-  hashtags = ['sale','property','website'];
+  hashtags:string[];
   
 
   constructor(private fb: FormBuilder,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
   	    this.createForm();
+        this.hashtags = ['#sale',"#car"];
   }
 
   createForm()
@@ -127,9 +128,13 @@ export class PostAdComponent  implements OnInit {
     );  }
 
   ngOnInit() {
+      console.log('hashtags',this.hashtags);
   }
 
   findChoices(searchText: string) {
+    console.log(this.hashtags);
+    this.hashtags = ['sale','property','website'];
+
     return this.hashtags.filter(item =>
       item.toLowerCase().includes(searchText.toLowerCase())
     );

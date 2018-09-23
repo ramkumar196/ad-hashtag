@@ -1,13 +1,36 @@
-<mat-grid-list cols="3" gutterSize="5px" rowHeight="450px" style="background-color:#b8c0c7">
-<mat-grid-tile [colspan]="deviceCols" *ngFor="let ad of adList">
-<mat-card class="ad-card rounded"  >
+
+<!-- <mat-grid-list cols="3" gutterSize="5px" rowHeight="110px" style="background-color:#b8c0c7">
+<mat-grid-tile [colspan]="3"  [rowspan]="2"> -->
+<!-- </mat-grid-tile>
+<mat-grid-tile [colspan]="deviceCols" [rowspan]="4" *ngFor="let ad of adList"> -->
+  <div class="row" >
+    <mat-toolbar color="primary" >
+  <mat-toolbar-row>
+<form [formGroup]='usersForm'>
+    <mat-form-field class="example-full-width">
+    <input matInput placeholder="Search" [matAutocomplete]="auto" formControlName='userInput'>
+  </mat-form-field>
+ <mat-autocomplete #auto="matAutocomplete" >
+    <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+    <ng-container *ngIf="!isLoading">
+      <mat-option *ngFor="let list of adList" [value]="list">
+        <span  [innerHtml]="list.show_text"></span>
+      </mat-option>
+    </ng-container>
+  </mat-autocomplete>
+</form>
+</mat-toolbar-row>
+</mat-toolbar>
+</div>
+  <div class="row">
+<mat-card class="ad-card rounded col-sm-4 m-3"  *ngFor="let ad of adList">
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar>
-    <mat-card-title>{{ad.username}}</mat-card-title>
+    <mat-card-title>{{ad.username | titlecase}}</mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>
  <img class="img-thumbnail mt-2" [src]="ad.ad_image_1" alt="">
-  <mat-card-content>
+  <mat-card-content class="m-2">
     <p [innerHtml]="ad.show_text">
     </p>
   </mat-card-content>
@@ -34,5 +57,6 @@
   <button class="float-right mr-2"  (click)="viewAd(ad._id)"  mat-raised-button color="accent">View</button>
   </mat-card-actions>
 </mat-card>
-</mat-grid-tile>
-</mat-grid-list>
+<!-- </mat-grid-tile>
+</mat-grid-list> -->
+</div>

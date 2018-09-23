@@ -23,6 +23,10 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -141,7 +145,9 @@ const routes: Routes = [
     MatMenuModule,
     MatBadgeModule,
     MatDialogModule,
-    NgbModule
+    NgbModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule
     ],
   providers: [ApiService,UserService,JwtService,AuthguardService],
   bootstrap: [AppComponent],

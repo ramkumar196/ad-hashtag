@@ -1,6 +1,9 @@
-<mat-grid-list cols="3" gutterSize="5px" rowHeight="100px" style="background-color:#b8c0c7">
-<mat-grid-tile [colspan]="3" [rowspan]="rowSpan">
-<mat-card class="view-ad-card rounded"  >
+<!-- <mat-grid-list cols="3" gutterSize="5px" rowHeight="100px" style="background-color:#b8c0c7">
+<mat-grid-tile [colspan]="3" [rowspan]="rowSpan"> -->
+<div class="row">
+<div class="col-sm-2">
+</div>
+<mat-card class="col-sm-8 rounded"  >
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar/>
     <mat-card-title>{{ad.username}}</mat-card-title>
@@ -51,5 +54,8 @@
   </button>
   </mat-card-actions>
 </mat-card>
-</mat-grid-tile>
-</mat-grid-list>
+<div class="col-sm-2">
+</div>
+<!-- </mat-grid-tile>
+</mat-grid-list> -->
+</div>
