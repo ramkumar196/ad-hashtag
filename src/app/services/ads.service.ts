@@ -33,7 +33,7 @@ export class AdsService {
    }  
 
     userAdList(data){
-    return this.apiService.post('/ad/list',data).pipe(
+    return this.apiService.post('/ad/mylist',data).pipe(
      catchError(this.formatErrors))
    }
 
@@ -50,5 +50,7 @@ export class AdsService {
     return this.apiService.delete('/ad/delete/'+id).pipe(
   	 catchError(this.formatErrors))
    }
+
+   
 }
 

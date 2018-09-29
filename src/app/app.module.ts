@@ -46,6 +46,9 @@ import { ApiService } from './services/api.service';
 import { UserService } from './services/user.service';
 import { JwtService } from './services/jwt.service';
 import { AuthguardService } from './services/authguard.service';
+import { BrowserLocation } from './services/browserlocation.service';
+import { HashtagService } from './services/hashtag.service';
+
 
 
 
@@ -55,7 +58,7 @@ import { LoginComponent } from './login/login.component';
 import { PostAdComponent } from './post-ad/post-ad.component';
 
 import { polyfill as keyboardEventKeyPolyfill } from 'keyboardevent-key-polyfill';
-import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
+import { TextInputAutocompleteModule } from './modules/textarea-autocomplete/text-input-autocomplete.module';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { DefaultLayoutComponent } from './default-layout/default-layout.component';
 import { LoggedLayoutComponent } from './logged-layout/logged-layout.component';
@@ -66,6 +69,8 @@ import { EditAdComponent } from './edit-ad/edit-ad.component';
 import { ViewAdComponent } from './view-ad/view-ad.component';
 import { UserListComponent } from './user-list/user-list.component';
 
+import { TextInputAutocompleteMenuComponent } from './modules/textarea-autocomplete/text-input-autocomplete-menu.component';
+import { TextInputAutocompleteContainerComponent } from './modules/textarea-autocomplete/text-input-autocomplete-container.component';
 
 keyboardEventKeyPolyfill();
 
@@ -149,11 +154,13 @@ const routes: Routes = [
     MatAutocompleteModule,
     MatProgressSpinnerModule
     ],
-  providers: [ApiService,UserService,JwtService,AuthguardService],
+  providers: [ApiService,UserService,JwtService,AuthguardService,BrowserLocation,HashtagService],
   bootstrap: [AppComponent],
   exports:[
     RouterModule
-  ]
+  ],
+  entryComponents:[  TextInputAutocompleteMenuComponent,
+  TextInputAutocompleteContainerComponent]
 })
 export class AppModule { 
 

@@ -7,9 +7,6 @@ import { UserModel } from '../model/user-model';
 import { throwError } from 'rxjs';
 
 
-
-
-
 @Injectable({
   providedIn: 'root'
 })

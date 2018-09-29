@@ -29,8 +29,8 @@
 </div>
 <!-- </mat-grid-tile>
 <mat-grid-tile [colspan]="deviceCols" [rowspan]="4" *ngFor="let ad of adList"> -->
-  <div class="row">
-<mat-card class="ad-card rounded col-sm-4 m-3"  *ngFor="let ad of adList">
+  <div class="card-columns">
+<mat-card class="card"  *ngFor="let ad of adList">
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar>
     <mat-card-title>{{ad.username | titlecase}}</mat-card-title>

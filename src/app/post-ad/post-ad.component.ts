@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input} from '@angular/core';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -9,6 +9,9 @@ import {MatSnackBar} from '@angular/material';
 import {ApiService} from '../services/api.service';
 import {AdsService} from '../services/ads.service';
 import { JwtService } from '../services/jwt.service';
+import { BrowserLocation } from '../services/browserlocation.service';
+import { HashtagService } from '../services/hashtag.service';
+
 
 
 @Component({
@@ -26,9 +29,11 @@ export class PostAdComponent  implements OnInit {
   imageUrl=[];
   imageno=0;
   hashtags:string[];
+  coordinates =[];
+  
   
 
-  constructor(private fb: FormBuilder,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
+  constructor(private fb: FormBuilder,private adsService :AdsService,public hashtagService :HashtagService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
   	    this.createForm();
         this.hashtags = ['#sale',"#car"];
   }
@@ -96,13 +101,14 @@ export class PostAdComponent  implements OnInit {
 
     const inputdata = this.postAdForm.value;
     inputdata.adImages = this.imageUrl;
+    inputdata.coordinates = this.coordinates;
     this.adsService
     .createAd(inputdata)
     .subscribe(
       data => {
         console.log("data",data);
          this.openSnackBar('success');
-         this.router.navigate(['/user/ad-list'])
+         this.router.navigate(['/user/list'])
       },
       err => {
         console.log("hereree",err);
@@ -128,16 +134,39 @@ export class PostAdComponent  implements OnInit {
     );  }
 
   ngOnInit() {
-      console.log('hashtags',this.hashtags);
-  }
+    this.browsersLocation.getLocation(window).subscribe(
+        data => {
 
-  findChoices(searchText: string) {
-    console.log(this.hashtags);
-    this.hashtags = ['sale','property','website'];
+          this.coordinates.push(data.coords.latitude);
+          this.coordinates.push(data.coords.longitude);
+          console.log("data",data.coords);
+        },
+        err => {
+          console.log("hereree",err);
+        }
+      );
+      }  
+  
+   findChoices(searchText: string) {
 
-    return this.hashtags.filter(item =>
-      item.toLowerCase().includes(searchText.toLowerCase())
-    );
+    // console.log(this.hashtags);
+    // this.hashtags = ['sale','property','website'];
+    // return  this.hashtags;
+
+    //    this.hashtagService.hashtaglist({'keyword':searchText})
+    // .subscribe(
+    //   data => {
+        
+    //     this.hashtags = data.details;
+    //     return this.hashtags;
+    //   },
+    //   err => {
+    //     console.log("hereree",err);
+
+    //   } 
+    //   );
+
+
   }
 
   getChoiceLabel(choice: string) {

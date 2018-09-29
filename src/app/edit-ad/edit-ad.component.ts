@@ -7,6 +7,9 @@ import {MatSnackBar} from '@angular/material';
 import {ApiService} from '../services/api.service';
 import {AdsService} from '../services/ads.service';
 import { JwtService } from '../services/jwt.service';
+import { BrowserLocation } from '../services/browserlocation.service';
+import { HashtagService } from '../services/hashtag.service';
+
 @Component({
   selector: 'app-edit-ad',
   templateUrl: './edit-ad.component.html',
@@ -24,9 +27,11 @@ formControlValue = '';
   hashtags = ['sale','property','website'];
   id: number;
   private sub: any;
+  coordinates =[];
+
   
 
-  constructor(private route: ActivatedRoute,private fb: FormBuilder,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
+  constructor(private route: ActivatedRoute,private fb: FormBuilder,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar ,,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
   	    this.createForm();
   }
 
@@ -93,13 +98,15 @@ formControlValue = '';
 
     const inputdata = this.postAdForm.value;
     inputdata.adImages = this.imageUrl;
+    inputdata.coordinates = this.coordinates;
+
     this.adsService
     .editAd(inputdata,this.id)
     .subscribe(
       data => {
         console.log("data",data);
          this.openSnackBar('success');
-         this.router.navigate(['/user/ad-list'])
+         this.router.navigate(['/user/list'])
       },
       err => {
         console.log("hereree",err);
@@ -125,7 +132,19 @@ formControlValue = '';
     );  }
 
   ngOnInit() {
-  	this.sub = this.route.params.subscribe(params => {
+
+    this.browsersLocation.getLocation(window).subscribe(
+        data => {
+
+          this.coordinates.push(data.coords.latitude);
+          this.coordinates.push(data.coords.longitude);
+          console.log("data",data.coords);
+        },
+        err => {
+          console.log("hereree",err);
+        }
+      );
+      this.sub = this.route.params.subscribe(params => {
        this.id = params['id']; // (+) converts string 'id' to a number
 
        console.log('params',params);

@@ -55,7 +55,8 @@ export class UserListComponent implements OnInit {
         data => {
           console.log("data",data);
            this.openSnackBar('success');
-           this.router.navigate(['/user/ad-list'])
+           this.refreshList();
+           this.router.navigate(['/user/list'])
         },
         err => {
           console.log("hereree",err);
@@ -71,6 +72,23 @@ export class UserListComponent implements OnInit {
 
     openSnackBar(msg) {
     this.snackBar.open(msg)
+    }
+
+    refreshList()
+    {
+      this.adservice.userAdList(this.filterDate)
+      .subscribe( data => {
+        this.adList = data.details;
+
+      })
+      if(this.detectDevice())
+      {
+        this.deviceCols = 3
+      }
+      else
+      {
+        this.deviceCols = 1;
+      }
     }
 
   ngOnInit() {

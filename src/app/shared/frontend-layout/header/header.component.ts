@@ -15,6 +15,7 @@ import {JwtService} from '../../../services/jwt.service';
 export class HeaderComponent implements OnInit {
 
   pageTitle;
+  geolocationPosition;
   constructor(private router: Router,private route: ActivatedRoute , titleService:Title,private userService: UserService,private jwtService: JwtService) { 
   router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
@@ -64,6 +65,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
 }
