@@ -8,16 +8,20 @@
   <mat-toolbar-row>
 <form [formGroup]='usersForm'>
     <mat-form-field class="example-full-width">
-    <input matInput placeholder="Search" [matAutocomplete]="auto" formControlName='userInput'>
+    <input matInput placeholder="Search" [matAutocomplete]="auto" formControlName='hashtags'>
   </mat-form-field>
  <mat-autocomplete #auto="matAutocomplete" >
     <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
     <ng-container *ngIf="!isLoading">
-      <mat-option *ngFor="let list of adList" [value]="list">
-        <span  [innerHtml]="list.show_text"></span>
+      <mat-option *ngFor="let list of filteredHashtags" [value]="list">
+        <span  [innerHtml]="list | hashtag"></span>
       </mat-option>
     </ng-container>
   </mat-autocomplete>
+  
+   <button mat-icon-button (click)="adListing()">
+    <mat-icon aria-label="">search</mat-icon>
+  </button>
 </form>
 </mat-toolbar-row>
 </mat-toolbar>
@@ -27,7 +31,7 @@
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar>
     <mat-card-title>{{ad.username | titlecase}}</mat-card-title>
-    <mat-card-subtitle>{{ad.created_date_format }}</mat-card-subtitle>
+    <mat-card-subtitle>{{ad.created_date_format | date:'medium' }}</mat-card-subtitle>
   </mat-card-header>
   <mat-divider></mat-divider>
  <img  class="img-thumbnail mt-2" [src]="ad.ad_image_1" alt="">

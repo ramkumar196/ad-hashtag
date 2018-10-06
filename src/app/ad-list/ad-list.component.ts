@@ -11,6 +11,7 @@ import {MatSnackBar} from '@angular/material';
 import {ApiService} from '../services/api.service';
 import {AdsService} from '../services/ads.service';
 import { JwtService } from '../services/jwt.service';
+import { HashtagService } from '../services/hashtag.service';
 
 export interface Listing {
   show_text: string;
@@ -37,7 +38,7 @@ export class AdListComponent implements OnInit {
  filteredHashtags: Observable<void |any []>;
 
 
-  constructor(private adservice :AdsService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog ,private fb: FormBuilder) { 
+  constructor(private adservice :AdsService,private hashtagservice :HashtagService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog ,private fb: FormBuilder) { 
   }
 
  // filterStates(value: string){
@@ -104,30 +105,36 @@ export class AdListComponent implements OnInit {
     this.snackBar.open(msg)
     }
 
+
+
   ngOnInit() {
-  	 this.adservice.SearchAdList(this.filterDate)
+     this.adservice.SearchAdList(this.filterDate)
       .subscribe( data => {
         this.adList = data.details;
+
+      })
+     this.hashtagservice.hashtaglist({keyword:''})
+      .subscribe( data => {
         this.filteredHashtags = data.details;
 
       })
     this.usersForm = this.fb.group({
-      userInput: null
+      hashtags: null
     })
 
       this.usersForm
-      .get('userInput')
+      .get('hashtags')
       .valueChanges
       .pipe(
         debounceTime(300),
         tap(() => this.isLoading = true),
-        switchMap(value => this.adservice.SearchAdList({hashtags: value})
+        switchMap(value => this.hashtagservice.hashtaglist({keyword: value})
         .pipe(
           finalize(() => this.isLoading = false),
           )
         )
       )
-      .subscribe(data => this.adList = data.details);
+      .subscribe(data => this.filteredHashtags = data.details);
       if(this.detectDevice())
       {
         this.deviceCols = 3
@@ -137,5 +144,13 @@ export class AdListComponent implements OnInit {
         this.deviceCols = 1;
       }
   }
+
+   adListing()
+    {
+    this.adservice.SearchAdList(this.usersForm.value)
+      .subscribe( data => {
+        this.adList = data.details;
+      })
+    }
  
 }

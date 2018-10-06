@@ -3,6 +3,7 @@ import { RouterModule, Routes, ActivatedRoute ,Router ,NavigationEnd } from '@an
 import {Title} from '@angular/platform-browser';
 import {UserService} from '../../../services/user.service';
 import {JwtService} from '../../../services/jwt.service';
+import { DialogService } from '../../../services/dialog.service';
 
 
 
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
 
   pageTitle;
   geolocationPosition;
-  constructor(private router: Router,private route: ActivatedRoute , titleService:Title,private userService: UserService,private jwtService: JwtService) { 
+  constructor(private dialog: DialogService,private router: Router,private route: ActivatedRoute , titleService:Title,private userService: UserService,private jwtService: JwtService) { 
   router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
         var title = this.getTitle(router.routerState, router.routerState.root).join('-');
@@ -51,6 +52,8 @@ export class HeaderComponent implements OnInit {
   logout()
   {
     this.jwtService.destroyToken();
+    this.dialog.confirm({title:'Logout',message:'Logged out Successfully',confirm:false})
+
     this.router.navigate(['/auth/login']);
   }
 

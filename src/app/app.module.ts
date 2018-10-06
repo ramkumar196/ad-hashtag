@@ -48,6 +48,7 @@ import { JwtService } from './services/jwt.service';
 import { AuthguardService } from './services/authguard.service';
 import { BrowserLocation } from './services/browserlocation.service';
 import { HashtagService } from './services/hashtag.service';
+import { DialogService } from './services/dialog.service';
 
 
 
@@ -71,6 +72,10 @@ import { UserListComponent } from './user-list/user-list.component';
 
 import { TextInputAutocompleteMenuComponent } from './modules/textarea-autocomplete/text-input-autocomplete-menu.component';
 import { TextInputAutocompleteContainerComponent } from './modules/textarea-autocomplete/text-input-autocomplete-container.component';
+import { ChatComponent } from './chat/chat.component';
+import { DialogComponent } from './services/dialog.component';
+import { HashtagPipe } from './pipes/pipes';
+
 
 keyboardEventKeyPolyfill();
 
@@ -82,6 +87,7 @@ const routes: Routes = [
     children: [ 
       {path: 'signup',component: RegisterComponent,data: {title: 'Signup'}},
       {path: 'login',component: LoginComponent,data: {title: 'Login'}},
+      {path: 'chat',component: ChatComponent,data: {title: 'chat'}},
       {path: 'post-ad',component: PostAdComponent,canActivate: [AuthguardService],data: {title: 'Post Ad'}},
       { path: 'ad-edit/:id', component: EditAdComponent,data: {title: 'Edit Ad'} },
       {path: 'profile',component: UserProfileComponent,canActivate: [AuthguardService],data: {title: 'Edit Profile'}}
@@ -124,7 +130,10 @@ const routes: Routes = [
     SidebarComponent,
     EditAdComponent,
     ViewAdComponent,
-    UserListComponent
+    UserListComponent,
+    ChatComponent,
+    HashtagPipe,
+    DialogComponent
     ],
   imports: [
     BrowserModule,
@@ -154,13 +163,13 @@ const routes: Routes = [
     MatAutocompleteModule,
     MatProgressSpinnerModule
     ],
-  providers: [ApiService,UserService,JwtService,AuthguardService,BrowserLocation,HashtagService],
+  providers: [ApiService,UserService,JwtService,AuthguardService,BrowserLocation,HashtagService,DialogService],
   bootstrap: [AppComponent],
   exports:[
     RouterModule
   ],
   entryComponents:[  TextInputAutocompleteMenuComponent,
-  TextInputAutocompleteContainerComponent]
+  TextInputAutocompleteContainerComponent,DialogComponent]
 })
 export class AppModule { 
 

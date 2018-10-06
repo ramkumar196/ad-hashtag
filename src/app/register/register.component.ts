@@ -7,6 +7,7 @@ import {MatSnackBar} from '@angular/material';
 
 import {ApiService} from '../services/api.service';
 import {UserService} from '../services/user.service';
+import { DialogService } from '../services/dialog.service';
 import { JwtService } from '../services/jwt.service';
 
 
@@ -23,7 +24,7 @@ export class RegisterComponent implements OnInit {
 
   
 
-  constructor(private fb: FormBuilder,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
+  constructor(private fb: FormBuilder,private dialog: DialogService,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
   	    this.createForm();
   }
 
@@ -50,7 +51,9 @@ export class RegisterComponent implements OnInit {
         console.log("data",data);
         var jwt_token = data.token;
         this.jwt.saveToken(jwt_token);
-         this.openSnackBar('success');
+         //this.openSnackBar('success');
+        this.dialog.confirm({title:'Login',message:'Logged in Successfully',confirm:false})
+
          this.router.navigate(['/'])
       },
       err => {

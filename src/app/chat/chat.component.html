@@ -1,0 +1,36 @@
+<div class="row" >
+<mat-card class="col-sm">
+  <mat-sidenav-container >
+    <!-- Left sidebar -->
+    <mat-sidenav class="chat-sidenav" #chatSidebar [opened]="isSidenavOpen" mode="side">
+      <!-- Left side topbar -->
+      <mat-toolbar color="primary" class="chat-sidebar-toolbar">
+        <a href="" class="toolbar-avatar online">
+          <img src="assets/images/face-3.jpg" alt="">
+          <span class="status-dot"></span>
+        </a>
+      </mat-toolbar>
+      <!-- Left side contact list -->
+      <mat-nav-list class="inbox-nav-list" role="list">
+        <mat-list-item
+        *ngFor="let user of connectedUsers"
+        (click)="changeActiveUser(user)">
+          <a 
+          mat-list-avatar 
+          [ngClass]=""
+          class="toolbar-avatar">
+            <img [src]="user.photo" alt="">
+            <span class="status-dot"></span>
+          </a>
+          <h6 matLine>{{user.name}}</h6>
+          <p matLine class="text-muted">{{user.lastMsg}}</p>
+        </mat-list-item>
+        
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <!-- Right side -->
+
+  </mat-sidenav-container>
+</mat-card>
+</div>

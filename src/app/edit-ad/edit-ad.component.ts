@@ -8,7 +8,6 @@ import {ApiService} from '../services/api.service';
 import {AdsService} from '../services/ads.service';
 import { JwtService } from '../services/jwt.service';
 import { BrowserLocation } from '../services/browserlocation.service';
-import { HashtagService } from '../services/hashtag.service';
 
 @Component({
   selector: 'app-edit-ad',
@@ -31,7 +30,7 @@ formControlValue = '';
 
   
 
-  constructor(private route: ActivatedRoute,private fb: FormBuilder,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar ,,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
+  constructor(private route: ActivatedRoute,private fb: FormBuilder,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
   	    this.createForm();
   }
 

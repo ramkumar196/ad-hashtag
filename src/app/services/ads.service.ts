@@ -48,6 +48,10 @@ export class AdsService {
    }
     deleteAd(id){
     return this.apiService.delete('/ad/delete/'+id).pipe(
+     catchError(this.formatErrors))
+   } 
+    sendMessage(data){
+    return this.apiService.post('/message/send',data).pipe(
   	 catchError(this.formatErrors))
    }
 

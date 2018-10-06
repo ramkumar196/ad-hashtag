@@ -8,6 +8,8 @@ import {MatSnackBar} from '@angular/material';
 import {ApiService} from '../services/api.service';
 import {UserService} from '../services/user.service';
 import { JwtService } from '../services/jwt.service';
+import { DialogService } from '../services/dialog.service';
+
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,7 @@ export class LoginComponent implements OnInit {
   isSubmitting;
 
 
-  constructor(private fb: FormBuilder,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
+  constructor(private dialog: DialogService,private fb: FormBuilder,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
   	    this.createForm();
   }
 
@@ -46,13 +48,14 @@ export class LoginComponent implements OnInit {
         console.log("data",data);
         var jwt_token = data.token;
         this.jwt.saveToken(jwt_token);
-         this.openSnackBar('success');
-         this.router.navigate(['/'])
+        this.dialog.confirm({title:'Login',message:'Logged in Successfully',confirm:false})
+        this.router.navigate(['/'])
       },
       err => {
         console.log("hereree",err);
+        this.dialog.confirm({title:'Error',message:err,confirm:false})
 
-        this.openSnackBar(err.error);
+        //this.openSnackBar(err.error);
 
         this.errors = err.error;
 

@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -17,10 +18,14 @@ export class ViewAdComponent implements  OnInit, OnDestroy {
   id: number;
   private sub: any;
   ad;
+  messageList;
   rowSpan = 11;
+  messageForm :FormGroup;
 
 
-  constructor(private adsService :AdsService,private router :Router, private snackBar :MatSnackBar, private route: ActivatedRoute ) { }
+  constructor(private fb: FormBuilder,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar, private route: ActivatedRoute ) { 
+this.createForm()
+  }
 
    ngOnInit() {
   	this.sub = this.route.params.subscribe(params => {
@@ -31,6 +36,8 @@ export class ViewAdComponent implements  OnInit, OnDestroy {
        this.adsService.adDetails(this.id)
       .subscribe( data => {
       	 this.ad = data.details;
+         this.messageList = data.details.message_list;
+
 
       	 console.log(this.ad);
         //this.postAdForm.setValue(data.details);
@@ -45,6 +52,29 @@ export class ViewAdComponent implements  OnInit, OnDestroy {
 		        this.rowSpan = 11;
 		      }
   	}
+
+
+  createForm()
+  {
+     this.messageForm = this.fb.group({
+      message: ['', [Validators.required]],
+    });;
+  }
+
+    sendMessage()
+    {
+      var inputdata = this.messageForm.value;
+      inputdata.adid =this.id; 
+      console.log(inputdata);
+      this.adsService.sendMessage(inputdata)
+      .subscribe( data => {
+         this.messageList = data.details;
+         this.messageForm.reset();
+
+         console.log(data.details);
+        //this.postAdForm.setValue(data.details);
+       })
+    }
 
 	  detectDevice() { 
    if( navigator.userAgent.match(/Android/i)
