@@ -3,7 +3,8 @@
   	<!-- <button *ngIf="loginStatus()" mat-icon-button (click)="drawer.toggle()">
     <mat-icon aria-label="Example icon-button with a heart icon">menu</mat-icon>
   	</button> -->
-    <span class="ad-logo"></span>
+<!--     <span class="ad-logo"></span>
+ -->    <img src="/assets/logo.png"/>
     <span class="toolbar-spacer"></span>
  	 <a *ngIf="!loginStatus()" [routerLink]="['/auth/login']"routerLinkActive="active"><button class="float-right mr-2" mat-raised-button color="accent">Login</button></a>
  	 <a *ngIf="!loginStatus()" [routerLink]="['/auth/signup']"routerLinkActive="active"><button class="float-right mr-2" mat-raised-button color="accent">Signup</button></a>
@@ -33,7 +34,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-divider></mat-divider>
-<mat-toolbar  class="" color="primary" style="height:50px;font-size:12px">
+<mat-toolbar  class="border-accent-small-bottom" color="primary" style="height:50px;font-size:12px">
   {{ pageTitle }}
 </mat-toolbar>
   <mat-divider></mat-divider>

@@ -1,75 +1,4 @@
-<!doctype html>
-<html lang="en">
-<!-- inline spinner styles to be able to display spinner right away -->
-    <style type="text/css">
-      body, html {
-        height: 100%;
-        background-color: #0000
-      }
-      .app-loading {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-      }
-      .app-loading .spinner {
-        height: 200px;
-        width: 200px;
-        animation: rotate 2s linear infinite;
-        transform-origin: center center;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-      }
-      .app-loading .spinner .path {
-        stroke-dasharray: 1, 200;
-        stroke-dashoffset: 0;
-        animation: dash 1.5s ease-in-out infinite;
-        stroke-linecap: round;
-        stroke: #ddd;
-      }
-      @keyframes rotate {
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      @keyframes dash {
-        0% {
-          stroke-dasharray: 1, 200;
-          stroke-dashoffset: 0;
-        }
-        50% {
-          stroke-dasharray: 89, 200;
-          stroke-dashoffset: -35px;
-        }
-        100% {
-          stroke-dasharray: 89, 200;
-          stroke-dashoffset: -124px;
-        }
-      }
-    </style>
-<head>
-  <meta charset="utf-8">
-  <title>Ad-Hastag</title>
-  <base href="/">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" rel="stylesheet">
-
-</head>
-<body>
-  <app-root>
-  	 <div class="app-loading">
-        <div class="logo"></div>
-        <!-- <svg  viewBox="25 25 50 50"> -->
-         <svg class="spinner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 266 256" width="266" height="256">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 266 256" width="266" height="256">
 	<defs>
 		<image width="266" height="256" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQoAAAEAAQMAAABxnqrsAAAAA1BMVEX///+nxBvIAAAAIElEQVR4nO3BAQ0AAADCoPdPbQ43oAAAAAAAAAAA4NcAIwAAAXU07cMAAAAASUVORK5CYII="/>
 		<image width="245" height="241" id="img2" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPUAAADxBAMAAADhDuxAAAAAIVBMVEUAAAAbXiAAAACAgICioouOjo5VVVWfn4CAgIDOzs6AgICyyzm8AAAAC3RSTlMA/wECCwkDCAYfBEyng+0AAALuSURBVHic7d3bTQNBDIXhcBOIJxaCQLzRAXQAHYQOQifQQegAOiULCpBksjsX2z+S7QLyyWcm4ZIdz2RSU3vdelW9iARsxt8mYQv+fkDu605NPhiRl3WhRI/LfT0oyOkdlipxOlte1hlHy+JHZXTXXYrR+Uv9WyAthNfRIngtLYDX0814C92IZ3yCD1XTp3sb3fQh00o34Pftdu1P9LZ9tqo6W4SuS12GrsJlEu+rmN4Xo7vzUluOLk5dLvG+imjBxPsqavxZ1u7mVOJ95dvidH7q8m3nN65A5zau0XZu4yp0XuM6bec1rkTnNK7Vdk7javR443ptjzeuSI81rtn2WOOq9HDjx7r2FRf5cOjK9FDo2m0PNa5ODzQO2vqR7w7dgN7V+ImFfc1Fvit0Ezod+qGNnWzcJvK0bUSnQreKPNW4VeQp24xOhA7adpFvh25IdwvQ3gjdMvLN0EnblN4IHbRtI18PnbSfjO0ZttxrC35qbd9wy/13wUnbnP6z4KBtH3k3Be3uP9gA/bPgTm1iuVcL7tV+RewFttVWm82pzWy1780Wtr0N0V+bLWxXNrXN+40edthWtvRjU/n1jr29+zd42GGHHXbYYYcddthhhx122Iz9gdlzt3/7h+3L9vq/3LAB2+t3VF5tr99Bo/YbYr/gz3l4tb0+S4XaXp8ZtDtSs217fTbW7bPQ5PPn5HP36HkDr2c8vJ7pcXuGizw3Z/pL+uZ5QfKcpNezqeh5YDN7um2T57/Rc+9GdipydM4BOt+BnGtBzvNA55h4nR2Dzush5xSh85mU7eFhYKRNziEj56+hc+fIeXvonEFyviI6V5Kcp4nOESXnp6JzY8l5ueicYHI+snTqZQOxwXnY6BxwdP45OfcdnXePzvlH7zcg73VA77NA7/FA7y8h721B76tB7+lB7ydC72VC76OalL/PRW8gA+kyfDb+cmUF3je3rMcs+UGDRu8XnIwHryd/1W5YeHcnC7tHM83XvconZv8bkEpXdSAAAAAASUVORK5CYII="/>
@@ -84,7 +13,3 @@
 	<use id="Layer 4" href="#img3" x="38" y="25" />
 	<use id="Layer 2" style="display: none" href="#img4" x="10" y="7" />
 </svg>
-      </div>
-  </app-root>
-</body>
-</html>

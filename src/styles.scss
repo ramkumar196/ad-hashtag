@@ -12,7 +12,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $candy-app-primary: mat-palette($mat-grey,100);
-$candy-app-accent:  mat-palette($mat-grey,900);
+$candy-app-accent:  mat-palette($mat-green,900);
 
 // The warn palette is optional (defaults to red).
 $candy-app-warn:    mat-palette($mat-red);
@@ -31,6 +31,7 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 
 $custom-typography: mat-typography-config(
     $font-family: 'Roboto'
+
 );
 
 @include mat-core($custom-typography);
@@ -196,7 +197,7 @@ background-color:whitesmoke
 }
 .hashtags
 {
-	color:blue;
+	color:#1b5e20;
 }
 .profileimage-content
 {
@@ -270,3 +271,30 @@ background-color:whitesmoke
   }
 }
 
+//colors
+
+.primary-md-color
+{
+	background-color:whitesmoke;
+	color:white;
+}
+.accent-md-color
+{
+	background-color:#1b5e20;
+	color:white;
+}
+
+.border-accent
+{
+	border:solid 10px #1b5e20;
+}
+
+.border-accent-small-bottom
+{
+	border-bottom:solid 2px #1b5e20;
+}
+
+.border-accent-small-top
+{
+	border-top:solid 2px #1b5e20;
+}

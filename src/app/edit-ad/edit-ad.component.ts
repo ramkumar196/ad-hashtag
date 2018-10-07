@@ -179,6 +179,7 @@ formControlValue = '';
         delete data.details.ad_image_4;
         delete data.details.username;
         delete data.details.profileImage;
+        delete data.details.message_list;
         this.postAdForm.setValue(data.details);
 
       })

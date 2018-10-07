@@ -25,6 +25,8 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 
 
@@ -161,7 +163,8 @@ const routes: Routes = [
     MatDialogModule,
     NgbModule,
     MatAutocompleteModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatChipsModule
     ],
   providers: [ApiService,UserService,JwtService,AuthguardService,BrowserLocation,HashtagService,DialogService],
   bootstrap: [AppComponent],

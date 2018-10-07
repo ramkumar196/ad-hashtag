@@ -1,6 +1,26 @@
-<mat-grid-list cols="12" rowHeight="100px" class="">
-	  <mat-grid-tile colspan="12" rowspan="1" style="background:red"></mat-grid-tile>
-	  <mat-grid-tile colspan="12" rowspan="1" style="background:green"></mat-grid-tile>
-	  <mat-grid-tile colspan="12" rowspan="1" style="background:yellow"></mat-grid-tile>
-	  <mat-grid-tile colspan="12" rowspan="3" style="background:blue"></mat-grid-tile>
+<div class="row">
+<!-- <div class="col-sm-1" >
+</div> -->
+<div class="col-sm " color="accent">
+	<div class="jumbotron ">
+		<h1 class="display-4">Just #AD</h1>
+		<p class="lead">This is a simple</p>
+		<hr class="my-4">
+		<p></p>
+		<a  [routerLink]="['/auth/post-ad']"routerLinkActive="active"><button class="mr-2" mat-raised-button color="accent">Post Ad</button></a>
+	</div>
+</div>
+<!-- <div class="col-sm-1" >
+</div> -->
+</div>
+<mat-toolbar color="primary" class="border-accent-small-bottom" >
+<mat-icon>trending_up</mat-icon>&nbsp;Trending 
+</mat-toolbar>
+<mat-grid-list cols="4" rowHeight="50px">
+<mat-grid-tile  [colspan]="colspanValue" [rowspan]="1"  *ngFor="let tl of trendingHashtags">
+<span> {{tl.hashtag | hashtag}} </span>&nbsp;&nbsp;&nbsp;
+<mat-chip-list>
+  <mat-chip color="color" selected>{{tl.count}}</mat-chip>
+</mat-chip-list>
+</mat-grid-tile>
 </mat-grid-list>
