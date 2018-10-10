@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 import {FormControl} from '@angular/forms';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {switchMap, debounceTime, tap, finalize} from 'rxjs/operators';
 import {Observable} from 'rxjs'
+import {MatAutocompleteSelectedEvent, MatChipInputEvent} from '@angular/material';
+import {map, startWith} from 'rxjs/operators';
+
 
 import {MatSnackBar} from '@angular/material';
 import {ApiService} from '../services/api.service';
@@ -36,6 +40,16 @@ export class AdListComponent implements OnInit {
 
  searchCtrl = new FormControl();
  filteredHashtags: Observable<void |any []>;
+
+ //chips
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = false;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  hashtagCtrl = new FormControl();
+  hashtags = [];
 
 
   constructor(private adservice :AdsService,private hashtagservice :HashtagService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog ,private fb: FormBuilder) { 
@@ -117,6 +131,8 @@ export class AdListComponent implements OnInit {
       .subscribe( data => {
         this.filteredHashtags = data.details;
 
+        console.log(this.filteredHashtags);
+
       })
     this.usersForm = this.fb.group({
       hashtags: null
@@ -143,14 +159,78 @@ export class AdListComponent implements OnInit {
       {
         this.deviceCols = 1;
       }
+
+            this.hashtagCtrl
+      .valueChanges
+      .pipe(
+        debounceTime(300),
+        tap(() => this.isLoading = true),
+        switchMap(value => this.hashtagservice.hashtaglist({keyword: value})
+        .pipe(
+          finalize(() => this.isLoading = false),
+          )
+        )
+      )
+      .subscribe(data => this.filteredHashtags = data.details);
+      if(this.detectDevice())
+      {
+        this.deviceCols = 3
+      }
+      else
+      {
+        this.deviceCols = 1;
+      }
   }
 
    adListing()
     {
-    this.adservice.SearchAdList(this.usersForm.value)
+      console.log('hash',this.hashtags);
+    this.adservice.SearchAdList({hashtags:this.hashtags})
       .subscribe( data => {
         this.adList = data.details;
       })
     }
- 
+
+  @ViewChild('hashtagInput') hashtagInput: ElementRef<HTMLInputElement>;
+
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.hashtags.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    this.hashtagCtrl.setValue(null);
+  }
+
+  remove(hashtag: string): void {
+    const index = this.hashtags.indexOf(hashtag);
+
+    if (index >= 0) {
+      this.hashtags.splice(index, 1);
+    }
+        this.adListing();
+
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.hashtags.push(event.option.viewValue);
+    this.hashtagInput.nativeElement.value = '';
+    this.hashtagCtrl.setValue(null);
+    this.adListing();
+  }
+
+  // _filter(value: string): string[] {
+  //   const filterValue = value.toLowerCase();
+
+  //   return ;
+  // }
 }
