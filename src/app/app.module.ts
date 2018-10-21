@@ -77,6 +77,8 @@ import { TextInputAutocompleteContainerComponent } from './modules/textarea-auto
 import { ChatComponent } from './chat/chat.component';
 import { DialogComponent } from './services/dialog.component';
 import { HashtagPipe } from './pipes/pipes';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 keyboardEventKeyPolyfill();
@@ -89,6 +91,8 @@ const routes: Routes = [
     children: [ 
       {path: 'signup',component: RegisterComponent,data: {title: 'Signup'}},
       {path: 'login',component: LoginComponent,data: {title: 'Login'}},
+      {path: 'reset-password',component: ResetPasswordComponent,data: {title: 'Reset Password'}},
+      {path: 'change-password/:id',component: ChangePasswordComponent,data: {title: 'Change Password'}},
       {path: 'chat',component: ChatComponent,data: {title: 'chat'}},
       {path: 'post-ad',component: PostAdComponent,canActivate: [AuthguardService],data: {title: 'Post Ad'}},
       { path: 'ad-edit/:id', component: EditAdComponent,data: {title: 'Edit Ad'} },
@@ -135,7 +139,9 @@ const routes: Routes = [
     UserListComponent,
     ChatComponent,
     HashtagPipe,
-    DialogComponent
+    DialogComponent,
+    ResetPasswordComponent,
+    ChangePasswordComponent
     ],
   imports: [
     BrowserModule,

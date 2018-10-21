@@ -36,6 +36,16 @@ export class UserService {
 
    profile(){
     return this.apiService.post('/user/profile').pipe(
+     catchError(this.formatErrors))
+   }
+
+   sendResetLink(data){
+    return this.apiService.post('/user/resetlink',data).pipe(
+     catchError(this.formatErrors))
+   }
+
+   resetPassword(data){
+    return this.apiService.post('/user/reset-password',data).pipe(
   	 catchError(this.formatErrors))
    }
 

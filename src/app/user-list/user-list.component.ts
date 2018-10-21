@@ -68,7 +68,7 @@ export class UserListComponent implements OnInit {
 
         }
       ); 
-      }  
+      } 
 
     openSnackBar(msg) {
     this.snackBar.open(msg)
