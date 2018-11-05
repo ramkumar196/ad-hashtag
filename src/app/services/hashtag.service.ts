@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable ,  throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { UserModel } from '../model/user-model';
-import { throwError } from 'rxjs';
 
 
 

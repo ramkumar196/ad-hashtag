@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
         var jwt_token = data.token;
         this.jwt.saveToken(jwt_token);
         this.dialog.confirm({title:'Login',message:'Logged in Successfully',confirm:false})
-        this.router.navigate(['/'])
+        this.router.navigate(['/ad/list'])
       },
       err => {
         console.log("hereree",err);

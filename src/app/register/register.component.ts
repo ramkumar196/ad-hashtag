@@ -57,7 +57,7 @@ export class RegisterComponent implements OnInit {
          this.router.navigate(['/'])
       },
       err => {
-        console.log("hereree",err);
+        console.log("hereree",err.error);
 
         if(err.length == 0)
         {

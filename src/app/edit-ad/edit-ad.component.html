@@ -22,6 +22,19 @@ name="adtextarea"
 </mat-form-field>
 <mat-error align="start" *ngIf="postAdForm.controls['adtextarea'].hasError('required') && postAdForm.controls['adtextarea'].touched " class="form__error">Ad is required</mat-error>
 <mat-error align="start" *ngIf="errors.adtextarea" class="form__error">{{ errors.adtextarea }}</mat-error>
+
+<mat-form-field class="full-width">
+    <input matInput placeholder="Website Link" formControlName="websitelink" value="">
+</mat-form-field>
+<mat-error align="start" *ngIf="errors.websitelink" class="form__error">{{ errors.websitelink }}</mat-error>
+<mat-form-field class="full-width">
+    <input matInput placeholder="City Name" aria-label="City Name" [matAutocomplete]="auto" formControlName="city">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let city of filteredCities " [value]="city.name">
+        <span>{{city.name}}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 <mat-grid-list rows="1" cols="4" rowHeight="100px">
   <mat-grid-tile  cols="1" *ngFor="let item of imageUrl">
 <div class="imgwrapper">

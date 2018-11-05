@@ -3,6 +3,11 @@ import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSnackBar} from '@angular/material';
+import { CustomValidator } from '../validators/customvalidator';
+import {Observable} from 'rxjs';
+import {switchMap, debounceTime, tap, finalize, map, startWith} from 'rxjs/operators';
+
+
 
 
 
@@ -11,7 +16,13 @@ import {AdsService} from '../services/ads.service';
 import { JwtService } from '../services/jwt.service';
 import { BrowserLocation } from '../services/browserlocation.service';
 import { HashtagService } from '../services/hashtag.service';
+import { UserService } from '../services/user.service';
 
+export interface State {
+  _id: string;
+  name: string;
+  state_id: string;
+}
 
 
 @Component({
@@ -19,6 +30,8 @@ import { HashtagService } from '../services/hashtag.service';
   templateUrl: './post-ad.component.html',
   styleUrls: ['./post-ad.component.css']
 })
+
+
 export class PostAdComponent  implements OnInit {
 
   formControlValue = '';
@@ -30,19 +43,32 @@ export class PostAdComponent  implements OnInit {
   imageno=0;
   hashtags:string[];
   coordinates =[];
-  
-  
 
-  constructor(private fb: FormBuilder,private adsService :AdsService,public hashtagService :HashtagService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
+  isLoading = true;
+  filteredCities: Observable<State>;
+  constructor(private fb: FormBuilder,private adsService :AdsService,public hashtagService :HashtagService,public userService :UserService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
   	    this.createForm();
         this.hashtags = ['#sale',"#car"];
+        this.postAdForm.get('city').valueChanges
+      .pipe(
+        debounceTime(300),
+        tap(() => this.isLoading = true),
+        switchMap(value => this.userService.cityList({keyword: value})
+        .pipe(
+          finalize(() => this.isLoading = false),
+          )
+        )
+      )
+      .subscribe(data => this.filteredCities = data.details);
   }
 
   createForm()
   {
   	this.postAdForm = this.fb.group({
       adtextarea: ['', Validators.required],
-  		adImages: ['']
+      websitelink: ['',[CustomValidator.urlValidator]],
+      adImages: [''],
+  		city: ['']
   	  });
   }
 
@@ -134,6 +160,8 @@ export class PostAdComponent  implements OnInit {
     );  }
 
   ngOnInit() {
+
+
     this.browsersLocation.getLocation(window).subscribe(
         data => {
 
@@ -149,7 +177,8 @@ export class PostAdComponent  implements OnInit {
   
    findChoices(searchText: string) {
 
-    // console.log(this.hashtags);
+
+   // console.log(this.hashtags);
     // this.hashtags = ['sale','property','website'];
     // return  this.hashtags;
 

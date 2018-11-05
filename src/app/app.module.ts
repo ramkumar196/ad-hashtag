@@ -56,7 +56,7 @@ import { DialogService } from './services/dialog.service';
 
 
 
-import { LoginLayoutModule } from './login-layout/login-layout.module';
+//import { LoginLayoutModule } from './login-layout/login-layout.module';
 import { LoginComponent } from './login/login.component';
 import { PostAdComponent } from './post-ad/post-ad.component';
 

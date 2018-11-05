@@ -3,11 +3,23 @@ import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSnackBar} from '@angular/material';
+import { CustomValidator } from '../validators/customvalidator';
+import {Observable} from 'rxjs';
+import {switchMap, debounceTime, tap, finalize, map, startWith} from 'rxjs/operators';
 
 import {ApiService} from '../services/api.service';
 import {AdsService} from '../services/ads.service';
 import { JwtService } from '../services/jwt.service';
 import { BrowserLocation } from '../services/browserlocation.service';
+import { UserService } from '../services/user.service';
+
+
+export interface State {
+  _id: string;
+  name: string;
+  state_id: string;
+}
+
 
 @Component({
   selector: 'app-edit-ad',
@@ -27,18 +39,34 @@ formControlValue = '';
   id: number;
   private sub: any;
   coordinates =[];
+  isLoading=false;
+  filteredCities: Observable<State>;
 
   
 
-  constructor(private route: ActivatedRoute,private fb: FormBuilder,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
+  constructor(private route: ActivatedRoute,private fb: FormBuilder,private adsService :AdsService,public userService :UserService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
   	    this.createForm();
+
+       this.postAdForm.get('city').valueChanges
+      .pipe(
+        debounceTime(300),
+        tap(() => this.isLoading = true),
+        switchMap(value => this.userService.cityList({keyword: value})
+        .pipe(
+          finalize(() => this.isLoading = false),
+          )
+        )
+      )
+      .subscribe(data => this.filteredCities = data.details);
   }
 
   createForm()
   {
   	this.postAdForm = this.fb.group({
       adtextarea: ['', Validators.required],
-  		adImages: ['']
+      websitelink: ['',[CustomValidator.urlValidator]],
+      adImages: [''],
+  		city: ['']
   	  });
   }
 
@@ -168,8 +196,11 @@ formControlValue = '';
         	this.imageUrl.push(data.details.ad_image_4)
         }
         
+               console.log(data.details);
+
         data.details.adtextarea = data.details.ad_text;
         data.details.adImages = '';
+        data.details.websitelink = data.details.websitelink;
         delete data.details._id;
         delete data.details.ad_text;
         delete data.details.created_date;
@@ -180,6 +211,12 @@ formControlValue = '';
         delete data.details.username;
         delete data.details.profileImage;
         delete data.details.message_list;
+
+        //if(data.details.websitelink != '')
+      // delete data.details.websitelink;
+
+       console.log(data.details);
+
         this.postAdForm.setValue(data.details);
 
       })

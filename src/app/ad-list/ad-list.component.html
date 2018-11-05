@@ -60,14 +60,27 @@
     <mat-card-subtitle>{{ad.created_date_format | date:'medium' }}</mat-card-subtitle>
   </mat-card-header>
   <mat-divider></mat-divider>
- <img  class="img-thumbnail mt-2" [src]="ad.ad_image_1" alt="">
+ <img *ngIf="ad.ad_image_1" class="img-thumbnail mt-2" [src]="ad.ad_image_1" alt="">
+ <div class="card-body">
   <mat-card-content class="m-2">
+    <mat-list class="card-text">
+  <mat-list-item>
     <p [innerHtml]="ad.show_text">
     </p>
+  </mat-list-item>
+    <mat-divider *ngIf="ad.websitelink"></mat-divider>
+  <mat-list-item *ngIf="ad.websitelink">
+   <a href="{{ad.websitelink}}" target="_blank"><mat-icon mat-list-icon>link</mat-icon></a>
+  </mat-list-item> 
+  <mat-divider *ngIf="ad.city"></mat-divider>
+  <mat-list-item *ngIf="ad.city">
+   <mat-icon mat-list-icon>location_on</mat-icon>{{ad.city}}
+  </mat-list-item>
+</mat-list>
   </mat-card-content>
   <mat-divider></mat-divider>
   <mat-card-actions>
-<button mat-icon-button>
+<!-- <button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">favorite</mat-icon>
   </button>
   <button mat-icon-button>
@@ -78,9 +91,10 @@
   </button>
    <button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">flag</mat-icon>
-  </button>
+  </button> -->
   <button class="float-right mr-2"  (click)="viewAd(ad._id)"  mat-raised-button color="accent">View</button>
   </mat-card-actions>
+</div>
 </mat-card>
 <!-- </mat-grid-tile>
 </mat-grid-list> -->

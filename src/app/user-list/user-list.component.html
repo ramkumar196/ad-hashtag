@@ -20,8 +20,8 @@
     <span mat-line>{{userdetails.description | titlecase}}</span>
   </mat-list-item>
 </mat-list> -->
-  <h6 class="display-4">{{userdetails.username | titlecase}}</h6>
-  <p class="lead">{{userdetails.description | titlecase}}</p>
+  <h6 class="display-8">{{userdetails.username | titlecase}}</h6>
+  <p class="lead-8">{{userdetails.description | titlecase}}</p>
   <hr class="my-4">
   <p>{{userdetails.address | titlecase}}</p>
   </mat-card-content>
@@ -34,16 +34,29 @@
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar>
     <mat-card-title>{{ad.username | titlecase}}</mat-card-title>
+    <mat-card-subtitle>{{ad.created_date_format | date:'medium' }}</mat-card-subtitle>
   </mat-card-header>
   <mat-divider></mat-divider>
- <img class="img-thumbnail mt-2" [src]="ad.ad_image_1" alt="">
+ <img *ngIf="ad.ad_image_1" class="img-thumbnail mt-2" [src]="ad.ad_image_1" alt="">
   <mat-card-content class="m-2">
+   <mat-list class="card-text">
+  <mat-list-item>
     <p [innerHtml]="ad.show_text">
     </p>
+  </mat-list-item>
+    <mat-divider *ngIf="ad.websitelink"></mat-divider>
+  <mat-list-item *ngIf="ad.websitelink">
+   <a href="{{ad.websitelink}}" target="_blank"><mat-icon mat-list-icon>link</mat-icon></a>
+  </mat-list-item> 
+  <mat-divider *ngIf="ad.city"></mat-divider>
+  <mat-list-item *ngIf="ad.city">
+   <mat-icon mat-list-icon>location_on</mat-icon>{{ad.city}}
+  </mat-list-item>
+</mat-list>
   </mat-card-content>
   <mat-divider></mat-divider>
   <mat-card-actions>
-<button mat-icon-button>
+<!-- <button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">favorite</mat-icon>
   </button>
   <button mat-icon-button>
@@ -54,7 +67,7 @@
   </button>
    <button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">flag</mat-icon>
-  </button>
+  </button> -->
   <button (click)="editAd(ad._id)" mat-icon-button>
     <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon>
   </button>

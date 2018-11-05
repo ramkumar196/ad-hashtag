@@ -57,10 +57,10 @@ export class UserProfileComponent implements OnInit {
       err => {
         console.log("hereree",err);
 
-        if(err.length == 0)
-        {
-          this.openSnackBar(err.error);
-        }
+        // if(err.length == 0)
+        // {
+        //   this.openSnackBar(err.error);
+        // }
 
         this.errors = err.error;
 

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable ,  throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { JwtService } from './jwt.service';
-import { throwError } from 'rxjs';
 
 
 
@@ -21,9 +20,10 @@ export class ApiService {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     };
-    console.log('jwt token',this.jwtService.getToken());
 
     if (this.jwtService.getToken()) {
+      console.log('jwt token',this.jwtService.getToken());
+
       headersConfig['Authorization'] = `${this.jwtService.getToken()}`;
     }
     return new HttpHeaders(headersConfig);

@@ -5,10 +5,9 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 import {FormControl} from '@angular/forms';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {switchMap, debounceTime, tap, finalize} from 'rxjs/operators';
+import {switchMap, debounceTime, tap, finalize, map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs'
 import {MatAutocompleteSelectedEvent, MatChipInputEvent} from '@angular/material';
-import {map, startWith} from 'rxjs/operators';
 
 
 import {MatSnackBar} from '@angular/material';
