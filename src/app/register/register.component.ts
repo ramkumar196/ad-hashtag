@@ -18,9 +18,10 @@ import { JwtService } from '../services/jwt.service';
 })
 export class RegisterComponent implements OnInit {
 
-	signUpForm :FormGroup;
+	public signUpForm :FormGroup;
   isSubmitting;
   errors = {};
+
 
   
 
@@ -54,7 +55,7 @@ export class RegisterComponent implements OnInit {
          //this.openSnackBar('success');
         this.dialog.confirm({title:'Login',message:'Logged in Successfully',confirm:false})
 
-         this.router.navigate(['/'])
+         this.router.navigate(['/ad/list'])
       },
       err => {
         console.log("hereree",err.error);

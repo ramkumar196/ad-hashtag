@@ -103,6 +103,7 @@ const routes: Routes = [
      canActivate: [AuthguardService],
      children: [ 
       {path: 'list',component: UserListComponent,data: {title: 'List'}},
+      {path: 'list/:id',component: UserListComponent,data: {title: 'List'}},
       {path: 'notifications',component: PostAdComponent,data: {title: 'Notifications'}}
       ]
     },
@@ -110,6 +111,7 @@ const routes: Routes = [
      canActivate: [AuthguardService],
      children: [ 
       {path: 'list',component: AdListComponent,data: {title: 'Ad List'}},
+      {path: 'list/:id',component: AdListComponent,data: {title: 'Ad List'}},
       {path: 'view/:id',component: ViewAdComponent,data: {title: 'View Ad'}}
       ]
     },

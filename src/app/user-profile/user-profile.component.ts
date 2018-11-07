@@ -21,6 +21,7 @@ export class UserProfileComponent implements OnInit {
   profile_image;
   errors = {};
 
+
   constructor(private fb: FormBuilder,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
   	    this.createForm();
   }
@@ -108,9 +109,10 @@ export class UserProfileComponent implements OnInit {
   {
     this.profile_image = '';
   }
+  
 
   ngOnInit() {
-     this.userservice.profile()
+     this.userservice.profile({})
       .subscribe( data => {
         this.profile_image = data.details.profileImage;
         this.editProfileForm.setValue(data.details);

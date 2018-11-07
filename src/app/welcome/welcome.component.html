@@ -18,7 +18,7 @@
 </mat-toolbar>
 <mat-grid-list cols="4" rowHeight="50px">
 <mat-grid-tile  [colspan]="colspanValue" [rowspan]="1"  *ngFor="let tl of trendingHashtags">
-<span> {{tl.hashtag | hashtag}} </span>&nbsp;&nbsp;&nbsp;
+<span><a href="ad/list/{{tl.hashtag}}"> {{tl.hashtag | hashtag}}</a> </span>&nbsp;&nbsp;&nbsp;
 <mat-chip-list>
   <mat-chip color="color" selected>{{tl.count}}</mat-chip>
 </mat-chip-list>

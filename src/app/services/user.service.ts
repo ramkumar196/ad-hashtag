@@ -33,8 +33,8 @@ export class UserService {
      catchError(this.formatErrors))
    }
 
-   profile(){
-    return this.apiService.post('/user/profile').pipe(
+   profile(data){
+    return this.apiService.post('/user/profile',data).pipe(
      catchError(this.formatErrors))
    }
 

@@ -83,6 +83,19 @@ body
 	width:100%;
 	margin:0px 5px;
 }
+.half-width
+{
+	width:50%;
+	margin:0px 5px;
+	float:left;
+}
+.quarter-width
+{
+	width:25%;
+	margin:0px 5px;
+	float:left;
+
+}
 .sidenav
 {
 	width:30%;
@@ -199,6 +212,13 @@ background-color:whitesmoke
 {
 	color:#1b5e20;
 }
+a { color: #1b5e20;text-decoration:none } 
+a:hover { color: #1b5e20;text-decoration:none } 
+.font-14
+{
+	font-size:14px !important
+}
+
 .profileimage-content
 {
 	margin:5px

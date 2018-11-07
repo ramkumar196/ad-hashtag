@@ -1,12 +1,13 @@
 <!-- <mat-grid-list cols="3" gutterSize="5px" rowHeight="100px" style="background-color:#b8c0c7">
 <mat-grid-tile [colspan]="3" [rowspan]="rowSpan"> -->
 <div class="row">
-<div class="col-sm-2">
-</div>
-<mat-card class="col-sm-8 rounded"  >
+<!-- <div class="col-sm-2">
+</div> -->
+<mat-card class="col-sm-6 rounded"  >
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar/>
-    <mat-card-title>{{ad.username}}</mat-card-title>
+    <mat-card-title>{{ad.username  | titlecase}}</mat-card-title>
+    <mat-card-subtitle>{{ad.created_date_format | date:'medium' }}</mat-card-subtitle>
   </mat-card-header>
   <mat-divider></mat-divider>
 <ngb-carousel >
@@ -32,14 +33,22 @@
     </div>
   </ng-template>
 </ngb-carousel>
-
-  <mat-card-content>
-    <p>
-      {{ad.ad_text}}
+   <div class="card-body">
+  <mat-card-content class="m-2">
+    <p [innerHtml]="ad.show_text">
     </p>
+    <mat-list class="card-text">
+  <mat-list-item *ngIf="ad.websitelink">
+   <a href="{{ad.websitelink}}" target="_blank"><mat-icon mat-list-icon>link</mat-icon></a>
+  </mat-list-item> 
+  <mat-divider *ngIf="ad.city"></mat-divider>
+  <mat-list-item *ngIf="ad.city">
+   <mat-icon mat-list-icon>location_on</mat-icon>{{ad.city}}
+  </mat-list-item>
+</mat-list>
   </mat-card-content>
-  <mat-divider></mat-divider>
-  <mat-card-actions>
+</div>
+<!--   <mat-card-actions>
 <button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">favorite</mat-icon>
   </button>
@@ -52,27 +61,27 @@
    <button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">flag</mat-icon>
   </button>
-  </mat-card-actions>
+  </mat-card-actions> -->
 </mat-card>
-<div class="col-sm-2">
-</div>
+<!-- <div class="col-sm-2">
+</div> -->
 <!-- </mat-grid-tile>
 </mat-grid-list> -->
-</div>
-<div class="row">
+<!-- </div>
+<div class="row"> -->
 
-      <div class="chats-wrap col-sm mt-2">
+      <div class="chats-wrap col-sm-6 mt-2">
       <!-- Right side topbar -->
       <mat-toolbar color="primary" class="chat-toolbar mb-1">
-        Message
+        Messages
       </mat-toolbar>
 
       <!-- Main chat body -->
       <div class="conversations-hold">
-<mat-card class="mt-10"  *ngFor="let ml of messageList">
-    <mat-card-header >
-    <img [src]="ml.profileImage"  class="border" mat-card-avatar>
-    <mat-card-title>{{ml.username | titlecase}}</mat-card-title>
+<mat-card class="mt-10 font-14"  *ngFor="let ml of messageList" >
+    <mat-card-header>
+    <img [src]="ml.profileImage"  class="border " mat-card-avatar>
+    <mat-card-title class="font-14"> {{ml.username | titlecase}}</mat-card-title>
     <mat-card-subtitle>{{ml.message_create_date | date:'medium' }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="mt-2">

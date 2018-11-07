@@ -211,6 +211,10 @@ formControlValue = '';
         delete data.details.username;
         delete data.details.profileImage;
         delete data.details.message_list;
+        delete data.details.created_date_format;
+        delete data.details.show_text;
+        delete data.details.hastags;
+        delete data.details.userid;
 
         //if(data.details.websitelink != '')
       // delete data.details.websitelink;

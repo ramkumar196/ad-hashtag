@@ -23,6 +23,11 @@
   <button mat-menu-item>
     <mat-icon>list</mat-icon>
     <span>Your Listing</span>
+  </button> </a> 
+  <a *ngIf="loginStatus()" [routerLink]="['/ad/list']"routerLinkActive="active">
+  <button mat-menu-item>
+    <mat-icon>list</mat-icon>
+    <span>Ad Listing</span>
   </button> </a>
    <a *ngIf="loginStatus()" >
   <button mat-menu-item (click)="logout()">

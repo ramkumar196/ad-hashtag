@@ -6,9 +6,9 @@
     <form [formGroup]="signUpForm" class="mt-1" (ngSubmit)="SubmitSignup()">
     	<mat-form-field class="full-width"> 
     	<input minlength="3" maxlength="15" matInput placeholder="User Name" formControlName="username">
-    	<mat-error align="start" *ngIf="signUpForm.controls['username'].hasError('required') && signUpForm.controls['username'].touched " class="form__error">Username is required</mat-error>
+    	<mat-error align="start" *ngIf="signUpForm.get('username').hasError('required') && signUpForm.get('username').touched " class="form__error">Username is required</mat-error>
     	</mat-form-field>
-        <mat-error align="start" *ngIf="signUpForm.controls['username'].touched && errors.username" class="form__error">{{ errors.username }}</mat-error> 
+        <mat-error align="start" *ngIf="signUpForm.get('username').touched && errors.username" class="form__error">{{ errors.username }}</mat-error> 
 
     	<mat-form-field class="full-width">
     	<input minlength="10" maxlength="50" matInput placeholder="Email" formControlName="email">
@@ -25,6 +25,7 @@
 
     	<mat-form-field class="full-width">
     	<input minlength="8" maxlength="15" matInput placeholder="Password" type="password" formControlName="password">
+        <mat-hint align="start"><strong>Password must greater that 8 character</strong> </mat-hint>
     	<mat-error align="start" *ngIf="signUpForm.controls['password'].hasError('required') && signUpForm.controls['password'].touched " class="form__error">Your Password is required</mat-error>
     	<mat-error align="start" *ngIf="signUpForm.controls['password'].touched && errors.password" class="form__error">{{ errors.password }}</mat-error>
     	</mat-form-field>

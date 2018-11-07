@@ -15,6 +15,7 @@ import {ApiService} from '../services/api.service';
 import {AdsService} from '../services/ads.service';
 import { JwtService } from '../services/jwt.service';
 import { HashtagService } from '../services/hashtag.service';
+import { UserService } from '../services/user.service';
 
 export interface Listing {
   show_text: string;
@@ -39,6 +40,7 @@ export class AdListComponent implements OnInit {
 
  searchCtrl = new FormControl();
  filteredHashtags: Observable<void |any []>;
+ filteredCities: Observable<void |any []>;
 
  //chips
 
@@ -48,10 +50,25 @@ export class AdListComponent implements OnInit {
   addOnBlur = false;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   hashtagCtrl = new FormControl();
+  cityCtrl = new FormControl();
   hashtags = [];
 
 
-  constructor(private adservice :AdsService,private hashtagservice :HashtagService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog ,private fb: FormBuilder) { 
+  constructor(private route: ActivatedRoute,private adservice :AdsService,private hashtagservice :HashtagService,public userService :UserService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog ,private fb: FormBuilder) { 
+       this.cityCtrl
+      .valueChanges
+      .pipe(
+        debounceTime(300),
+        tap(() => this.isLoading = true),
+        switchMap(value => this.userService.cityList({keyword: value})
+        .pipe(
+          finalize(() => this.isLoading = false),
+          )
+        )
+      )
+      .subscribe(data => this.filteredCities = data.details);
+
+
   }
 
  // filterStates(value: string){
@@ -171,6 +188,7 @@ export class AdListComponent implements OnInit {
         )
       )
       .subscribe(data => this.filteredHashtags = data.details);
+
       if(this.detectDevice())
       {
         this.deviceCols = 3
@@ -179,12 +197,26 @@ export class AdListComponent implements OnInit {
       {
         this.deviceCols = 1;
       }
+
+      this.route.params.subscribe(params => {
+       var id = params['id'];
+       console.log(id); 
+       if(id != '' && typeof(id) != 'undefined')
+       {
+         this.hashtags.push(id);
+         this.hashtagInput.nativeElement.value = '';
+         this.hashtagCtrl.setValue(null);
+         this.adListing();
+       }
+     })
   }
 
    adListing()
     {
       console.log('hash',this.hashtags);
-    this.adservice.SearchAdList({hashtags:this.hashtags})
+      var cityname = this.cityCtrl.value;
+
+    this.adservice.SearchAdList({hashtags:this.hashtags,city: cityname})
       .subscribe( data => {
         this.adList = data.details;
       })
@@ -224,6 +256,10 @@ export class AdListComponent implements OnInit {
     this.hashtags.push(event.option.viewValue);
     this.hashtagInput.nativeElement.value = '';
     this.hashtagCtrl.setValue(null);
+    this.adListing();
+  }
+
+    selectedcity(event: MatAutocompleteSelectedEvent): void {
     this.adListing();
   }
 

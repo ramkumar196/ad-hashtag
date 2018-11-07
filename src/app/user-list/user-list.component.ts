@@ -19,8 +19,10 @@ export class UserListComponent implements OnInit {
  adList;
  deviceCols = 1;
  userdetails = {};
+ private sub: any;
+ userid;
 
-  constructor(private adservice :AdsService,private userservice :UserService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog) { }
+  constructor(private route: ActivatedRoute,private adservice :AdsService,private userservice :UserService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog) { }
 
   detectDevice() { 
    if( navigator.userAgent.match(/Android/i)
@@ -92,11 +94,24 @@ export class UserListComponent implements OnInit {
     }
 
   ngOnInit() {
-  	 this.adservice.userAdList(this.filterDate)
+
+    this.sub = this.route.params.subscribe(params => {
+       this.userid = params['id']; // (+) converts string 'id' to a number
+
+       console.log('params',params);
+  	 this.adservice.userAdList({userid:this.userid})
       .subscribe( data => {
         this.adList = data.details;
 
       })
+      this.userservice.profile({userid:this.userid})
+      .subscribe( data => {
+        this.userdetails = data.details;
+      })
+      
+    });
+
+
       if(this.detectDevice())
       {
         this.deviceCols = 3
@@ -106,10 +121,7 @@ export class UserListComponent implements OnInit {
         this.deviceCols = 1;
       }
 
-       this.userservice.profile()
-      .subscribe( data => {
-        this.userdetails = data.details;
-      })
+       
   }
  
 }
