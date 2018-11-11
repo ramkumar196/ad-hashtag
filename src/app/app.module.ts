@@ -108,7 +108,6 @@ const routes: Routes = [
       ]
     },
     {path: 'ad', component: LoggedLayoutComponent,
-     canActivate: [AuthguardService],
      children: [ 
       {path: 'list',component: AdListComponent,data: {title: 'Ad List'}},
       {path: 'list/:id',component: AdListComponent,data: {title: 'Ad List'}},

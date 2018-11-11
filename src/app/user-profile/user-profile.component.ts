@@ -19,7 +19,13 @@ export class UserProfileComponent implements OnInit {
   editProfileForm :FormGroup;
   isSubmitting;
   profile_image;
-  errors = {};
+  errors = {
+    username:'',
+    email:'',
+    phone:'',
+    address:'',
+    description:''
+  };
 
 
   constructor(private fb: FormBuilder,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 

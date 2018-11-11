@@ -20,7 +20,12 @@ export class RegisterComponent implements OnInit {
 
 	public signUpForm :FormGroup;
   isSubmitting;
-  errors = {};
+  errors = {
+    username:'',
+    email:'',
+    phone:'',
+    password:'',
+  };
 
 
   

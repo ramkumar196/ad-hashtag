@@ -31,7 +31,10 @@ export class EditAdComponent implements OnInit, OnDestroy {
 formControlValue = '';
   postAdForm :FormGroup;
   isSubmitting;
-  errors = {};
+  errors = {
+    adtextarea:'',
+    websitelink:'',
+  };  
   files='';
   imageUrl=[];
   imageno=0;

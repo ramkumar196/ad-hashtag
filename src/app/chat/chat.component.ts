@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatComponent implements OnInit {
 
+  isSidenavOpen='';
+
   constructor() { }
 
     activeChatUser = {

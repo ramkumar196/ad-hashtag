@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule, Routes, ActivatedRoute ,Router ,NavigationEnd } from '@angular/router';
 import { HashtagService } from '../services/hashtag.service';
 import {ThemePalette} from '@angular/material/core';
 
@@ -14,7 +15,13 @@ export class WelcomeComponent implements OnInit {
   colspanValue = 1;
   color: ThemePalette;
   
-  constructor(private hashtagservice : HashtagService) {  }
+  constructor(private hashtagservice : HashtagService,private router: Router,private route: ActivatedRoute ) {  }
+
+  redirect(data)
+  {
+      this.router.navigate(['ad/list/'+data],{relativeTo:this.route});
+  }
+
 
   ngOnInit() {
   	 this.hashtagservice.hashtaglist({keyword:'',all:true})

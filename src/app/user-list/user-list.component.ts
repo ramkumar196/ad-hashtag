@@ -18,7 +18,12 @@ export class UserListComponent implements OnInit {
  filterDate = [];
  adList;
  deviceCols = 1;
- userdetails = {};
+ userdetails = {
+   profileImage:'',
+   username:'',
+   description:'',
+   address:''
+ };
  private sub: any;
  userid;
 

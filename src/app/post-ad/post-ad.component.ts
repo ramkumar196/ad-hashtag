@@ -37,7 +37,10 @@ export class PostAdComponent  implements OnInit {
   formControlValue = '';
   postAdForm :FormGroup;
   isSubmitting;
-  errors = {};
+  errors = {
+    adtextarea:'',
+    websitelink:'',
+  };
   files='';
   imageUrl=[];
   imageno=0;
