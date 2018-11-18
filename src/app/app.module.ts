@@ -26,6 +26,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 
@@ -51,6 +53,7 @@ import { AuthguardService } from './services/authguard.service';
 import { BrowserLocation } from './services/browserlocation.service';
 import { HashtagService } from './services/hashtag.service';
 import { DialogService } from './services/dialog.service';
+import { CommonService } from './services/common.service';
 
 
 
@@ -171,9 +174,11 @@ const routes: Routes = [
     NgbModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTabsModule,
+    MatButtonToggleModule
     ],
-  providers: [ApiService,UserService,JwtService,AuthguardService,BrowserLocation,HashtagService,DialogService],
+  providers: [ApiService,UserService,JwtService,AuthguardService,BrowserLocation,HashtagService,DialogService,CommonService],
   bootstrap: [AppComponent],
   exports:[
     RouterModule

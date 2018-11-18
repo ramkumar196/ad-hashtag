@@ -50,6 +50,11 @@ export class UserService {
 
    cityList(data){
     return this.apiService.post('/city-list',data).pipe(
+     catchError(this.formatErrors))
+   }
+
+   follow(data){
+    return this.apiService.post('/user/update-follow',data).pipe(
   	 catchError(this.formatErrors))
    }
 

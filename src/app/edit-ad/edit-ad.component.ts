@@ -87,14 +87,14 @@ formControlValue = '';
 	onFileChanged(event: any) {
 	 if(this.imageno > 3)
 	 {
-	 	this.openSnackBar('You have maximum limit for upload');
+	 	this.openSnackBar('You have maximum limit for upload','close');
 	 	return false;
 	 }
 
 	  if (event.target.files && event.target.files[0]) {
 
 	  	if (!this.validateFile(event.target.files[0].name)) {
-	 	this.openSnackBar('File Format not supported');
+	 	this.openSnackBar('File Format not supported','close');
 		return false;
 		}
 
@@ -135,7 +135,7 @@ formControlValue = '';
     .subscribe(
       data => {
         console.log("data",data);
-         this.openSnackBar('success');
+         this.openSnackBar('success','close');
          this.router.navigate(['/user/list'])
       },
       err => {
@@ -143,7 +143,7 @@ formControlValue = '';
 
         if(err.length == 0)
         {
-          this.openSnackBar(err.error);
+          this.openSnackBar(err.error,'close');
         }
 
         this.errors = err.error;
@@ -243,9 +243,12 @@ formControlValue = '';
     return `#${choice} `;
   }
 
-   openSnackBar(msg) {
-    this.snackBar.open(msg)
-    }
+   
+    openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 
      ngOnDestroy() {
     this.sub.unsubscribe();

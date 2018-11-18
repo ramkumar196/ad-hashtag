@@ -89,14 +89,14 @@ export class PostAdComponent  implements OnInit {
 	onFileChanged(event: any) {
 	 if(this.imageno > 3)
 	 {
-	 	this.openSnackBar('You have maximum limit for upload');
+	 	this.openSnackBar('You have maximum limit for upload','close');
 	 	return false;
 	 }
 
 	  if (event.target.files && event.target.files[0]) {
 
 	  	if (!this.validateFile(event.target.files[0].name)) {
-	 	this.openSnackBar('File Format not supported');
+	 	this.openSnackBar('File Format not supported','close');
 		return false;
 		}
 
@@ -136,7 +136,7 @@ export class PostAdComponent  implements OnInit {
     .subscribe(
       data => {
         console.log("data",data);
-         this.openSnackBar('success');
+         this.openSnackBar('success','close');
          this.router.navigate(['/user/list'])
       },
       err => {
@@ -144,7 +144,7 @@ export class PostAdComponent  implements OnInit {
 
         if(err.length == 0)
         {
-          this.openSnackBar(err.error);
+          this.openSnackBar(err.error,'close');
         }
 
         this.errors = err.error;
@@ -205,9 +205,11 @@ export class PostAdComponent  implements OnInit {
     return `#${choice} `;
   }
 
-   openSnackBar(msg) {
-    this.snackBar.open(msg)
-    }
+    openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 
 
 }

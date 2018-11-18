@@ -22,7 +22,9 @@ export class UserListComponent implements OnInit {
    profileImage:'',
    username:'',
    description:'',
-   address:''
+   address:'',
+   follower_list:[],
+   following_list:[],
  };
  private sub: any;
  userid;
@@ -61,7 +63,7 @@ export class UserListComponent implements OnInit {
       .subscribe(
         data => {
           console.log("data",data);
-           this.openSnackBar('success');
+           this.openSnackBar('success','close');
            this.refreshList();
            this.router.navigate(['/user/list'])
         },
@@ -70,16 +72,12 @@ export class UserListComponent implements OnInit {
 
           if(err.length == 0)
           {
-            this.openSnackBar(err.error);
+            this.openSnackBar(err.error,'close');
           }
 
         }
       ); 
       } 
-
-    openSnackBar(msg) {
-    this.snackBar.open(msg)
-    }
 
     refreshList()
     {
@@ -96,6 +94,39 @@ export class UserListComponent implements OnInit {
       {
         this.deviceCols = 1;
       }
+    }
+
+    followUser(status)
+    {
+      this.userservice.follow({userid:this.userid,status:status})
+      .subscribe( data => {
+        this.userRefresh();
+                   this.openSnackBar('success','close');
+
+      })
+    }
+
+
+      openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+  
+  followStatus(){
+  var follow = this.userdetails.follower_list.filter(x => x.userid === this.userid);
+
+  console.log(this.userdetails.follower_list);
+  console.log(follow);
+  return follow.length;
+  }
+
+  userRefresh()
+  {
+  this.userservice.profile({userid:this.userid})
+      .subscribe( data => {
+        this.userdetails = data.details;
+      })
     }
 
   ngOnInit() {

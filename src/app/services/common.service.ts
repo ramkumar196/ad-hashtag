@@ -5,10 +5,14 @@ import { Observable ,  throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { UserModel } from '../model/user-model';
 
+
+
+
+
 @Injectable({
   providedIn: 'root'
 })
-export class HashtagService {
+export class CommonService {
 
   constructor(    private apiService: ApiService
 ) { }
@@ -17,8 +21,8 @@ export class HashtagService {
      return throwError(error);
   }
 
-    hashtaglist(data){
-    return this.apiService.post('/hashtag/list',data).pipe(
+    siteSettings(data){
+    return this.apiService.post('/common/settings',data).pipe(
      catchError(this.formatErrors))
    }
 }

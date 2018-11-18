@@ -39,7 +39,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-divider></mat-divider>
-<mat-toolbar  class="border-accent-small-bottom" color="primary" style="height:50px;font-size:12px">
+<mat-toolbar *ngIf="pageTitle != 'Welcome'" class="border-accent-small-bottom" color="primary" style="height:50px;font-size:12px">
   {{ pageTitle }}
 </mat-toolbar>
   <mat-divider></mat-divider>

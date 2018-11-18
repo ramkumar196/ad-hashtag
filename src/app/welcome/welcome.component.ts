@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, Routes, ActivatedRoute ,Router ,NavigationEnd } from '@angular/router';
 import { HashtagService } from '../services/hashtag.service';
+import { CommonService } from '../services/common.service';
 import {ThemePalette} from '@angular/material/core';
 
 @Component({
@@ -12,10 +13,11 @@ export class WelcomeComponent implements OnInit {
 
   
   trendingHashtags;
+  settings = {};
   colspanValue = 1;
   color: ThemePalette;
   
-  constructor(private hashtagservice : HashtagService,private router: Router,private route: ActivatedRoute ) {  }
+  constructor(private hashtagservice : HashtagService,private commonservice : CommonService,private router: Router,private route: ActivatedRoute ) {  }
 
   redirect(data)
   {
@@ -24,9 +26,15 @@ export class WelcomeComponent implements OnInit {
 
 
   ngOnInit() {
-  	 this.hashtagservice.hashtaglist({keyword:'',all:true})
+     this.hashtagservice.hashtaglist({keyword:'',all:true})
       .subscribe( data => {
         this.trendingHashtags = data.details;
+      }) 
+
+      this.commonservice.siteSettings({})
+      .subscribe( data => {
+        this.settings = data.details;
+        console.log('settings',this.settings)
       })
 
       if(this.detectDevice())

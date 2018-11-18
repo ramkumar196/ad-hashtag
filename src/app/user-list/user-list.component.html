@@ -1,35 +1,41 @@
 
 <!-- <mat-grid-list cols="3" gutterSize="5px" rowHeight="110px" style="background-color:#b8c0c7">
 <mat-grid-tile [colspan]="3"  [rowspan]="2"> -->
-  <div class="row">
-<mat-card  class="col-sm jumbotron">
-  <mat-card-header class="m-2 float-left">
-    <img [src]="userdetails.profileImage"  class="rounded-circle border-accent" mat-card-lg-image>
-  </mat-card-header>
-  <mat-card-content class="float-left" style="margin-left:20px">
-<!-- <mat-list role="list" class="list-group">
-  <mat-list-item role="listitem" class="list-group-item d-flex justify-content-between align-items-center">
+  <div class="row mt-2">
+<div class="col-sm-2" >
+    <img class="m-2" [src]="userdetails.profileImage"  class="rounded-circle border-accent" mat-card-lg-image>
+</div>
+<div class="col-sm-10" >
+<mat-list  role="list" class="list-group">
+  <mat-list-item role="listitem" class="list-group-item ">
   	<mat-icon mat-list-icon>account_box</mat-icon>
     <h4 mat-line>{{userdetails.username | titlecase}}</h4>
   </mat-list-item>
-  <mat-list-item role="listitem" class="list-group-item d-flex justify-content-between align-items-center">
-  	<mat-icon mat-list-icon>description</mat-icon>
-    <span mat-line>{{userdetails.description | titlecase}}</span>
-  </mat-list-item>  <mat-list-item role="listitem" class="list-group-item d-flex justify-content-between align-items-center">
-  	<mat-icon mat-list-icon>description</mat-icon>
+  <mat-list-item role="listitem" class="list-group-item">
+    <mat-icon mat-list-icon>location_on</mat-icon>
+    <span mat-line>{{userdetails.address | titlecase}}</span>
+  </mat-list-item> 
+  <mat-list-item role="listitem" class="list-group-item">
+    <mat-icon mat-list-icon>description</mat-icon>
     <span mat-line>{{userdetails.description | titlecase}}</span>
   </mat-list-item>
-</mat-list> -->
-  <h6 class="display-8">{{userdetails.username | titlecase}}</h6>
-  <p class="lead-8">{{userdetails.description | titlecase}}</p>
-  <hr class="my-4">
-  <p>{{userdetails.address | titlecase}}</p>
-  </mat-card-content>
- </mat-card>
+  <mat-list-item role="listitem" class="list-group-item">
+         <button *ngIf="userdetails.selfStatus == 0 && userdetails.followStatus == 0" mat-flat-button color="accent" (click)="followUser(0)">Follow</button>
+         <button *ngIf="userdetails.selfStatus == 0 && userdetails.followStatus > 0" mat-flat-button color="accent" (click)="followUser(1)">Unfollow</button>
+  </mat-list-item>
+</mat-list>
+
 </div>
+<mat-tab-group>
+<mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">view_list</mat-icon>&nbsp;
+      Your Listings
+    </ng-template>
+    
 <!-- </mat-grid-tile>
 <mat-grid-tile [colspan]="deviceCols" [rowspan]="4" *ngFor="let ad of adList"> -->
-  <div class="card-columns">
+  <div class="card-columns mt-5">
 <mat-card class="card"  *ngFor="let ad of adList">
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar>
@@ -80,3 +86,20 @@
 <!-- </mat-grid-tile>
 </mat-grid-list> -->
 </div>
+</mat-tab>
+ <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">people</mat-icon>&nbsp;
+      Followers
+          </ng-template>
+  <!--       <mat-list role="list">
+            <mat-list-item *ngFor="let fl of userdetails.follower_list" role="listitem" class="col-sm-6">
+              <span><img class="m-2" [src]="fl.profileImage"  class="rounded-circle border-accent" mat-card-lg-image></span>
+              <span>{{fl.username | titlecase}}</span>
+              <span>{{fl.description | titlecase}}</span>
+            </mat-list-item>
+        </mat-list> -->
+
+
+  </mat-tab>
+</mat-tab-group>
