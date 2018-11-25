@@ -67,8 +67,22 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['login'],{relativeTo:this.route})
   }
 
+  verifyToken()
+  {
+     this.userService
+    .verifyToken({})
+    .subscribe(
+      data => {
+        console.log("data",data);
+      },
+      err => {
+        if(err.status == 402)
+        this.logout();
+      }
+    );  } 
+  
   ngOnInit() {
-
+      this.verifyToken();
   }
 
 }

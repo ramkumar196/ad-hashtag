@@ -108,6 +108,7 @@ const routes: Routes = [
       {path: 'list',component: UserListComponent,data: {title: 'List'}},
       {path: 'list/:id',component: UserListComponent,data: {title: 'List'}},
       {path: 'notifications',component: PostAdComponent,data: {title: 'Notifications'}}
+
       ]
     },
     {path: 'ad', component: LoggedLayoutComponent,

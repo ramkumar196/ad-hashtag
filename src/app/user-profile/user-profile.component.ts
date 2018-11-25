@@ -8,6 +8,7 @@ import {MatSnackBar} from '@angular/material';
 import {ApiService} from '../services/api.service';
 import {UserService} from '../services/user.service';
 import { JwtService } from '../services/jwt.service';
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -28,7 +29,7 @@ export class UserProfileComponent implements OnInit {
   };
 
 
-  constructor(private fb: FormBuilder,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
+  constructor(private fb: FormBuilder,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService,private dialog :DialogService) { 
   	    this.createForm();
   }
 
@@ -80,6 +81,15 @@ export class UserProfileComponent implements OnInit {
 	  duration: 3000
     });
     }
+
+      logout()
+      {
+        this.jwt.destroyToken();
+        this.dialog.confirm({title:'Logout',message:'Logged out Successfully',confirm:false})
+
+        this.router.navigate(['/auth/login']);
+      }
+
 
     onFileChanged(event: any) {
 

@@ -55,6 +55,11 @@ export class UserService {
 
    follow(data){
     return this.apiService.post('/user/update-follow',data).pipe(
+     catchError(this.formatErrors))
+   }
+
+   verifyToken(data){
+    return this.apiService.post('/user/verify-token',data).pipe(
   	 catchError(this.formatErrors))
    }
 

@@ -24,19 +24,24 @@
          <button *ngIf="userdetails.selfStatus == 0 && userdetails.followStatus > 0" mat-flat-button color="accent" (click)="followUser(1)">Unfollow</button>
   </mat-list-item>
 </mat-list>
-
 </div>
-<mat-tab-group>
+<mat-divider></mat-divider>
+<div class="col-sm mt-2">
+<mat-tab-group >
 <mat-tab>
-    <ng-template mat-tab-label>
+    <ng-template  *ngIf="userdetails.selfStatus == 0"  mat-tab-label>
+      <mat-icon class="example-tab-icon">view_list</mat-icon>&nbsp;
+      Listings
+    </ng-template> 
+    <ng-template  *ngIf="userdetails.selfStatus == 1"  mat-tab-label>
       <mat-icon class="example-tab-icon">view_list</mat-icon>&nbsp;
       Your Listings
     </ng-template>
-    
+     
 <!-- </mat-grid-tile>
 <mat-grid-tile [colspan]="deviceCols" [rowspan]="4" *ngFor="let ad of adList"> -->
-  <div class="card-columns mt-5">
-<mat-card class="card"  *ngFor="let ad of adList">
+  <div class="card-columns">
+<mat-card class="card m-2"  *ngFor="let ad of adList">
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar>
     <mat-card-title>{{ad.username | titlecase}}</mat-card-title>
@@ -87,19 +92,36 @@
 </mat-grid-list> -->
 </div>
 </mat-tab>
+<mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">people</mat-icon>&nbsp;Follower
+    </ng-template>
+    <div class="text-center m-2" *ngIf="userdetails.follower_list.length == 0">No Followers</div>
+    <div class="card-columns">
+      <mat-card class="card mt-2" *ngFor="let fl of userdetails.follower_list">
+        <mat-card-header >
+        <img  mat-card-avatar [src]="concatImageUrl(userdetails.imgurl,fl.profile_image)"  class="rounded-circle" >
+        <mat-card-title  ><a href="user/list/{{fl.userid}}"> {{fl.username | titlecase}}</a>
+        </mat-card-title>
+        </mat-card-header>
+      </mat-card>
+    </div>
+</mat-tab>
  <mat-tab>
     <ng-template mat-tab-label>
       <mat-icon class="example-tab-icon">people</mat-icon>&nbsp;
-      Followers
+      Following
           </ng-template>
-  <!--       <mat-list role="list">
-            <mat-list-item *ngFor="let fl of userdetails.follower_list" role="listitem" class="col-sm-6">
-              <span><img class="m-2" [src]="fl.profileImage"  class="rounded-circle border-accent" mat-card-lg-image></span>
-              <span>{{fl.username | titlecase}}</span>
-              <span>{{fl.description | titlecase}}</span>
-            </mat-list-item>
-        </mat-list> -->
-
-
+    <div class="text-center m-2"  *ngIf="userdetails.following_list.length == 0">No one following</div>
+    <div class="card-columns mt-2">
+        <mat-card class="card" *ngFor="let fl of userdetails.following_list">
+        <mat-card-header>
+        <img  mat-card-avatar [src]="concatImageUrl(userdetails.imgurl,fl.profile_image)"  class="rounded-circle" >
+        <mat-card-title><a href="user/list/{{fl.userid}}"> {{fl.username | titlecase}}</a></mat-card-title>
+        </mat-card-header>
+        </mat-card>
+      </div>
   </mat-tab>
 </mat-tab-group>
+</div>
+</div>

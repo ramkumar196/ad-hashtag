@@ -25,6 +25,8 @@ export class UserListComponent implements OnInit {
    address:'',
    follower_list:[],
    following_list:[],
+   selfStatus:0,
+   followStatus:0
  };
  private sub: any;
  userid;
@@ -119,6 +121,11 @@ export class UserListComponent implements OnInit {
   console.log(this.userdetails.follower_list);
   console.log(follow);
   return follow.length;
+  }
+
+   concatImageUrl(url,image)
+  {
+    return url+image;
   }
 
   userRefresh()

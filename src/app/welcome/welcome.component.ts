@@ -13,9 +13,13 @@ export class WelcomeComponent implements OnInit {
 
   
   trendingHashtags;
-  settings = {};
   colspanValue = 1;
   color: ThemePalette;
+  settings={
+    home_page_text:'',
+    home_page_sub_text:'',
+  };
+  home_page_text={};
   
   constructor(private hashtagservice : HashtagService,private commonservice : CommonService,private router: Router,private route: ActivatedRoute ) {  }
 
