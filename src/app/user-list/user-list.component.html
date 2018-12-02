@@ -41,6 +41,8 @@
 <!-- </mat-grid-tile>
 <mat-grid-tile [colspan]="deviceCols" [rowspan]="4" *ngFor="let ad of adList"> -->
   <div class="card-columns">
+        <div class="text-center m-2" *ngIf="adList.length == 0">No Listings</div>
+
 <mat-card class="card m-2"  *ngFor="let ad of adList">
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar>

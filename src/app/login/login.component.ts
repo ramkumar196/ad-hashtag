@@ -53,9 +53,9 @@ export class LoginComponent implements OnInit {
       },
       err => {
         console.log("hereree",err);
-        this.dialog.confirm({title:'Error',message:err,confirm:false})
+        //this.dialog.confirm({title:'Error',message:err,confirm:false})
 
-        //this.openSnackBar(err.error);
+        this.openSnackBar(err.error);
 
         this.errors = err.error;
 

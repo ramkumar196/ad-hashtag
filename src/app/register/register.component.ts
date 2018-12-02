@@ -65,10 +65,10 @@ export class RegisterComponent implements OnInit {
       err => {
         console.log("hereree",err.error);
 
-        if(err.length == 0)
-        {
+       // if(err.length == 0)
+        //{
           this.openSnackBar(err.error);
-        }
+        //}
 
         this.errors = err.error;
 
