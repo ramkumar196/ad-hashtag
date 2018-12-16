@@ -11,11 +11,16 @@
   	<mat-icon mat-list-icon>account_box</mat-icon>
     <h4 mat-line>{{userdetails.username | titlecase}}</h4>
   </mat-list-item>
-  <mat-list-item role="listitem" class="list-group-item">
+  <mat-list-item *ngIf="userdetails.userType" role="listitem" class="list-group-item">
+    <mat-icon mat-list-icon>business</mat-icon>
+    <span mat-line>{{userdetails.businessName | titlecase}}</span>
+  </mat-list-item>
+
+  <mat-list-item *ngIf="userdetails.userType" role="listitem" class="list-group-item">
     <mat-icon mat-list-icon>location_on</mat-icon>
     <span mat-line>{{userdetails.address | titlecase}}</span>
   </mat-list-item> 
-  <mat-list-item role="listitem" class="list-group-item">
+  <mat-list-item *ngIf="userdetails.userType" role="listitem" class="list-group-item">
     <mat-icon mat-list-icon>description</mat-icon>
     <span mat-line>{{userdetails.description | titlecase}}</span>
   </mat-list-item>
@@ -25,6 +30,8 @@
   </mat-list-item>
 </mat-list>
 </div>
+ <mat-toolbar color="primary" class="m-2">
+</mat-toolbar>
 <mat-divider></mat-divider>
 <div class="col-sm mt-2">
 <mat-tab-group >
@@ -115,12 +122,14 @@
       Following
           </ng-template>
     <div class="text-center m-2"  *ngIf="userdetails.following_list.length == 0">No one following</div>
-    <div class="card-columns mt-2">
-        <mat-card class="card" *ngFor="let fl of userdetails.following_list">
+    <div class="card-columns">
+        <mat-card class="card mt-2" *ngFor="let fl of userdetails.following_list">
         <mat-card-header>
         <img  mat-card-avatar [src]="concatImageUrl(userdetails.imgurl,fl.profile_image)"  class="rounded-circle" >
         <mat-card-title><a href="user/list/{{fl.userid}}"> {{fl.username | titlecase}}</a></mat-card-title>
         </mat-card-header>
+<!--          <img mat-card-image [src]="concatImageUrl(userdetails.imgurl,fl.profile_image)" alt="">
+ -->
         </mat-card>
       </div>
   </mat-tab>

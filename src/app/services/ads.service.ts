@@ -51,6 +51,11 @@ export class AdsService {
    } 
     sendMessage(data){
     return this.apiService.post('/message/send',data).pipe(
+     catchError(this.formatErrors))
+   } 
+
+    replyMessage(data){
+    return this.apiService.post('/message/reply',data).pipe(
   	 catchError(this.formatErrors))
    }
 

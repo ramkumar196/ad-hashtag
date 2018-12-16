@@ -28,7 +28,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
+import { ShareButtonsModule } from '@ngx-share/buttons';
 
 
 
@@ -53,6 +56,7 @@ import { AuthguardService } from './services/authguard.service';
 import { BrowserLocation } from './services/browserlocation.service';
 import { HashtagService } from './services/hashtag.service';
 import { DialogService } from './services/dialog.service';
+import { DialogInputService } from './services/dialoginput.service';
 import { CommonService } from './services/common.service';
 
 
@@ -79,7 +83,9 @@ import { TextInputAutocompleteMenuComponent } from './modules/textarea-autocompl
 import { TextInputAutocompleteContainerComponent } from './modules/textarea-autocomplete/text-input-autocomplete-container.component';
 import { ChatComponent } from './chat/chat.component';
 import { DialogComponent } from './services/dialog.component';
+import { DialogInputComponent } from './services/dialoginput.component';
 import { HashtagPipe } from './pipes/pipes';
+import { HashtagRemovePipe } from './pipes/hashtagremove';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 
@@ -144,7 +150,9 @@ const routes: Routes = [
     UserListComponent,
     ChatComponent,
     HashtagPipe,
+    HashtagRemovePipe,
     DialogComponent,
+    DialogInputComponent,
     ResetPasswordComponent,
     ChangePasswordComponent
     ],
@@ -177,15 +185,18 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatChipsModule,
     MatTabsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    ShareButtonsModule
     ],
-  providers: [ApiService,UserService,JwtService,AuthguardService,BrowserLocation,HashtagService,DialogService,CommonService],
+  providers: [ApiService,UserService,JwtService,AuthguardService,BrowserLocation,HashtagService,DialogService,CommonService,DialogInputService],
   bootstrap: [AppComponent],
   exports:[
     RouterModule
   ],
   entryComponents:[  TextInputAutocompleteMenuComponent,
-  TextInputAutocompleteContainerComponent,DialogComponent]
+  TextInputAutocompleteContainerComponent,DialogComponent,DialogInputComponent]
 })
 export class AppModule { 
 

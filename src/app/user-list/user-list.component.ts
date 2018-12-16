@@ -23,6 +23,8 @@ export class UserListComponent implements OnInit {
    username:'',
    description:'',
    address:'',
+   businessName:'',
+   userType:false,
    follower_list:[],
    following_list:[],
    selfStatus:0,

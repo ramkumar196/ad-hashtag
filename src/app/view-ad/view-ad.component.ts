@@ -7,6 +7,7 @@ import {MatSnackBar} from '@angular/material';
 import {ApiService} from '../services/api.service';
 import {AdsService} from '../services/ads.service';
 import { JwtService } from '../services/jwt.service';
+import { DialogInputService } from '../services/dialoginput.service';
 
 @Component({
   selector: 'app-view-ad',
@@ -23,7 +24,7 @@ export class ViewAdComponent implements  OnInit, OnDestroy {
   messageForm :FormGroup;
 
 
-  constructor(private fb: FormBuilder,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar, private route: ActivatedRoute ) { 
+  constructor(private fb: FormBuilder,private dialoginput:DialogInputService,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar, private route: ActivatedRoute ) { 
 this.createForm()
   }
 
@@ -76,6 +77,20 @@ this.createForm()
        })
     }
 
+
+    replyMessage(Msg,id,adID)
+    {
+      console.log('herere',{message:Msg,Msgid:id,adid:adID});
+      this.adsService.replyMessage({message:Msg,Msgid:id,adid:adID})
+      .subscribe( data => {
+         this.messageList = data.details;
+         this.messageForm.reset();
+
+         console.log(data.details);
+        //this.postAdForm.setValue(data.details);
+       })
+    }
+
 	  detectDevice() { 
    if( navigator.userAgent.match(/Android/i)
    || navigator.userAgent.match(/webOS/i)
@@ -92,6 +107,12 @@ this.createForm()
     }
   }
 
+    openTextBox(id,adID)
+    {
+      this.dialoginput.showinputbox({title:'Login',message:'Logged in Successfully',confirm:false}).subscribe(result => {
+        this.replyMessage(result,id,adID);
+    });
+    }
 
      ngOnDestroy() {
     this.sub.unsubscribe();

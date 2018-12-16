@@ -4,13 +4,16 @@
   <mat-card class="col-sm rounded mt-10"  >
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar/>
-    <mat-card-title>{{ad.username  | titlecase}}</mat-card-title>
+    <mat-card-title><a href="user/list/{{ad.userid}}">{{ad.username  | titlecase}}</a></mat-card-title>
     <mat-card-subtitle>{{ad.created_date_format | date:'medium' }}</mat-card-subtitle>
   </mat-card-header>
 </mat-card>
 </div>
 <div class="row mt-5">
-<mat-card class="col-sm-6 rounded"  >
+<mat-toolbar>{{ad.hastags}}</mat-toolbar>
+
+<mat-card class="col-sm-6"  >
+
 <ngb-carousel>
   <ng-template ngbSlide *ngIf="ad.ad_image_1 != ''">
     <img class="img-thumbnail" [src]="ad.ad_image_1"  alt="Random first slide">
@@ -19,14 +22,14 @@
       <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> -->
     </div>
   </ng-template>
-  <ng-template ngbSlide *ngIf="ad.ad_image_2 != ''">
+  <ng-template ngbSlide *ngIf="ad.ad_image_2">
     <img class="img-thumbnail mt-2" [src]="ad.ad_image_2"  alt="Random second slide">
     <div class="carousel-caption">
    <!--    <h3>Second slide label</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> -->
     </div>
   </ng-template>
-  <ng-template ngbSlide *ngIf="ad.ad_image_3 != ''">
+  <ng-template ngbSlide *ngIf="ad.ad_image_3">
     <img class="img-thumbnail mt-2" [src]="ad.ad_image_3"  alt="Random third slide">
     <div class="carousel-caption">
   <!--     <h3>Third slide label</h3>
@@ -36,29 +39,45 @@
 </ngb-carousel>
 </mat-card>
 
-<mat-card class="col-sm-6 rounded"  >
+<mat-card class="col-sm-6"  >
    <div class="card-body">
   <mat-card-content class="m-2">
     <p [innerHtml]="ad.show_text">
     </p>
     <mat-list class="card-text">
+  <mat-divider *ngIf="ad.websitelink"></mat-divider>
   <mat-list-item *ngIf="ad.websitelink">
-   <a href="{{ad.websitelink}}" target="_blank"><mat-icon mat-list-icon>link</mat-icon></a>
+   <a href="{{ad.websitelink}}" target="_blank"><mat-icon mat-list-icon>link</mat-icon></a>Website Link
   </mat-list-item> 
   <mat-divider *ngIf="ad.city"></mat-divider>
   <mat-list-item *ngIf="ad.city">
    <mat-icon mat-list-icon>location_on</mat-icon>{{ad.city}}
   </mat-list-item>
+  <mat-divider *ngIf="ad.hastags"></mat-divider>
+  <mat-list-item *ngIf="ad.hastags">
+   <mat-icon mat-list-icon>style</mat-icon>{{ad.hastags}}
+  </mat-list-item> 
+  <mat-divider *ngIf="ad.ad_text"></mat-divider>
 </mat-list>
   </mat-card-content>
-  <mat-card-actions>
-    <div class="sharethis-inline-share-buttons"></div>
-  </mat-card-actions>
 </div>
-<!--   <mat-card-actions>
-<button mat-icon-button>
-    <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+
+  
+ <mat-card-actions>
+  <!-- <button mat-icon-button>
+    <a href="whatsapp://send?text={{ad.ad_text}}" data-action="share/whatsapp/share"><mat-icon mat-fab aria-label="Example icon-button with a heart icon">share</mat-icon></a>
   </button>
+
+ -->
+
+<share-buttons [theme]="'circles-dark'"
+ [include]="['facebook','twitter','pinterest','reddit','messenger','whatsapp','email','print']"
+ [show]="8"
+ [showCount]="false"
+ [size]="2"
+ [url]="'http://www.thehashad.com/ad/view/'+ad._id"
+ [autoSetMeta]="false"
+></share-buttons><!--
   <button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">visibility</mat-icon>
   </button>
@@ -67,8 +86,8 @@
   </button>
    <button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">flag</mat-icon>
-  </button>
-  </mat-card-actions> -->
+  </button> -->
+  </mat-card-actions>
 </mat-card>
 <!-- </mat-grid-tile>
 </mat-grid-list> -->
@@ -92,6 +111,14 @@
   <mat-card-content class="mt-2">
                   {{ml.message}}
   </mat-card-content>
+   <mat-card-actions>
+  <!-- <button mat-icon-button>
+    <mat-icon (click)="openTextBox(ml.message_id,ad._id)" mat-fab aria-label="Example icon-button with a heart icon">reply</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon mat-fab aria-label="Example icon-button with a heart icon">report</mat-icon>
+  </button> -->
+  </mat-card-actions>
 </mat-card>
         <!-- single chat item -->
       <!--   <div class="single-conversation" fxLayout="row"  *ngFor="let ml of messageList">

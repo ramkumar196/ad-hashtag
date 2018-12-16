@@ -3,7 +3,7 @@
 <mat-form-field class="full-width">
 <mwl-text-input-autocomplete-container class="dropdown-hashtag">
 <textarea  matInput class="rounded" 
-maxlength="256"
+maxlength="500"
 placeholder=""
 #message
 rows="10" columns="10"
@@ -17,7 +17,7 @@ name="adtextarea"
 <!-- pattern="[a-zA-Z $#%]*" -->
 </mwl-text-input-autocomplete-container>
 <mat-hint align="start"><strong>Ads must contain a hashtag</strong> </mat-hint>
-<mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+<mat-hint align="end">{{message.value.length}} / 500</mat-hint>
 
 </mat-form-field>
 <mat-error align="start" *ngIf="postAdForm.controls['adtextarea'].hasError('required') && postAdForm.controls['adtextarea'].touched " class="form__error">Ad is required</mat-error>

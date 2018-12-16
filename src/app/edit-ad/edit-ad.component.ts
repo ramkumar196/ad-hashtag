@@ -218,6 +218,7 @@ formControlValue = '';
         delete data.details.show_text;
         delete data.details.hastags;
         delete data.details.userid;
+        delete data.details.currentuserid;
 
         //if(data.details.websitelink != '')
       // delete data.details.websitelink;
