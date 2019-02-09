@@ -3,7 +3,7 @@
 <mat-grid-tile [colspan]="3"  [rowspan]="2"> -->
 <!-- </mat-grid-tile>
 <mat-grid-tile [colspan]="deviceCols" [rowspan]="4" *ngFor="let ad of adList"> -->
-  <div class="row" >
+  <div class="row mx-md-n5"  style="background: #ffff" >
     <!-- <mat-toolbar color="primary" >
   <mat-toolbar-row> -->
 <!-- <form [formGroup]='usersForm'>
@@ -18,7 +18,8 @@
       </mat-option>
     </ng-container>
   </mat-autocomplete> -->
- <mat-form-field class="col-sm-6 font-14">
+ <mat-form-field  class="col-sm-6 font-14"  color="accent" appearance="outline">
+    <mat-label>Hashtags</mat-label>
     <mat-chip-list #chipList>
     <mat-chip
       *ngFor="let tag of hashtags"
@@ -45,7 +46,8 @@
   </mat-autocomplete>
   </mat-form-field>
 
-  <mat-form-field class="col-sm-4 font-14">
+  <mat-form-field class="col-sm-4 font-14"  color="accent" appearance="outline">
+    <mat-label>City Name</mat-label>
     <input matInput placeholder="City Name" [matAutocomplete]="auto2" [formControl]="cityCtrl">
     <mat-autocomplete #auto2="matAutocomplete"  (optionSelected)="selectedcity($event)">
       <mat-option *ngFor="let city of filteredCities " [value]="city.name">
@@ -61,8 +63,11 @@
 
 </mat-toolbar> -->
 </div>
-  <div class="card-columns mt-5">
-<p *ngIf="adList == '' || !adList">No Ad Found</p>
+<div class="d-flex justify-content-center"><mat-spinner color="accent" mode="indeterminate" *ngIf="showLoader"></mat-spinner>
+<mat-list *ngIf="(adList == '' || !adList) && !showLoader" role="list">
+  <mat-list-item role="listitem">No Ad Found</mat-list-item>
+</mat-list>
+  <div class="card-columns mt-2" *ngIf="!showLoader">
 <mat-card class="card"  *ngFor="let ad of adList">
   <mat-card-header class="m-2">
     <img [src]="ad.profileImage"  class="border" mat-card-avatar>
@@ -87,13 +92,17 @@
   </mat-card-content>
   <mat-divider></mat-divider>
   <mat-card-actions>
-<!-- <button mat-icon-button>
-    <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">favorite</mat-icon>
-  </button>
   <button mat-icon-button>
-    <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">visibility</mat-icon>
+    <mat-icon title="Views" aria-label="Example icon-button with a heart icon">visibility</mat-icon>{{ad.views}}
+   <!--   matBadge="{{ad.views}}" matBadgeColor="accent" matBadgeSize="medium" matBadgePosition="after" matBadgeOverlap="false"  -->
   </button>
-   <button mat-icon-button>
+   <button mat-icon-button *ngIf="ad.favStatus">
+  <mat-icon color="warn" title="Remove Favourite" (click)="updateFav(ad._id,1)"  aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.favCount}}
+  </button>
+  <button mat-icon-button *ngIf="!ad.favStatus">
+  <mat-icon title="Add Favourite" (click)="updateFav(ad._id,0)" aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.favCount}}
+  </button>  
+  <!-- <button mat-icon-button>
   <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">email</mat-icon>
   </button>
    <button mat-icon-button>

@@ -7,6 +7,7 @@ import {MatGridListModule} from '@angular/material';
 import {LayoutModule} from '@angular/cdk/layout';
 import { HttpClientModule } from '@angular/common/http'; 
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
+import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 
 
 import {MatInputModule} from '@angular/material/input';
@@ -30,8 +31,11 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatRippleModule} from '@angular/material/core';
 
 import { ShareButtonsModule } from '@ngx-share/buttons';
+import { NgxEditorModule } from 'ngx-editor';
 
 
 
@@ -58,6 +62,7 @@ import { HashtagService } from './services/hashtag.service';
 import { DialogService } from './services/dialog.service';
 import { DialogInputService } from './services/dialoginput.service';
 import { CommonService } from './services/common.service';
+import { SharedService } from './services/shared.service';
 
 
 
@@ -88,23 +93,26 @@ import { HashtagPipe } from './pipes/pipes';
 import { HashtagRemovePipe } from './pipes/hashtagremove';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { WelcomenewComponent } from './welcomenew/welcomenew.component';
 
 
 keyboardEventKeyPolyfill();
-
+/** config angular i18n **/
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+registerLocaleData(en);
 
 const routes: Routes = [
+    {path: 'home', component: WelcomenewComponent },
   {
     path: 'auth',
-    component: LoginLayoutComponent,
+    component: LoggedLayoutComponent,
     children: [ 
       {path: 'signup',component: RegisterComponent,data: {title: 'Signup'}},
       {path: 'login',component: LoginComponent,data: {title: 'Login'}},
       {path: 'reset-password',component: ResetPasswordComponent,data: {title: 'Reset Password'}},
       {path: 'change-password/:id',component: ChangePasswordComponent,data: {title: 'Change Password'}},
       {path: 'chat',component: ChatComponent,data: {title: 'chat'}},
-      {path: 'post-ad',component: PostAdComponent,canActivate: [AuthguardService],data: {title: 'Post Ad'}},
-      { path: 'ad-edit/:id', component: EditAdComponent,data: {title: 'Edit Ad'} },
       {path: 'profile',component: UserProfileComponent,canActivate: [AuthguardService],data: {title: 'Edit Profile'}}
       ]
     },
@@ -121,13 +129,18 @@ const routes: Routes = [
      children: [ 
       {path: 'list',component: AdListComponent,data: {title: 'Ad List'}},
       {path: 'list/:id',component: AdListComponent,data: {title: 'Ad List'}},
-      {path: 'view/:id',component: ViewAdComponent,data: {title: 'View Ad'}}
+      {path: 'view/:id',component: ViewAdComponent,data: {title: 'View Ad'}},
+      {path: 'post',component: PostAdComponent,canActivate: [AuthguardService],data: {title: 'Post Ad'}},
+      { path: 'edit/:id', component: EditAdComponent,data: {title: 'Edit Ad'} }
+
       ]
     },
     {path: '', component: DefaultLayoutComponent,
      children: [ 
-      {path: '',component: WelcomeComponent,data: {title: 'Welcome'}}]
-    },
+      {path: '',component: WelcomeComponent,data: {title: 'Welcome'}},
+      {path: 'home',component: WelcomenewComponent,data: {title: 'Welcome'}}
+      ]
+    }
   ];
 
 @NgModule({
@@ -154,7 +167,8 @@ const routes: Routes = [
     DialogComponent,
     DialogInputComponent,
     ResetPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    WelcomenewComponent
     ],
   imports: [
     BrowserModule,
@@ -188,9 +202,13 @@ const routes: Routes = [
     MatButtonToggleModule,
     MatRadioModule,
     MatCheckboxModule,
-    ShareButtonsModule
+    ShareButtonsModule,
+    MatExpansionModule,
+    MatRippleModule,
+    NgxEditorModule,
+    NgZorroAntdModule
     ],
-  providers: [ApiService,UserService,JwtService,AuthguardService,BrowserLocation,HashtagService,DialogService,CommonService,DialogInputService],
+  providers: [ApiService,UserService,JwtService,AuthguardService,BrowserLocation,HashtagService,DialogService,CommonService,DialogInputService,{ provide: NZ_I18N, useValue: en_US },SharedService],
   bootstrap: [AppComponent],
   exports:[
     RouterModule

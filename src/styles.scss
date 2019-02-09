@@ -47,6 +47,12 @@ body
 {
 }
 
+input,
+textarea,
+[contenteditable] {
+  color: #666;
+  caret-color: #1b5e20;
+}
 .footer {
   position: relative;
   bottom: 0;
@@ -156,11 +162,15 @@ body
    width: 80%;
 }
 
-.dropdown-menu li a
+.dropdown-menu-hashtag li
 {
 	font-size:16px;
 	color:#004d40;
 	font-weight:500;
+  text-decoration:none;
+  padding:2px;
+  border: 1px solid;
+  width:100%
 }
 
 .ad-card
@@ -219,6 +229,7 @@ background-color:whitesmoke
 .hashtags
 {
 	color:#1b5e20;
+  font-weight:500
 }
 a { color: #1b5e20;text-decoration:none } 
 a:hover { color: #1b5e20;text-decoration:none } 
@@ -300,7 +311,7 @@ a:hover { color: #1b5e20;text-decoration:none }
 }
 
 //colors
-
+ 
 .primary-md-color
 {
 	background-color:whitesmoke;
@@ -310,6 +321,13 @@ a:hover { color: #1b5e20;text-decoration:none }
 {
 	background-color:#1b5e20;
 	color:white;
+}
+
+.accent-md-font-color
+{
+  background-color:whitesmoke;
+  color:#1b5e20;
+  font-weight:700;
 }
 
 .border-accent
@@ -372,8 +390,6 @@ a:hover { color: #1b5e20;text-decoration:none }
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: black;
-  opacity: 0.5;
   z-index: 1;
 }
 
@@ -395,7 +411,7 @@ a:hover { color: #1b5e20;text-decoration:none }
 
       body, html {
         height: 100%;
-        background-color: #0000
+        background-color: #ebecec
       }
       .app-loading {
         position: relative;
@@ -443,3 +459,35 @@ a:hover { color: #1b5e20;text-decoration:none }
           stroke-dashoffset: -124px;
         }
       }
+
+      .sliderwidth
+      {
+      width:100%;
+      height:100%;
+      }
+
+      .position-center
+      {
+      position:fixed;
+      top:50%;
+      left:50%;
+      z-index:100;
+      color:white
+      }
+
+      .profiles-container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 40px;
+}
+
+.bold-class
+{
+    font-weight: 500
+}
+
+@import 'tim.css';
+@import 'quill.css';

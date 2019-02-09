@@ -9,8 +9,8 @@
 		</div>
 
     	<mat-form-field class="full-width"> 
-    	<input minlength="3" maxlength="15" matInput placeholder="User Name" formControlName="username">
-    	<mat-error align="start" *ngIf="editProfileForm.controls['username'].hasError('required') && editProfileForm.controls['username'].touched " readonly class="form__error">Username is required</mat-error>
+    	<input minlength="3" maxlength="15" matInput placeholder="User Name" [readonly]="true" formControlName="username">
+    	<mat-error align="start" *ngIf="editProfileForm.controls['username'].hasError('required') && editProfileForm.controls['username'].touched "  class="form__error">Username is required</mat-error>
     	<mat-error align="start" *ngIf="errors.username" class="form__error">{{ errors.username }}</mat-error> 
     	</mat-form-field>
     	<mat-form-field class="full-width">

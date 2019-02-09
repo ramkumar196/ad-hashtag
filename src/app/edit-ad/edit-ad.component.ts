@@ -31,6 +31,8 @@ export class EditAdComponent implements OnInit, OnDestroy {
 formControlValue = '';
   postAdForm :FormGroup;
   isSubmitting;
+  showImageLoader = false;
+  showHttpLoader = false;
   errors = {
     adtextarea:'',
     websitelink:'',
@@ -85,9 +87,15 @@ formControlValue = '';
 	}
 	
 	onFileChanged(event: any) {
+
+   this.showImageLoader = true;
+
+
 	 if(this.imageno > 3)
 	 {
 	 	this.openSnackBar('You have maximum limit for upload','close');
+    this.showImageLoader = false;
+
 	 	return false;
 	 }
 
@@ -95,6 +103,8 @@ formControlValue = '';
 
 	  	if (!this.validateFile(event.target.files[0].name)) {
 	 	this.openSnackBar('File Format not supported','close');
+    this.showImageLoader = false;
+
 		return false;
 		}
 
@@ -105,7 +115,9 @@ formControlValue = '';
 			fileReader.onload = (event: Event) => {
 				this.imageUrl.splice(this.imageno, 0, fileReader.result);
 				this.imageno++;
-				console.log('image no',this.imageno)
+        setTimeout(()=>{   
+        this.showImageLoader = false;
+        }, 2000)
 			}
 		}
 	}
@@ -118,11 +130,17 @@ formControlValue = '';
 			this.imageno--;
 
 			//this.imageUrl.splice(index, 1);
-	}
+  	}
+    cancelEdit()
+    {
+       this.router.navigate(['/user/list'])
+    }
 
 
   createAd()
   {
+     this.showHttpLoader = true;
+
      this.isSubmitting = true;
      //this.errors = new Errors();
 
@@ -136,6 +154,8 @@ formControlValue = '';
       data => {
         console.log("data",data);
          this.openSnackBar('success','close');
+         this.showHttpLoader = false;
+
          this.router.navigate(['/user/list'])
       },
       err => {
@@ -147,6 +167,9 @@ formControlValue = '';
         }
 
         this.errors = err.error;
+
+             this.showHttpLoader = false;
+
 
         // if(this.errors.username)
         // this.signUpForm.controls['username'].setErrors({'incorrect': true});
@@ -201,31 +224,16 @@ formControlValue = '';
         
                console.log(data.details);
 
-        data.details.adtextarea = data.details.ad_text;
-        data.details.adImages = '';
-        data.details.websitelink = data.details.websitelink;
-        delete data.details._id;
-        delete data.details.ad_text;
-        delete data.details.created_date;
-        delete data.details.ad_image_1;
-        delete data.details.ad_image_2;
-        delete data.details.ad_image_3;
-        delete data.details.ad_image_4;
-        delete data.details.username;
-        delete data.details.profileImage;
-        delete data.details.message_list;
-        delete data.details.created_date_format;
-        delete data.details.show_text;
-        delete data.details.hastags;
-        delete data.details.userid;
-        delete data.details.currentuserid;
+        var adDetails = {
+          adtextarea:'',adImages:'',websitelink:'',city:''
+        };
 
-        //if(data.details.websitelink != '')
-      // delete data.details.websitelink;
+        adDetails.adtextarea = data.details.ad_text;
+        adDetails.adImages = '';
+        adDetails.websitelink = data.details.websitelink;
+        adDetails.city = data.details.city;
 
-       console.log(data.details);
-
-        this.postAdForm.setValue(data.details);
+        this.postAdForm.setValue(adDetails);
 
       })
 

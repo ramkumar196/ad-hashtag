@@ -57,7 +57,7 @@ export class UserListComponent implements OnInit {
 
   editAd(id)
   {
-     this.router.navigate(['/auth/ad-edit/'+id]);
+     this.router.navigate(['/ad/edit/'+id]);
   }
 
   deleteAd(id)
@@ -138,6 +138,24 @@ export class UserListComponent implements OnInit {
       })
     }
 
+  updateFav(id,status)
+  {
+    var inputdata = {adid:id,status:status}; 
+    this.adservice.updateFav(inputdata)
+    .subscribe( data => {
+      this.adservice.userAdList({userid:this.userid})
+      .subscribe( data => {
+        this.adList = data.details;
+
+      })
+      if(status == 0)
+      this.openSnackBar("Added to Favourites",'close');
+      else
+      this.openSnackBar("Removed from Favourites",'close');
+
+     })
+  }
+
   ngOnInit() {
 
     this.sub = this.route.params.subscribe(params => {
@@ -168,5 +186,6 @@ export class UserListComponent implements OnInit {
 
        
   }
+
  
 }

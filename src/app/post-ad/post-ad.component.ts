@@ -37,6 +37,8 @@ export class PostAdComponent  implements OnInit {
   formControlValue = '';
   postAdForm :FormGroup;
   isSubmitting;
+  showImageLoader = false;
+  showHttpLoader = false;
   errors = {
     adtextarea:'',
     websitelink:'',
@@ -87,9 +89,12 @@ export class PostAdComponent  implements OnInit {
 	}
 	
 	onFileChanged(event: any) {
+
+   this.showImageLoader = true;
 	 if(this.imageno > 3)
 	 {
 	 	this.openSnackBar('You have maximum limit for upload','close');
+    this.showImageLoader = false;
 	 	return false;
 	 }
 
@@ -97,6 +102,8 @@ export class PostAdComponent  implements OnInit {
 
 	  	if (!this.validateFile(event.target.files[0].name)) {
 	 	this.openSnackBar('File Format not supported','close');
+    this.showImageLoader = false;
+
 		return false;
 		}
 
@@ -107,7 +114,9 @@ export class PostAdComponent  implements OnInit {
 			fileReader.onload = (event: Event) => {
 				this.imageUrl.splice(this.imageno, 0, fileReader.result);
 				this.imageno++;
-				console.log('image no',this.imageno)
+        setTimeout(()=>{   
+        this.showImageLoader = false;
+        }, 2000)
 			}
 		}
 	}
@@ -125,6 +134,7 @@ export class PostAdComponent  implements OnInit {
 
   createAd()
   {
+    this.showHttpLoader = true;
      this.isSubmitting = true;
      //this.errors = new Errors();
 
@@ -137,6 +147,7 @@ export class PostAdComponent  implements OnInit {
       data => {
         console.log("data",data);
          this.openSnackBar('success','close');
+         this.showHttpLoader = false;
          this.router.navigate(['/user/list'])
       },
       err => {

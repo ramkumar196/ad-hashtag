@@ -9,7 +9,7 @@
   </mat-card-header>
 </mat-card>
 </div>
-<div class="row mt-5">
+<div class="row mt-2">
 <mat-toolbar>{{ad.hastags}}</mat-toolbar>
 
 <mat-card class="col-sm-6"  >
@@ -58,6 +58,19 @@
    <mat-icon mat-list-icon>style</mat-icon>{{ad.hastags}}
   </mat-list-item> 
   <mat-divider *ngIf="ad.ad_text"></mat-divider>
+  <mat-list-item>
+  <button mat-icon-button>
+    <mat-icon title="Views" aria-label="Example icon-button with a heart icon">visibility</mat-icon>{{ad.views}}
+   <!--   matBadge="{{ad.views}}" matBadgeColor="accent" matBadgeSize="medium" matBadgePosition="after" matBadgeOverlap="false"  -->
+  </button>
+   <button mat-icon-button *ngIf="ad.favStatus">
+  <mat-icon color="warn" title="Remove Favourite" (click)="updateFav(1)"  aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.favCount}}
+  </button>
+  <button mat-icon-button *ngIf="!ad.favStatus">
+  <mat-icon title="Add Favourite" (click)="updateFav(0)" aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.favCount}}
+  </button>  
+
+</mat-list-item> 
 </mat-list>
   </mat-card-content>
 </div>
@@ -69,7 +82,11 @@
   </button>
 
  -->
-
+<mat-expansion-panel>
+  <mat-expansion-panel-header matRipple >
+    <mat-panel-title>Share This Ad  &nbsp; <mat-icon>share</mat-icon>
+    </mat-panel-title>
+    </mat-expansion-panel-header>
 <share-buttons [theme]="'circles-dark'"
  [include]="['facebook','twitter','pinterest','reddit','messenger','whatsapp','email','print']"
  [show]="8"
@@ -77,14 +94,9 @@
  [size]="2"
  [url]="'http://www.thehashad.com/ad/view/'+ad._id"
  [autoSetMeta]="false"
-></share-buttons><!--
-  <button mat-icon-button>
-    <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">visibility</mat-icon>
-  </button>
-   <button mat-icon-button>
-  <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">email</mat-icon>
-  </button>
-   <button mat-icon-button>
+></share-buttons>
+</mat-expansion-panel>
+   <!--<button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">flag</mat-icon>
   </button> -->
   </mat-card-actions>
@@ -102,24 +114,45 @@
 
       <!-- Main chat body -->
       <div class="conversations-hold">
-<mat-card class="mt-10 font-14"  *ngFor="let ml of messageList" >
+        <div *ngFor="let ml of messageList">
+<mat-card class="mt-2 font-14"   >
     <mat-card-header>
-    <img [src]="ml.profileImage"  class="border " mat-card-avatar>
+    <img [src]="concatImageUrl(ad.profileImgUrl,ml.profile_image)"  class="border " mat-card-avatar>
     <mat-card-title class="font-14"> {{ml.username | titlecase}}</mat-card-title>
-    <mat-card-subtitle>{{ml.message_create_date | date:'medium' }}</mat-card-subtitle>
+    <mat-card-subtitle>{{ml.created_date | date:'medium' }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="mt-2">
                   {{ml.message}}
   </mat-card-content>
    <mat-card-actions>
-  <!-- <button mat-icon-button>
+  <button mat-icon-button>
     <mat-icon (click)="openTextBox(ml.message_id,ad._id)" mat-fab aria-label="Example icon-button with a heart icon">reply</mat-icon>
-  </button>
+  </button><!-- 
   <button mat-icon-button>
     <mat-icon mat-fab aria-label="Example icon-button with a heart icon">report</mat-icon>
   </button> -->
   </mat-card-actions>
 </mat-card>
+
+<mat-expansion-panel matRipple *ngIf="ml.reply_list?.length > 0" class="primary-md-color">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      View Comments       ({{ml.reply_list.length}})
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+<mat-card class="mt-2 font-14"  *ngFor="let mr of ml.reply_list" >
+    <mat-card-header>
+    <img [src]="concatImageUrl(ad.profileImgUrl,mr.profile_image)"  class="border " mat-card-avatar>
+    <mat-card-title class="font-14"> {{mr.username | titlecase}}</mat-card-title>
+    <mat-card-subtitle>{{mr.created_date | date:'medium' }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="mt-2">
+                  {{mr.message}}
+  </mat-card-content>
+</mat-card>
+</mat-expansion-panel>
+</div>
+
         <!-- single chat item -->
       <!--   <div class="single-conversation" fxLayout="row"  *ngFor="let ml of messageList">
           <a href="" class="toolbar-avatar online">

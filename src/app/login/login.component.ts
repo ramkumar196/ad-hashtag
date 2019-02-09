@@ -3,7 +3,8 @@ import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSnackBar} from '@angular/material';
-
+import {MediaMatcher} from '@angular/cdk/layout';
+import {ChangeDetectorRef, OnDestroy} from '@angular/core';
 
 import {ApiService} from '../services/api.service';
 import {UserService} from '../services/user.service';
@@ -18,13 +19,20 @@ import { DialogService } from '../services/dialog.service';
 })
 export class LoginComponent implements OnInit {
 
+
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
   loginForm :FormGroup;
   errors = {};
   isSubmitting;
+  hide = true;
 
 
-  constructor(private dialog: DialogService,private fb: FormBuilder,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
+  constructor(private dialog: DialogService,private fb: FormBuilder,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) { 
   	    this.createForm();
+        this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   createForm()

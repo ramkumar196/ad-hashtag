@@ -4,7 +4,8 @@ import {Title} from '@angular/platform-browser';
 import {UserService} from '../../../services/user.service';
 import {JwtService} from '../../../services/jwt.service';
 import { DialogService } from '../../../services/dialog.service';
-
+import {MediaMatcher} from '@angular/cdk/layout';
+import {ChangeDetectorRef, OnDestroy} from '@angular/core';
 
 
 
@@ -15,9 +16,15 @@ import { DialogService } from '../../../services/dialog.service';
 })
 export class HeaderComponent implements OnInit {
 
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
   pageTitle;
   geolocationPosition;
-  constructor(private dialog: DialogService,private router: Router,private route: ActivatedRoute , titleService:Title,private userService: UserService,private jwtService: JwtService) { 
+  constructor(private dialog: DialogService,private router: Router,private route: ActivatedRoute , titleService:Title,private userService: UserService,private jwtService: JwtService,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) { 
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+    console.log(this.mobileQuery);
   router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
         var title = this.getTitle(router.routerState, router.routerState.root).join('-');
@@ -85,4 +92,7 @@ export class HeaderComponent implements OnInit {
       this.verifyToken();
   }
 
+    ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
 }

@@ -1,32 +1,22 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 
+
 @Component({
   selector: 'mwl-text-input-autocomplete-menu',
   template: `
-    <ul
-      *ngIf="choices?.length > 0"
-      #dropdownMenu
-      class="dropdown-menu"
-      [style.top.px]="position?.top"
-      [style.left.px]="position?.left">
-      <li
-        *ngFor="let choice of choices; trackBy:trackById"
-        [class.active]="activeChoice === choice">
-        <a
-          href="javascript:;"
-          (click)="selectChoice.next(choice)">
-          {{ choice }}
-        </a>
-      </li>
-    </ul>
+    <mat-list  class="dropdown-menu-hashtag "  *ngIf="choices?.length > 0"
+      #dropdownMenu role="list">
+  <mat-list-item class="accent-md-font-color"  *ngFor="let choice of choices; trackBy:trackById" role="listitem" (click)="selectChoice.next(choice)" [class.active]="activeChoice === choice">#{{ choice }}</mat-list-item>
+</mat-list>
   `,
   styles: [
     `
-      .dropdown-menu {
+      .dropdown-menu-hashtag {
         display: block;
         max-height: 200px;
         overflow-y: auto;
+
       }
     `
   ]

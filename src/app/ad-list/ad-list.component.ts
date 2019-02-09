@@ -52,6 +52,7 @@ export class AdListComponent implements OnInit {
   hashtagCtrl = new FormControl();
   cityCtrl = new FormControl();
   hashtags = [];
+  showLoader = false;
 
 
   constructor(private route: ActivatedRoute,private adservice :AdsService,private hashtagservice :HashtagService,public userService :UserService,private router :Router , private snackBar :MatSnackBar ,private dialog : MatDialog ,private fb: FormBuilder) { 
@@ -83,6 +84,7 @@ export class AdListComponent implements OnInit {
  //    });
 
  //  }
+
 
   detectDevice() { 
    if( navigator.userAgent.match(/Android/i)
@@ -116,7 +118,7 @@ export class AdListComponent implements OnInit {
       .subscribe(
         data => {
           console.log("data",data);
-           this.openSnackBar('success');
+           this.openSnackBar('success','close');
            this.router.navigate(['/user/ad-list'])
         },
         err => {
@@ -124,25 +126,21 @@ export class AdListComponent implements OnInit {
 
           if(err.length == 0)
           {
-            this.openSnackBar(err.error);
+            this.openSnackBar(err.error,'close');
           }
 
         }
       ); 
-      }  
-
-    openSnackBar(msg) {
-    this.snackBar.open(msg)
-    }
+      } 
 
 
 
   ngOnInit() {
-     this.adservice.SearchAdList(this.filterDate)
-      .subscribe( data => {
-        this.adList = data.details;
+     // this.adservice.SearchAdList(this.filterDate)
+     //  .subscribe( data => {
+     //    this.adList = data.details;
 
-      })
+     //  })
      this.hashtagservice.hashtaglist({keyword:''})
       .subscribe( data => {
         this.filteredHashtags = data.details;
@@ -206,6 +204,7 @@ export class AdListComponent implements OnInit {
          this.hashtags.push(id);
          this.hashtagInput.nativeElement.value = '';
          this.hashtagCtrl.setValue(null);
+         console.log("herrererere");
          this.adListing();
        }
      })
@@ -213,12 +212,16 @@ export class AdListComponent implements OnInit {
 
    adListing()
     {
+      this.showLoader = true;
       console.log('hash',this.hashtags);
       var cityname = this.cityCtrl.value;
 
     this.adservice.SearchAdList({hashtags:this.hashtags,city: cityname})
       .subscribe( data => {
         this.adList = data.details;
+        setTimeout(()=>{   
+                  this.showLoader = false;
+        }, 2000)
       })
     }
 
@@ -256,13 +259,35 @@ export class AdListComponent implements OnInit {
     this.hashtags.push(event.option.viewValue);
     this.hashtagInput.nativeElement.value = '';
     this.hashtagCtrl.setValue(null);
+    console.log("herer000");
     this.adListing();
   }
 
     selectedcity(event: MatAutocompleteSelectedEvent): void {
+          console.log("herer1111");
+
     this.adListing();
   }
 
+     updateFav(id,status)
+  {
+    var inputdata = {adid:id,status:status}; 
+    this.adservice.updateFav(inputdata)
+    .subscribe( data => {
+      this.adListing();
+      if(status == 0)
+      this.openSnackBar("Added to Favourites",'close');
+      else
+      this.openSnackBar("Removed from Favourites",'close');
+
+     })
+  }
+
+    openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+    }
   // _filter(value: string): string[] {
   //   const filterValue = value.toLowerCase();
 

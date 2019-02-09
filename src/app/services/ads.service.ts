@@ -56,6 +56,16 @@ export class AdsService {
 
     replyMessage(data){
     return this.apiService.post('/message/reply',data).pipe(
+     catchError(this.formatErrors))
+   }
+
+    viewCount(data){
+    return this.apiService.post('/fav/update-view-count',data).pipe(
+     catchError(this.formatErrors))
+   }
+
+    updateFav(data){
+    return this.apiService.post('/fav/update',data).pipe(
   	 catchError(this.formatErrors))
    }
 

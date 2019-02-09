@@ -29,15 +29,18 @@ this.createForm()
   }
 
    ngOnInit() {
+
   	this.sub = this.route.params.subscribe(params => {
        this.id = params['id']; // (+) converts string 'id' to a number
 
        console.log('params',params);
+       this.viewCount();
+
 
        this.adsService.adDetails(this.id)
       .subscribe( data => {
       	 this.ad = data.details;
-         this.messageList = data.details.message_list;
+         this.messageList = data.details.messageList;
 
 
       	 console.log(this.ad);
@@ -77,6 +80,54 @@ this.createForm()
        })
     }
 
+    viewCount()
+    {
+      var inputdata = {adid:this.id};
+      console.log(inputdata);
+      this.adsService.viewCount(inputdata)
+      .subscribe( data => {
+        console.log("view count......");
+       })
+    }
+
+    userExists(arr,item)
+    {
+      console.log("arr",arr);
+      console.log("item",item);
+      let result = false;
+       for (var i=0; i < arr.length; i++) {
+          if (arr[i].userid === item) {
+              return true;
+          }
+      }
+
+    }
+
+    updateFav(status)
+    {
+      var inputdata = {adid:this.id,status:status}; 
+      this.adsService.updateFav(inputdata)
+      .subscribe( data => {
+      this.adsService.adDetails(this.id)
+      .subscribe( data => {
+        this.ad = data.details;
+
+        if(status == 0)
+        this.openSnackBar("Added to Favourites",'close');
+        else
+        this.openSnackBar("Removed from Favourites",'close');
+
+      })
+
+       })
+    }
+
+    
+   concatImageUrl(url,image)
+  {
+    return url+image;
+  }
+
 
     replyMessage(Msg,id,adID)
     {
@@ -113,6 +164,12 @@ this.createForm()
         this.replyMessage(result,id,adID);
     });
     }
+
+    openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 
      ngOnDestroy() {
     this.sub.unsubscribe();

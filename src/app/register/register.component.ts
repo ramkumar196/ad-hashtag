@@ -9,7 +9,8 @@ import {ApiService} from '../services/api.service';
 import {UserService} from '../services/user.service';
 import { DialogService } from '../services/dialog.service';
 import { JwtService } from '../services/jwt.service';
-
+import {MediaMatcher} from '@angular/cdk/layout';
+import {ChangeDetectorRef, OnDestroy} from '@angular/core';
 
 @Component({
   selector: 'app-register',
@@ -26,12 +27,19 @@ export class RegisterComponent implements OnInit {
     phone:'',
     password:'',
   };
-
-
+  hide=true;
+  checkMobile = false;
+  
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
   
 
-  constructor(private fb: FormBuilder,private dialog: DialogService,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
-  	    this.createForm();
+  constructor(private fb: FormBuilder,private dialog: DialogService,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) { 
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+        this.createForm();
+
   }
 
   createForm()
