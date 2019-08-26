@@ -1,0 +1,8 @@
+<div class="row" style="margin-left:10px">
+    <mat-card  *ngFor="let item of notifyList"    class="col-sm-8 m-2">{{item.notify_message}}
+        <a class="m-2"  href="user/list/{{item.userid}}"><button mat-raised-button color="accent">view user</button></a>
+        <button class="m-2" mat-button color="accent" *ngIf="item.notify_read == 0">new</button>
+    </mat-card>
+</div>
+
+

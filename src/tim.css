@@ -109,7 +109,7 @@ nav,
 section {
     display: block
 }
-
+/*
 body {
     margin: 0;
     font-family: Roboto, Helvetica, Arial, sans-serif;
@@ -119,7 +119,7 @@ body {
     color: #212529;
     text-align: left;
     background-color: #fafafa
-}
+}*/
 
 [tabindex="-1"]:focus {
     outline: 0!important

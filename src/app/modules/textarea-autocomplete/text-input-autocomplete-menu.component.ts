@@ -22,7 +22,7 @@ import { Subject } from 'rxjs';
   ]
 })
 export class TextInputAutocompleteMenuComponent {
-  @ViewChild('dropdownMenu') dropdownMenuElement: ElementRef<HTMLUListElement>;
+  @ViewChild('dropdownMenu',{ read: true, static: false }) dropdownMenuElement: ElementRef<HTMLUListElement>;
   position: { top: number; left: number };
   selectChoice = new Subject();
   activeChoice: any;

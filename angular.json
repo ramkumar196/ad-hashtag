@@ -13,16 +13,22 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../ad",
+            "outputPath": "../browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
+              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -72,8 +78,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-            "node_modules/semantic-ui/dist/semantic.min.css",
-            "src/styles.css"
+              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "node_modules/semantic-ui/dist/semantic.min.css",
+              "src/styles.css"
             ],
             "scripts": [],
             "assets": [
@@ -92,6 +99,14 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "../server",
+            "main": "src/main.server.ts",
+            "tsConfig": "src/tsconfig.server.json"
           }
         }
       }

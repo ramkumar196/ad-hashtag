@@ -20,6 +20,10 @@ export class HashtagService {
     hashtaglist(data){
     return this.apiService.post('/hashtag/list',data).pipe(
      catchError(this.formatErrors))
+   } 
+     subscribe(data){
+    return this.apiService.post('/fav/subscribe',data).pipe(
+     catchError(this.formatErrors))
    }
 }
 

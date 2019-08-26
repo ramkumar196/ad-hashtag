@@ -1,0 +1,59 @@
+<!-- <div class="row">
+<div class="col-sm" >
+  <div class="overlay"></div>
+   <ngb-carousel class="sliderwidth" *ngIf="settings.slider_images?.length > 0" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+    <ng-template ngbSlide *ngFor="let image of settings.slider_images">
+      <img [src]="image.path" class="img-fluid" alt="Random slide">
+      <div class="carousel-caption d-none d-md-block">
+          <a  [routerLink]="['/auth/post-ad']"routerLinkActive="active"><button class="mr-2" mat-raised-button color="accent">Post Ad</button></a>
+           <h3>{{settings.home_page_text}}</h3>
+            <p>{{settings.home_page_sub_text}}</p>
+            <hr class="my-4">
+        <p></p>
+       
+      </div>
+    </ng-template>
+  </ngb-carousel>
+
+ <div class="col-sm-1" >
+</div>
+</div>
+</div>
+<mat-toolbar color="primary" class="border-accent-small-bottom" >
+<mat-icon>trending_up</mat-icon>&nbsp;Trending 
+</mat-toolbar>
+<mat-grid-list cols="4" rowHeight="50px">
+<mat-grid-tile  [colspan]="colspanValue" [rowspan]="1"  *ngFor="let tl of trendingHashtags">
+<span class="bold-class"><a [routerLink]="['/ad/list/'+tl.hashtag]" routerLinkActive="active"> {{tl.hashtag | hashtag}}</a> </span>&nbsp;&nbsp;&nbsp;
+<mat-chip-list>
+  <mat-chip color="color" selected>{{tl.count}}</mat-chip>
+</mat-chip-list>
+</mat-grid-tile>
+</mat-grid-list>
+
+<mat-toolbar color="primary" class="border-accent-small-bottom" >
+<mat-icon>view_list</mat-icon>&nbsp;Popular Posts 
+</mat-toolbar>
+
+<mat-tab-group>
+  <mat-tab *ngFor="let tl of trendingHashtags">
+    <ng-template mat-tab-label>
+     <span (click)="adListing(tl.hashtag)"> {{tl.hashtag | hashtag}}</span>
+    </ng-template>
+
+<mat-list *ngIf="adList == '' || !adList" role="list">
+  <mat-list-item role="listitem">No Ad Found</mat-list-item>
+</mat-list>
+<div class="d-flex justify-content-center"><mat-spinner color="accent" mode="indeterminate" *ngIf="showLoader"></mat-spinner>
+</div>
+<div class="card-columns" *ngIf="adList != 'undefined' && adList != '' && !showLoader">
+    <div class="card" *ngFor="let ad of adList"  (click)="viewAd(ad._id)">
+      <img  [src]="ad.ad_image_1"  class="card-img-top colored-shadow" alt="">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+        --> <!--   <p class="card-text" [innerHtml]="ad.show_text"></p>
+        </div>
+    </div>
+</div>
+</mat-tab>
+</mat-tab-group> -->

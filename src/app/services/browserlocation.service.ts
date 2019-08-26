@@ -1,4 +1,4 @@
-import {Injectable, Provider} from '@angular/core';
+import {Injectable, Provider, Inject} from '@angular/core';
 import {Observable} from 'rxjs';
 
 const GEOLOCATION_ERRORS = {
@@ -10,6 +10,8 @@ const GEOLOCATION_ERRORS = {
 
 @Injectable()
 export class BrowserLocation {
+ constructor() {}
+
 
   /**
    * Obtains the geographic position, in terms of latitude and longitude coordinates, of the device.

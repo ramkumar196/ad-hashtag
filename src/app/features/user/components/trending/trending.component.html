@@ -1,0 +1,29 @@
+<mat-toolbar class="" color="primary">
+      <img width="30px" src="/assets/logoicon.svg" />&nbsp;<span>Trending</span>
+</mat-toolbar>
+<!-- <mat-grid-list cols="4" rowHeight="50px">
+<mat-grid-tile  [colspan]="mobileQuery.matches ? 4 : 1" [rowspan]="1"  *ngFor="let tl of trendingHashtags">
+<span class="bold-class"><a [routerLink]="['/ad/list/'+tl.hashtag]" routerLinkActive="active"> {{tl.hashtag | hashtag}}</a> </span>&nbsp;&nbsp;&nbsp;
+<mat-chip-list>
+  <mat-chip color="color" selected>{{tl.count}}</mat-chip>
+</mat-chip-list>
+</mat-grid-tile>
+</mat-grid-list> -->
+
+<div class="card-columns m-2" >
+  <div class="card p-2"  *ngFor="let tl of trendingHashtags"  >
+
+      <div class="card-body">
+    <h5 class="card-title"><a [routerLink]="['/ad/list/'+tl.hashtag]" routerLinkActive="active"> {{tl.hashtag | hashtag}}</a></h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Ads - {{tl.count}}</li>
+    <li class="list-group-item">Subscribers - {{tl.subCount}}</li>
+  </ul>
+  <div class="card-body">
+      <p>
+           <button *ngIf="!tl.subStatus" class="float-right" mat-raised-button (click)="Subscribe(tl._id,0,tl.hashtag)" color="accent">Subscribe</button>
+           <button *ngIf="tl.subStatus" class="float-right" mat-raised-button (click)="Subscribe(tl._id,1,tl.hashtag)" color="accent">UnSubscribe</button>
+        </p>
+  </div>
+  </div>

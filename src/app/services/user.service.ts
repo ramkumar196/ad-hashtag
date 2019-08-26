@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Inject } from '@angular/core';
 import {ApiService} from './api.service';
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { Observable ,  throwError } from 'rxjs';
@@ -11,7 +11,7 @@ import { UserModel } from '../model/user-model';
 })
 export class UserService {
 
-  constructor(    private apiService: ApiService
+  constructor(   private apiService: ApiService
 ) { }
 
    private formatErrors(error: any) {
@@ -19,7 +19,7 @@ export class UserService {
   }
 
   signup(data): Observable<UserModel> {
-    return this.apiService.post('/user/signup',data).pipe(
+    return this.apiService.post('/user/register',data).pipe(
   	 catchError(this.formatErrors))
    } 
 
@@ -60,6 +60,11 @@ export class UserService {
 
    verifyToken(data){
     return this.apiService.post('/user/verify-token',data).pipe(
+  	 catchError(this.formatErrors))
+   }
+
+   notifyList(data){
+    return this.apiService.post('/user/notify-list',data).pipe(
   	 catchError(this.formatErrors))
    }
 
