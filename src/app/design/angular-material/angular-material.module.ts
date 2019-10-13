@@ -42,7 +42,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 
-
 @NgModule({
   declarations: [
     DialogComponent,
@@ -124,7 +123,7 @@ import { RouterModule } from '@angular/router';
     MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule,
+    MatTableModule
   ],
   entryComponents:[
     DialogComponent,

@@ -37,7 +37,12 @@ export class AdsService {
    }
 
     SearchAdList(data){
-    return this.apiService.post('/ad/list',data).pipe(
+     var url = '/ad/list';
+     if(data.page != 0 && data.page != undefined )
+     {
+      url = '/ad/list?page='+data.page;
+     }
+    return this.apiService.post(url,data).pipe(
      catchError(this.formatErrors))
    }
 

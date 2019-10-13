@@ -1,4 +1,4 @@
-import { Component, OnInit ,Input, Inject} from '@angular/core';
+import { Component, OnInit ,Input, Inject ,ViewEncapsulation} from '@angular/core';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -186,25 +186,24 @@ export class PostAdComponent  implements OnInit {
   
    findChoices(searchText: string) {
 
-
-   // console.log(this.hashtags);
-    // this.hashtags = ['sale','property','website'];
-    // return  this.hashtags;
-
-    //    this.hashtagService.hashtaglist({'keyword':searchText})
-    // .subscribe(
-    //   data => {
+    this.hashtagService.hashtaglist({'keyword':searchText})
+    .subscribe(
+      data => {    
+        console.log("data",data);
+        let hashtagArray = [];
+        data.forEach(function(item,index)
+        {
+          hashtagArray.push(item.hashtag);
+        })
         
-    //     this.hashtags = data.details;
-    //     return this.hashtags;
-    //   },
-    //   err => {
-    //     console.log("hereree",err);
+        this.hashtags = hashtagArray;
+        return this.hashtags;
+      },
+      err => {
+        console.log("hereree",err);
 
-    //   } 
-    //   );
-
-
+      } 
+      );
   }
 
   getChoiceLabel(choice: string) {
@@ -216,6 +215,9 @@ export class PostAdComponent  implements OnInit {
       duration: 2000,
     });
   }
+
+  inputValue: string;
+  suggestions = ['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご'];
 
 
 }

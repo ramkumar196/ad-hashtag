@@ -39,12 +39,12 @@ export class UserService {
    }
 
    sendResetLink(data){
-    return this.apiService.post('/user/resetlink',data).pipe(
+    return this.apiService.post('/user/password/resetlink/',data).pipe(
      catchError(this.formatErrors))
    }
 
    resetPassword(data){
-    return this.apiService.post('/user/reset-password',data).pipe(
+    return this.apiService.post('/user/password/reset',data).pipe(
      catchError(this.formatErrors))
    }
 

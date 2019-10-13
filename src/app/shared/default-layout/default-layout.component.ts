@@ -17,6 +17,8 @@ import { JwtService } from 'src/app/services/jwt.service';
 })
 export class DefaultLayoutComponent implements OnInit {
   mobileQuery: MediaQueryList;
+  isCollapsed = false;
+  siderWidth ='200px';
   @ViewChild('sidenav',{ read: true, static: false }) public myNav: MatSidenavModule;
 
 
@@ -55,6 +57,17 @@ export class DefaultLayoutComponent implements OnInit {
    { 'click':"",'loginStatus':this.loginStatus(),'routeLink':'/user/subscriptions','iconName':'subscriptions','listName':'Subscriptions'},
    { 'click':'','loginStatus':this.loginStatus(),'routeLink':'','iconName':'block','listName':'Logout'},
    ];
+
+   toggleCollapsed(): void {
+
+
+    if(this.isCollapsed == false)
+    this.siderWidth = 'auto';
+    else
+    this.siderWidth = '200px';
+
+    this.isCollapsed = !this.isCollapsed;
+  }
 
    getTitle(state, parent) {
     var data = [];

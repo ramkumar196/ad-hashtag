@@ -34,7 +34,7 @@ export class ResetPasswordComponent implements OnInit {
   createForm()
   {
   	 this.resetForm = this.fb.group({
-  		username: ['', [Validators.required]],
+  		email: ['', [Validators.required]],
     });
   }
  
@@ -56,15 +56,21 @@ export class ResetPasswordComponent implements OnInit {
       },
       err => {
         console.log("hereree",err);
-        this.dialog.confirm({title:'Error',message:err,confirm:false})
+        //this.dialog.confirm({title:'Error',message:err,confirm:false})
 
-        //this.openSnackBar(err.error);
+        this.openSnackBar(err.error.message,'close');
 
         this.errors = err.error;
 
         this.isSubmitting = false;
       });
     }
+
+    openSnackBar(message: string, action: string) {
+      this.snackBar.open(message, action, {
+        duration: 2000,
+      });
+      }
 
 
   ngOnInit() {

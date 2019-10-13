@@ -1,0 +1,59 @@
+.layout {
+    height: 100vh;
+  }
+
+  .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+    text-align: center;
+  }
+
+  nz-header {
+    background: #fff;
+    padding: 0;
+  }
+
+  nz-content {
+    margin: 24px 16px 0;
+  }
+
+  .fixed-sidebar
+  {
+    position:fixed
+  }
+
+  .inner-content {
+    background: #fff;
+    min-height:500px;
+    max-width: 300px;
+  }
+
+  nz-footer {
+    text-align: center;
+  }
+
+  .box-shadow {
+    box-shadow: 0 2px 8px #f0f1f2;
+    z-index: 10;
+  }
+
+  .box-border{
+    border-bottom: rgb(179, 178, 178) 1px solid
+  }
+
+  .box-border-bottom{
+    border-bottom: rgb(179, 178, 178) 1px solid
+  }
+
+  .box-border-top{
+    border-top: rgb(179, 178, 178) 1px solid
+  }
+
+  .box-border-left{
+    border-left: rgb(179, 178, 178) 1px solid
+  }
+
+  .box-border-right{
+    border-right: rgb(179, 178, 178) 1px solid
+  }

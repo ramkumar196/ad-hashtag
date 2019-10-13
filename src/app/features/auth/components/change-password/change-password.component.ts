@@ -6,7 +6,8 @@ import {MatSnackBar} from '@angular/material';
 import { DialogService } from 'src/app/services/dialog.service';
 import { UserService } from 'src/app/services/user.service';
 import { JwtService } from 'src/app/services/jwt.service';
-
+import {MediaMatcher} from '@angular/cdk/layout';
+import {ChangeDetectorRef, OnDestroy} from '@angular/core';
 
 @Component({
   selector: 'app-change-password',
@@ -19,23 +20,30 @@ export class ChangePasswordComponent implements OnInit {
   errors = {};
   isSubmitting;
 
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
-  constructor(private route: ActivatedRoute,private dialog: DialogService,private fb: FormBuilder,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService) { 
-  	    this.createForm();
+
+  constructor(private route: ActivatedRoute,private dialog: DialogService,private fb: FormBuilder,private userservice :UserService, private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) { 
+        this.createForm();
+        this.mobileQuery = media.matchMedia('(max-width: 600px)');
+        this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+        this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   createForm()
   {
   	 this.passwordForm = this.fb.group({
-  		newpassword: ['', [Validators.required]],
-  		confirmpassword: ['', [Validators.required]]
+      email: ['', [Validators.required,Validators.email]],
+      password: ['', [Validators.required]],
+  		password_confirmation: ['', [Validators.required]]
   	    }, { validator: this.checkPasswords });
   }
 
 
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-    let pass = group.controls.newpassword.value;
-    let confirmPass = group.controls.confirmpassword.value;
+    let pass = group.controls.password.value;
+    let confirmPass = group.controls.password_confirmation.value;
 
     return pass === confirmPass ? null : { notSame: true }
   }
@@ -46,7 +54,7 @@ export class ChangePasswordComponent implements OnInit {
      //this.errors = new Errors();
   	this.route.params.subscribe(params => { 
     const inputdata = this.passwordForm.value;
-    inputdata.resetcode =  params['id'];
+    inputdata.token =  params['id'];
     this.userservice
     .resetPassword(inputdata)
     .subscribe(
@@ -56,18 +64,24 @@ export class ChangePasswordComponent implements OnInit {
         this.router.navigate(['/'])
       },
       err => {
-        console.log("hereree",err.error.message);
-        this.dialog.confirm({title:'Error',message:err.error.message,confirm:false})
+        console.log("hereree",err);
+        //this.dialog.confirm({title:'Error',message:err.error.message,confirm:false})
 
-        //this.openSnackBar(err.error);
+        this.openSnackBar(err.error.message,'close');
 
         this.errors = err.error;
 
         this.isSubmitting = false;
       });
     })
-	}
-
+  }
+  
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+    }
+ 
 
   ngOnInit() {
   }

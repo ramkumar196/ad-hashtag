@@ -44,14 +44,14 @@ export class TrendingComponent implements OnInit {
   {
      this.hashtagservice.hashtaglist({keyword:'',all:true})
       .subscribe( data => {
-        this.trendingHashtags = data.details;
+        this.trendingHashtags = data;
       }) 
   }
 
   ngOnInit() {
   	     this.hashtagservice.hashtaglist({keyword:'',all:true})
       .subscribe( data => {
-        this.trendingHashtags = data.details;
+        this.trendingHashtags = data;
       }) 
   }
 

@@ -26,6 +26,7 @@ import { AdModule } from './features/ad/ad.module';
 import { UserModule } from './features/user/user.module';
 import { SharedModule } from './shared/shared.module';
 import { AppBrowserModule } from './app.browser.module';
+import { AntDesignModule } from './design/ant-design/ant-design.module';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { AppBrowserModule } from './app.browser.module';
     ],
   imports:[
     AngularMaterialModule,
+    AntDesignModule,
     HomeModule,
     AuthModule,
     AdModule,

@@ -40,8 +40,8 @@
       (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-    <mat-option *ngFor="let list of filteredHashtags " [value]="list">
-      {{list}}
+    <mat-option *ngFor="let list of filteredHashtags " [value]="list.hashtag">
+      {{list.hashtag}}
     </mat-option> 
   </mat-autocomplete>
   </mat-form-field>
@@ -120,3 +120,8 @@
     </div>
   </div>
   </div>
+  <mat-paginator [length]="paginationMeta.total"
+              [pageSize]="paginationMeta.per_page"
+              (page)="paginateAdListing($event)"
+              >
+</mat-paginator>

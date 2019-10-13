@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { AngularMaterialModule } from 'src/app/design/angular-material/angular-material.module';
 import { LoggedLayoutComponent } from './logged-layout/logged-layout.component';
 import { FooterComponent, HeaderComponent } from './frontend-layout';
 import { LoginLayoutComponent } from './login-layout/login-layout.component';
 import { DefaultLayoutComponent } from './default-layout/default-layout.component';
+import { AppBrowserModule } from '../app.browser.module';
+import { AngularMaterialModule } from '../design/angular-material/angular-material.module';
+import { AntDesignModule } from '../design/ant-design/ant-design.module';
 
 const routes: Routes = [
 ];
@@ -21,13 +23,16 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    AngularMaterialModule,
     RouterModule,
+    AppBrowserModule,
+    AngularMaterialModule,
+    AntDesignModule,
     
   ],
   providers:[],
   exports:[
-    RouterModule
+    RouterModule,
+    
   ]
 })
 export class SharedModule { }

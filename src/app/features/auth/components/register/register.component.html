@@ -23,15 +23,15 @@
     	<input minlength="10" maxlength="50" matInput placeholder="Email" formControlName="email">
     	<mat-error align="start" *ngIf="signUpForm.controls['email'].hasError('required') && signUpForm.controls['email'].touched " class="form__error">Your Email is required</mat-error>
     	<mat-error align="start" *ngIf="signUpForm.controls['email'].valid && signUpForm.controls['email'].touched " class="form__error">Your email is not valid</mat-error>
-        <mat-error align="start" *ngIf="errors.email" class="form__error">{{ errors.email }}</mat-error>
-    	</mat-form-field>
+		</mat-form-field>
+		<mat-error align="start" *ngIf="errors.email" class="form__error">{{ errors.email }}</mat-error>
     	<mat-form-field color="accent" class="full-width" appearance="outline">
         <mat-label>Mobile</mat-label>
         <mat-icon matSuffix>phone_iphone</mat-icon>
     	<input minlength="6" maxlength="15" matInput placeholder="Mobile" formControlName="phone">
     	<mat-error align="start" *ngIf="signUpForm.controls['phone'].hasError('required') && signUpForm.controls['phone'].touched " class="form__error">Your Mobile Number is required</mat-error>
-    	<mat-error align="start" *ngIf="errors.phone" class="form__error">{{ errors.phone }}</mat-error>
-    	</mat-form-field>
+		</mat-form-field>
+		<mat-error align="start" *ngIf="errors.phone" class="form__error">{{ errors.phone }}</mat-error>
 
     	<mat-form-field color="accent" class="full-width" appearance="outline">
         <mat-label>Password</mat-label>
@@ -42,7 +42,8 @@
     	<mat-error align="start" *ngIf="signUpForm.controls['password'].touched && errors.password" class="form__error">{{ errors.password }}</mat-error>
     	</mat-form-field>
     	<div class="button-row mt-5">
-    	  <button mat-raised-button  [disabled]="!signUpForm.valid" type="submit" color="accent">Sign up</button>
+		<mat-spinner [diameter]="30" *ngIf="isSubmitting"></mat-spinner>
+    	<button *ngIf="!isSubmitting" mat-raised-button  [disabled]="!signUpForm.valid" type="submit" color="accent">Sign up</button>
     	</div>
 
     </form>

@@ -40,6 +40,7 @@ export class AdListComponent implements OnInit {
  usersForm: FormGroup;
  isLoading = false;
  notifyList=[];
+ paginationMeta;
 
  searchCtrl = new FormControl();
  filteredHashtags: Observable<void |any []>;
@@ -182,7 +183,7 @@ export class AdListComponent implements OnInit {
       })
      this.hashtagservice.hashtaglist({keyword:''})
       .subscribe( data => {
-        this.filteredHashtags = data.details;
+        this.filteredHashtags = data;
 
         console.log(this.filteredHashtags);
 
@@ -204,7 +205,7 @@ export class AdListComponent implements OnInit {
           )
         )
       )
-      .subscribe(data => this.filteredHashtags = data.details);
+      .subscribe(data => this.filteredHashtags = data);
       if(this.detectDevice())
       {
         this.deviceCols = 3
@@ -225,7 +226,7 @@ export class AdListComponent implements OnInit {
           )
         )
       )
-      .subscribe(data => this.filteredHashtags = data.details);
+      .subscribe(data => this.filteredHashtags = data);
 
       if(this.detectDevice())
       {
@@ -249,20 +250,21 @@ export class AdListComponent implements OnInit {
        }
        else
        {
-          this.adListing();
+          this.adListing(0);
        }
      })
   }
 
-   adListing()
+   adListing(page=0)
     {
       this.showLoader = true;
       console.log('hash',this.hashtags);
       var cityname = this.cityCtrl.value;
 
-    this.adservice.SearchAdList({hashtags:this.hashtags,city: cityname})
+    this.adservice.SearchAdList({hashtags:this.hashtags,city: cityname , page : page})
       .subscribe( data => {
-        this.adList = data.details;
+        this.adList = data.data;
+        this.paginationMeta = data.meta;
         setTimeout(()=>{   
                   this.showLoader = false;
         }, 2000)
@@ -295,7 +297,7 @@ export class AdListComponent implements OnInit {
     if (index >= 0) {
       this.hashtags.splice(index, 1);
     }
-        this.adListing();
+        this.adListing(0);
 
   }
 
@@ -304,13 +306,13 @@ export class AdListComponent implements OnInit {
     this.hashtagInput.nativeElement.value = '';
     this.hashtagCtrl.setValue(null);
     console.log("herer000");
-    this.adListing();
+    this.adListing(0);
   }
 
     selectedcity(event: MatAutocompleteSelectedEvent): void {
           console.log("herer1111");
 
-    this.adListing();
+    this.adListing(0);
   }
 
      updateFav(id,status)
@@ -318,7 +320,7 @@ export class AdListComponent implements OnInit {
     var inputdata = {adid:id,status:status}; 
     this.adservice.updateFav(inputdata)
     .subscribe( data => {
-      this.adListing();
+      this.adListing(0);
       if(status == 0)
       this.openSnackBar("Added to Favourites",'close');
       else
@@ -337,4 +339,9 @@ export class AdListComponent implements OnInit {
 
   //   return ;
   // }
+  paginateAdListing(event)
+  {
+    let offset = event.pageSize * event.pageIndex
+    this.adListing(offset);
+  }
 }
