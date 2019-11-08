@@ -18,14 +18,15 @@ export class UserProfileComponent implements OnInit {
 
   editProfileForm :FormGroup;
   isSubmitting;
-  profile_image;
+  profileImage;
   errors = {
     username:'',
     email:'',
     phone:'',
     address:'',
-    description:'',
      businessName:'',
+     business_description:'',
+     business_address:'',
      userType:''
 
   };
@@ -47,11 +48,11 @@ export class UserProfileComponent implements OnInit {
 		email: ['', [Validators.required,Validators.email] ],
 		phone: ['', Validators.required],
 		//password: [''],
-		address: [''],
-    description: [''],
-		profileImage: ['file'],
-    businessName:[''],
-    userType:[false]
+		business_address: [''],
+    business_description: [''],
+		profile_image: ['file'],
+    business_name:[''],
+    user_type:[false]
     });
   }
 
@@ -62,7 +63,7 @@ export class UserProfileComponent implements OnInit {
 
     const inputdata = this.editProfileForm.value;
 
-    inputdata.profileImage = this.profile_image;
+    inputdata.profile_image = this.profileImage;
     this.userservice
     .updateProfile(inputdata)
     .subscribe(
@@ -76,8 +77,8 @@ export class UserProfileComponent implements OnInit {
 
         // if(err.length == 0)
         // {
-        //   this.openSnackBar(err.error);
-        // }
+        this.openSnackBar(err.error.message);
+        //}
 
         this.errors = err.error;
 
@@ -114,7 +115,7 @@ export class UserProfileComponent implements OnInit {
         fileReader.readAsDataURL(event.target.files[0]); // read file as data url
 
       fileReader.onload = (event: Event) => {
-        this.profile_image=  fileReader.result;
+        this.profileImage=  fileReader.result;
       }
     }
   }
@@ -132,57 +133,67 @@ export class UserProfileComponent implements OnInit {
 
   removeImage()
   {
-    this.profile_image = '';
+    this.profileImage = '';
   }
 
   changeBusiness(userType)
   {
     console.log("gdfxdhgdfh");
-    console.log(this.editProfileForm.value.userType);
+    console.log(this.editProfileForm.value.user_type);
   }
   
 
   ngOnInit() {
      this.userservice.profile({})
       .subscribe( data => {
-        this.profile_image = data.details.profileImage;
+        this.profileImage = data.profile_image;
          let profileArray = {
           username:'',
           email:'',
           phone:'',
-          address:'',
-          description:'',
-          profileImage:'',
-          businessName:'',
-          userType:false
+          business_address:'',
+          business_description:'',
+          profile_image:'',
+          business_name:'',
+          user_type:false
           };
-          if(typeof(data.details.address) != 'undefined')
-          profileArray.address = data.details.address;
+          if(typeof(data.business_address) != 'undefined')
+          profileArray.business_address = data.business_address;
 
-          if(typeof(data.details.description) != 'undefined')
-          profileArray.description = data.details.description;
+          if(typeof(data.business_description) != 'undefined')
+          profileArray.business_description = data.business_description;
 
-          if(typeof(data.details.email) != 'undefined')
-          profileArray.email = data.details.email;
+          if(typeof(data.email) != 'undefined')
+          profileArray.email = data.email;
 
-           if(typeof(data.details.phone) != 'undefined')
-          profileArray.phone = data.details.phone;
+           if(typeof(data.phone) != 'undefined')
+          profileArray.phone = data.phone;
 
-          if(typeof(data.details.profileImage) != 'undefined')
-          profileArray.profileImage = data.details.profileImage;
+          if(typeof(data.profile_image) != 'undefined')
+          profileArray.profile_image = data.profile_image;
 
-          if(typeof(data.details.username) != 'undefined')
-          profileArray.username = data.details.username;
+          if(typeof(data.username) != 'undefined')
+          profileArray.username = data.username;
 
-          if(typeof(data.details.businessName) != 'undefined')
-          profileArray.businessName = data.details.businessName;
+          if(typeof(data.business_name) != 'undefined')
+          profileArray.business_name = data.business_name;
 
-          if(typeof(data.details.userType) != 'undefined')
-          profileArray.userType = data.details.userType;
+          if(typeof(data.user_type) != 'undefined')
+          profileArray.user_type = data.user_type;
 
         this.editProfileForm.setValue(profileArray);
 
-      })
+      },
+      err =>{
+        console.log(err);
+
+        if(err.header.status == 401)
+        this.logout();
+        else
+        this.openSnackBar(err.error.message);
+
+      }
+      )
   }
 
 }

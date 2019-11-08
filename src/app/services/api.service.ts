@@ -24,7 +24,7 @@ export class ApiService {
     if (this.jwtService.getToken()) {
       console.log('jwt token',this.jwtService.getToken());
 
-      headersConfig['Authorization'] = `${this.jwtService.getToken()}`;
+      headersConfig['Authorization'] = `Bearer ${this.jwtService.getToken()}`;
     }
     return new HttpHeaders(headersConfig);
   }
