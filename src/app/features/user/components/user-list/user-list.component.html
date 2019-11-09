@@ -1,174 +1,40 @@
-
-<!-- <mat-grid-list cols="3" gutterSize="5px" rowHeight="110px" style="background-color:#b8c0c7">
-<mat-grid-tile [colspan]="3"  [rowspan]="2"> -->
-  <div>
-    <div class=""> 
-      <div class="page-header header-filter">
-      </div> 
-<div class="main main-raised">
-    <div class="col-md-12">
-              <div class="card card-profile">
-                <div class="card-avatar">
-                  <a>
-                    <img class="img"  [src]="userdetails.profileImage"   />
-                  </a>
-                </div>
-                <div class="card-body" >
-                  <h6 class="card-title">@{{userdetails.username | titlecase}}</h6>
-                  <h4 class="card-title">{{userdetails.businessName | titlecase}}</h4>
-                  <p class="card-description">
-                    {{userdetails.description | titlecase}}
-                  </p>
-                  <p class="card-description"> {{userdetails.address | titlecase}}</p>
-                      <button *ngIf="userdetails.selfStatus == 0 && userdetails.followStatus == 0" mat-flat-button color="accent" (click)="followUser(0)">Follow</button>
-                      <button *ngIf="userdetails.selfStatus == 0 && userdetails.followStatus > 0" mat-flat-button color="accent" (click)="followUser(1)">Unfollow</button>
-                </div>
-              </div>
-              </div> 
-              </div> 
-  </div>
-<!--   <div class="row mt-2">
-<div class="col-sm-2" >
-    <img class="m-2" [src]="userdetails.profileImage"  class="rounded-circle border-accent" mat-card-lg-image>
-</div>
-<div class="col-sm-10" >
-<mat-list  role="list" class="list-group">
-  <mat-list-item role="listitem" class="list-group-item ">
-  	<mat-icon mat-list-icon>account_box</mat-icon>
-    <h4 mat-line>{{userdetails.username | titlecase}}</h4>
-  </mat-list-item>
-  <mat-list-item *ngIf="userdetails.userType" role="listitem" class="list-group-item">
-    <mat-icon mat-list-icon>business</mat-icon>
-    <span mat-line>{{userdetails.businessName | titlecase}}</span>
-  </mat-list-item>
-
-  <mat-list-item *ngIf="userdetails.userType" role="listitem" class="list-group-item">
-    <mat-icon mat-list-icon>location_on</mat-icon>
-    <span mat-line>{{userdetails.address | titlecase}}</span>
-  </mat-list-item> 
-  <mat-list-item *ngIf="userdetails.userType" role="listitem" class="list-group-item">
-    <mat-icon mat-list-icon>description</mat-icon>
-    <span mat-line>{{userdetails.description | titlecase}}</span>
-  </mat-list-item>
-  <mat-list-item role="listitem" class="list-group-item">
-         <button *ngIf="userdetails.selfStatus == 0 && userdetails.followStatus == 0" mat-flat-button color="accent" (click)="followUser(0)">Follow</button>
-         <button *ngIf="userdetails.selfStatus == 0 && userdetails.followStatus > 0" mat-flat-button color="accent" (click)="followUser(1)">Unfollow</button>
-  </mat-list-item>
-</mat-list>
-</div> -->
-<mat-divider></mat-divider>
-<div class="col-sm mt-2">
-<mat-tab-group >
-<mat-tab>
-    <ng-template  *ngIf="userdetails.selfStatus == 0"  mat-tab-label>
-      <mat-icon class="example-tab-icon">view_list</mat-icon>&nbsp;
-      Listings
-    </ng-template> 
-    <ng-template  *ngIf="userdetails.selfStatus == 1"  mat-tab-label>
-      <mat-icon class="example-tab-icon">view_list</mat-icon>&nbsp;
-      Your Listings
-    </ng-template>
-     
-<!-- </mat-grid-tile>
-<mat-grid-tile [colspan]="deviceCols" [rowspan]="4" *ngFor="let ad of adList"> -->
-  <div class="card-columns">
-        <div class="text-center m-2" *ngIf="adList.length == 0">No Listings</div>
-          <div class="card"  *ngFor="let ad of adList" >
-    <img *ngIf="ad.ad_image_1"  class="card-img-top" [src]="ad.ad_image_1" alt="" (click)="viewAd(ad._id)">
-    <div class="card-body">
-      <p class="card-text" [innerHtml]="ad.show_text"></p>
-          <mat-list class="card-text">
-          <mat-list-item *ngIf="ad.websitelink">
-           <a href="{{ad.websitelink}}" target="_blank"><mat-icon mat-list-icon>link</mat-icon><small class="text-muted">Click Link</small></a>
-          </mat-list-item> 
-          <mat-divider *ngIf="ad.websitelink"></mat-divider>
-          <mat-list-item *ngIf="ad.city">
-           <mat-icon mat-list-icon>location_on</mat-icon><small class="text-muted">{{ad.city}}</small>
-          </mat-list-item>
-          <mat-divider *ngIf="ad.city"></mat-divider>
-          <mat-list-item >
-          <button mat-icon-button>
-          <mat-icon title="Views" aria-label="Example icon-button with a heart icon">visibility</mat-icon>{{ad.views}}</button>
-           <button mat-icon-button *ngIf="ad.favStatus">
-            <mat-icon color="warn" title="Remove Favourite" (click)="updateFav(ad._id,1)"  aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.favCount}}
-            </button>
-            <button mat-icon-button *ngIf="!ad.favStatus">
-            <mat-icon title="Add Favourite" (click)="updateFav(ad._id,0)" aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.favCount}}
-            </button>
-            <button (click)="editAd(ad._id)"  mat-icon-button *ngIf="ad.showEdit">
-            <mat-icon title="Edit Ad" aria-label="Example icon-button with a heart icon">create</mat-icon>
-            </button> 
-            <button (click)="deleteAd(ad._id)"  mat-icon-button *ngIf="ad.showEdit">
-            <mat-icon title="Edit Ad" aria-label="Example icon-button with a heart icon">delete</mat-icon>
-            </button>
-           </mat-list-item>
-        </mat-list>
-    </div>
-</div>
-</div>
-</mat-tab>
-<mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">people</mat-icon>&nbsp;Follower
-    </ng-template>
-    <div class="text-center m-2" *ngIf="userdetails.follower_list.length == 0">No Followers</div>
-<!--     <div class="card-columns">
-      <mat-card class="card mt-2" *ngFor="let fl of userdetails.follower_list">
-        <mat-card-header >
-        <img  mat-card-avatar [src]="concatImageUrl(userdetails.imgurl,fl.profile_image)"  class="rounded-circle" >
-        <mat-card-title  ><a href="user/list/{{fl.userid}}"> {{fl.username | titlecase}}</a>
-        </mat-card-title>
-        </mat-card-header>
-      </mat-card>
-    </div> -->
-    <div class="row">
-    <div class="col-md-2"  *ngFor="let fl of userdetails.follower_list">
-    <div class="card card-blog" style="margin-right:2px !important">
-                <div class="card-header card-header-image">
-                  <a href="user/list/{{fl.userid}}">
-                    <img [src]="concatImageUrl(userdetails.imgurl,fl.profile_image)" alt="">
-                  </a>
-                <div class="colored-shadow"></div></div>
-                <div class="card-body">
-                  <h6 class="card-category text-warning"></h6>
-                  <h4 class="card-title">{{fl.username | titlecase}}</h4>
-                </div>
-                </div>
-              </div>
-            </div>
-</mat-tab>
- <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">people</mat-icon>&nbsp;
-      Following
-          </ng-template>
-    <div class="text-center m-2"  *ngIf="userdetails.following_list.length == 0">No one following</div>
-<div class="row">
-<div class="col-md-2"  *ngFor="let fl of userdetails.following_list">
-    <div class="card card-blog" style="margin-right:2px !important">
-                <div class="card-header card-header-image">
-                  <a href="user/list/{{fl.userid}}">
-                    <img [src]="concatImageUrl(userdetails.imgurl,fl.profile_image)" alt="">
-                  </a>
-                <div class="colored-shadow" style="background-image: url(&quot;./assets/img/examples/color1.jpg&quot;); opacity: 1;"></div></div>
-                <div class="card-body">
-                  <h6 class="card-category text-warning"></h6>
-                  <h4 class="card-title">{{fl.username | titlecase}}</h4>
-                </div>
-                </div>
-              </div>
+<div class="card-columns m-2" >
+    <div class="text-center m-2" *ngIf="adList.length == 0">No Listings</div>
+    <div class="card"  *ngFor="let ad of adList" >
+      <img *ngIf="ad.ad_image_1"  class="card-img-top" [src]="ad.ad_image_1" alt="" (click)="viewAd(ad.id)">
+      <div class="card-body">
+        <p class="card-text" [innerHtml]="ad.show_text"></p>
+            <mat-list class="card-text">
+            <mat-list-item *ngIf="ad.websitelink">
+             <a href="{{ad.websitelink}}" target="_blank"><mat-icon mat-list-icon>link</mat-icon><small class="text-muted">Click Link</small></a>
+            </mat-list-item> 
+            <mat-divider *ngIf="ad.websitelink"></mat-divider>
+            <mat-list-item *ngIf="ad.city">
+             <mat-icon mat-list-icon>location_on</mat-icon><small class="text-muted">{{ad.city}}</small>
+            </mat-list-item>
+            <mat-divider *ngIf="ad.city"></mat-divider>
+            <mat-list-item >
+            <button mat-icon-button>
+            <mat-icon title="Views" aria-label="Example icon-button with a heart icon">visibility</mat-icon>{{ad.views}}</button>
+             <button mat-icon-button *ngIf="ad.fav_status">
+              <mat-icon color="warn" title="Remove Favourite" (click)="updateFav(ad.id,1)"  aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
+              </button>
+              <button mat-icon-button *ngIf="!ad.fav_status" >
+              <mat-icon title="Add Favourite" (click)="updateFav(ad.id,0)" aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
+              </button>
+              <button (click)="editAd(ad.id)"  mat-icon-button >
+                  <mat-icon title="Edit Ad" aria-label="Example icon-button with a heart icon">create</mat-icon>
+                  </button> 
+                  <button (click)="deleteAd(ad.id)"  mat-icon-button >
+                  <mat-icon title="Edit Ad" aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                  </button>
+             </mat-list-item>
+          </mat-list>
       </div>
-
-    <!-- <div class="card-columns">
-        <mat-card class="card mt-2" *ngFor="let fl of userdetails.following_list">
-        <mat-card-header>
-        <img  mat-card-avatar [src]="concatImageUrl(userdetails.imgurl,fl.profile_image)"  class="rounded-circle" >
-        <mat-card-title><a href="user/list/{{fl.userid}}"> {{fl.username | titlecase}}</a></mat-card-title>
-        </mat-card-header>
-         <img mat-card-image [src]="concatImageUrl(userdetails.imgurl,fl.profile_image)" alt="">
-         </mat-card>
-      </div> -->
-  </mat-tab>
-</mat-tab-group>
-</div>
-</div>
+    </div>
+    </div>
+    <mat-paginator *ngIf="adList.length > 0" [length]="paginationMeta.total"
+                [pageSize]="paginationMeta.per_page"
+                (page)="paginateAdListing($event)"
+                >
+  </mat-paginator>

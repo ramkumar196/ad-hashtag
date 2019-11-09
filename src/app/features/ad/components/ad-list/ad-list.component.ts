@@ -264,6 +264,7 @@ export class AdListComponent implements OnInit {
     this.adservice.SearchAdList({hashtags:this.hashtags,city: cityname , page : page})
       .subscribe( data => {
         this.adList = data.data;
+        console.log('ad list',this.adList);
         this.paginationMeta = data.meta;
         setTimeout(()=>{   
                   this.showLoader = false;

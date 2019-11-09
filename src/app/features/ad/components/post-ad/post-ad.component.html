@@ -1,22 +1,18 @@
 <mat-progress-bar *ngIf="showHttpLoader" color="accent" mode="indeterminate"></mat-progress-bar>
-
-<div class="row m-2">
-  <div class="col-sm-2" ></div>
-  <mat-toolbar class="col-sm-8"><mat-icon>create</mat-icon>&nbsp;Post AD</mat-toolbar>
-  <div class="col-sm-2" ></div>
-</div>
-<div class="row m-2 ">
-  <div class="col-sm-2" ></div>
-<div class="col-sm-8" style="background-color: #ffff">
-<div class="rounded  text-center">
-<form [formGroup]="postAdForm" class="mt-1" >
-<mat-form-field class="full-width">
-<nz-mention (nzOnSearchChange)="findChoices($event)"  [nzSuggestions]="hashtags" [nzPrefix]="['#']" [nzNotFoundContent]="'Not Found'" >
-  <textarea matInput nz-input [nzAutosize]="{ minRows: 6, maxRows: 4 }" formControlName="adtextarea"
- [(ngModel)]="adtextarea" nzMentionTrigger>
+<mat-toolbar color="white">Post AD</mat-toolbar>
+<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+  <div class="item item-1" fxFlex="15%"></div>
+  <div class="item item-2" fxFlex>
+    <form [formGroup]="postAdForm" class="mt-1">
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Ad Text</mat-label>
+        <nz-mention (nzOnSearchChange)="findChoices($event)" [nzSuggestions]="hashtags" [nzPrefix]="['#']"
+          [nzNotFoundContent]="'Not Found'">
+          <textarea matInput nz-input [nzAutosize]="{ minRows: 6, maxRows: 4 }" formControlName="adtextarea"
+            [(ngModel)]="adtextarea" nzMentionTrigger>
   </textarea>
-</nz-mention> 
-<!-- <mwl-text-input-autocomplete-container class="dropdown-hashtag">
+        </nz-mention>
+        <!-- <mwl-text-input-autocomplete-container class="dropdown-hashtag">
 <textarea  matInput class="rounded" 
 maxlength="500"
 placeholder=""
@@ -31,26 +27,42 @@ name="adtextarea"
 </textarea>
 pattern="[a-zA-Z $#%]*" 
 </mwl-text-input-autocomplete-container> -->
-<mat-hint align="start"><strong>Ads must contain a hashtag</strong> </mat-hint>
-<!-- <mat-hint align="end">{{message.value.length}} / 500</mat-hint> -->
+        <mat-hint align="start"><strong>Ads must contain a hashtag</strong> </mat-hint>
+        <!-- <mat-hint align="end">{{message.value.length}} / 500</mat-hint> -->
 
-</mat-form-field>
-<mat-error align="start" *ngIf="postAdForm.controls['adtextarea'].hasError('required') && postAdForm.controls['adtextarea'].touched " class="form__error">Ad is required</mat-error>
-<mat-error align="start" *ngIf="errors.adtextarea" class="form__error">{{ errors.adtextarea }}</mat-error>
+      </mat-form-field>
+      <mat-error align="start"
+        *ngIf="postAdForm.controls['adtextarea'].hasError('required') && postAdForm.controls['adtextarea'].touched "
+        class="form__error">Ad is required</mat-error>
+      <mat-error align="start" *ngIf="errors.adtextarea" class="form__error">{{ errors.adtextarea }}</mat-error>
 
-<mat-form-field class="full-width">
-    <input matInput placeholder="Website Link" formControlName="websitelink" value="">
-</mat-form-field>
-<mat-error align="start" *ngIf="errors.websitelink" class="form__error">{{ errors.websitelink }}</mat-error>
-<mat-form-field class="full-width">
-    <input matInput placeholder="City Name" aria-label="City Name" [matAutocomplete]="auto" formControlName="city">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let city of filteredCities " [value]="city.name">
-        <span>{{city.name}}</span>
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-<mat-grid-list rows="1" cols="4" rowHeight="120px">
+      <mat-form-field class="full-width mt-1" appearance="outline">
+        <mat-label>Website Url</mat-label>
+        <input matInput placeholder="Website Link" formControlName="websitelink" value="">
+      </mat-form-field>
+      <mat-error align="start" *ngIf="errors.websitelink" class="form__error">{{ errors.websitelink }}</mat-error>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="City Name" aria-label="City Name" [matAutocomplete]="auto" formControlName="city">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let city of filteredCities " [value]="city.name">
+            <span>{{city.name}}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+        <mat-card fxFlex="20%" *ngFor="let item of imageUrl">
+          <mat-progress-spinner *ngIf="showImageLoader" mode="indeterminate" [diameter]="50" color="accent">
+          </mat-progress-spinner>
+          <img *ngIf="!showImageLoader" [src]="item" mat-card-image>
+          <mat-card-actions>
+            <button mat-icon-button (click)="removeImage(item)" aria-label="Example icon-button with a heart icon">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      <!-- <mat-grid-list rows="1" cols="4" rowHeight="120px">
   <mat-grid-tile  cols="1" *ngFor="let item of imageUrl">
 <div class="imgwrapper">
 <img [src]="item"  class="img-thumbnail">
@@ -58,14 +70,14 @@ pattern="[a-zA-Z $#%]*"
 <button type="button" (click)="removeImage(item)" class="close float-right" aria-label="Close">
   <span aria-hidden="true">&times;</span>
 </button> 
-</mat-grid-tile>
-<mat-grid-tile cols="1" *ngIf="showImageLoader">
+</mat-grid-tile> -->
+      <!-- <mat-grid-tile cols="1" *ngIf="showImageLoader">
    <mat-progress-spinner mode="indeterminate" [diameter]="70"   color="accent"></mat-progress-spinner>
 </mat-grid-tile>
-</mat-grid-list>
+</mat-grid-list> -->
 
 
-<!--c///already  
+      <!--c///already  
 <div class="row">
 
 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 thumb" *ngFor="let item of imageUrl">
@@ -77,25 +89,23 @@ pattern="[a-zA-Z $#%]*"
 </div>
 </div>
 </div> -->
-<div class="image-upload">
-    <input #fileInput multiple type="file" formControlName="adImages"
- (change)="onFileChanged($event)"/>
-</div>
-<div class="button-row">
-<button class="m-2" (click)="fileInput.click()" title="Upload Images" mat-fab color="accent">
-<mat-icon  aria-label="icon-button with a heart icon">cloud_upload</mat-icon>
-</button> 
-<!-- <button class="m-2" title="Add Links" mat-fab color="accent">
+      <div class="image-upload">
+        <input #fileInput multiple type="file" formControlName="adImages" (change)="onFileChanged($event)" />
+      </div>
+      <div class="button-row mt-2">
+        <button class="m-2" (click)="fileInput.click()" title="Upload Images" mat-fab color="accent">
+          <mat-icon aria-label="icon-button with a heart icon">cloud_upload</mat-icon>
+        </button>
+        <!-- <button class="m-2" title="Add Links" mat-fab color="accent">
 <mat-icon aria-label="icon-button with a heart icon">link</mat-icon>
 </button> -->
 
-<button class="m-2" mat-fab title="Post Ad"  [disabled]="!postAdForm.valid" (click)="createAd()" type="submit" color="accent">
-<mat-icon aria-label="icon-button with a heart icon">publish</mat-icon>
-</button>
+        <button class="m-2" mat-fab title="Post Ad" [disabled]="!postAdForm.valid" (click)="createAd()" type="submit"
+          color="accent">
+          <mat-icon aria-label="icon-button with a heart icon">publish</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="item item-1" fxFlex="15%"></div>
 </div>
-</form>
-</div>
-</div>
-  <div class="col-sm-2" ></div>
-</div> 
-

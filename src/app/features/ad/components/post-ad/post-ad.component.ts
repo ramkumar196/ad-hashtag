@@ -148,10 +148,8 @@ export class PostAdComponent  implements OnInit {
       err => {
         console.log("hereree",err);
 
-        if(err.length == 0)
-        {
-          this.openSnackBar(err.error,'close');
-        }
+        this.openSnackBar(err.error.message,'close');
+
 
         this.errors = err.error;
 

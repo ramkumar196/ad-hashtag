@@ -4,7 +4,7 @@
 	<div class="item item-2" fxFlex>
 		<mat-divider></mat-divider>
 		<form [formGroup]="editProfileForm" (ngSubmit)="updateProfile()">
-			<mat-card class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="1" class="mt-1">
+			<mat-card class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center" fxLayoutGap="5px" fxLayoutGap.xs="1" class="mt-1">
 				<div fxFlex  *ngIf="profileImage" >
 						<img class="img-thumbnail" src="{{profileImage}}"
 						(click)="fileInput.click()">
@@ -12,6 +12,7 @@
 				<mat-icon fxFlex *ngIf="!profileImage" aria-hidden="false" (click)="fileInput.click()" style="width:100px"
 					aria-label="Example home icon">add_a_photo</mat-icon>
 				<mat-form-field fxFlex="60%" appearance="outline">
+					<mat-label>Username</mat-label>
 					<input minlength="3" maxlength="15" matInput placeholder="User Name" [readonly]="true"
 						formControlName="username">
 					<mat-error align="start"
@@ -24,9 +25,9 @@
 			<div class="image-upload">
 				<input #fileInput type="file" formControlName="profile_image" (change)="onFileChanged($event)" />
 			</div>
-			<mat-toolbar class="full-width">Personal Details</mat-toolbar>
 			<mat-card class="mt-1">
-				<mat-form-field class="full-width" appearance="outline">
+				<mat-toolbar class="full-width">Personal Details</mat-toolbar>
+				<mat-form-field class="full-width mt-1" appearance="outline">
 					<mat-label>Email</mat-label>
 					<input minlength="10" maxlength="50" matInput placeholder="Email" formControlName="email">
 					<mat-error align="start"
@@ -35,8 +36,8 @@
 					<mat-error align="start"
 						*ngIf="editProfileForm.controls['email'].valid && editProfileForm.controls['email'].touched "
 						class="form__error">Your email is not valid</mat-error>
-					<mat-error align="start" *ngIf="errors.email" class="form__error">{{ errors.email }}</mat-error>
 				</mat-form-field>
+				<mat-error align="start" *ngIf="errors.email" class="form__error">{{ errors.email[0] }}</mat-error>
 
 				<mat-form-field class="full-width" appearance="outline">
 					<mat-label>Phone</mat-label>
@@ -44,8 +45,9 @@
 					<mat-error align="start"
 						*ngIf="editProfileForm.controls['phone'].hasError('required') && editProfileForm.controls['phone'].touched "
 						class="form__error">Your Mobile Number is required</mat-error>
-					<mat-error align="start" *ngIf="errors.phone" class="form__error">{{ errors.phone }}</mat-error>
 				</mat-form-field>
+				<mat-error align="start" *ngIf="errors.phone" class="form__error">{{ errors.phone[0] }}</mat-error>
+
 
 				<!-- 	<mat-form-field class="full-width">
     	<input minlength="8" maxlength="15" matInput placeholder="Password" type="password" formControlName="password">
@@ -68,6 +70,8 @@
 						*ngIf="editProfileForm.controls['business_name'].touched && errors.business_name"
 						class="form__error">{{ errors.business_name }}</mat-error>
 				</mat-form-field>
+				<mat-error align="start" *ngIf="errors.business_name" class="form__error">{{ errors.business_name[0] }}</mat-error>
+
 
 				<mat-form-field *ngIf="editProfileForm.value.user_type" class="full-width" appearance="outline">
 					<mat-label>Business Address</mat-label>
@@ -77,6 +81,8 @@
 						*ngIf="editProfileForm.controls['business_address'].touched && errors.address"
 						class="form__error">{{ errors.address }}</mat-error>
 				</mat-form-field>
+				<mat-error align="start" *ngIf="errors.business_address" class="form__error">{{ errors.business_address[0] }}</mat-error>
+
 
 				<mat-form-field *ngIf="editProfileForm.value.user_type" class="full-width" appearance="outline">
 					<mat-label>Business Description</mat-label>
@@ -87,6 +93,8 @@
 						*ngIf="editProfileForm.controls['business_description'].touched && errors.description"
 						class="form__error">{{ errors.description }}</mat-error>
 				</mat-form-field>
+				<mat-error align="start" *ngIf="errors.business_description" class="form__error">{{ errors.business_description[0] }}</mat-error>
+
 
 				<div class="button-row mt-5">
 					<button mat-raised-button [disabled]="!editProfileForm.valid" type="submit" color="accent">Update

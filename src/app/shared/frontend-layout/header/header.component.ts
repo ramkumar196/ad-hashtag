@@ -83,7 +83,7 @@ export class HeaderComponent implements OnInit {
         console.log("data",data);
       },
       err => {
-        if(err.status == 402 || err.status == 401)
+        if(err.status == 401)
         this.logout();
       }
     );  } 

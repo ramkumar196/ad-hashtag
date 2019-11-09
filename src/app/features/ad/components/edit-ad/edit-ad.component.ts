@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 import { JwtService } from 'src/app/services/jwt.service';
 import { BrowserLocation } from 'src/app/services/browserlocation.service';
 import { CustomValidator } from 'src/app/validators/customvalidator';
+import { HashtagService } from 'src/app/services/hashtag.service';
 
 
 export interface State {
@@ -47,7 +48,7 @@ formControlValue = '';
 
   
 
-  constructor(private route: ActivatedRoute,private fb: FormBuilder,private adsService :AdsService,public userService :UserService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
+  constructor(private route: ActivatedRoute,public hashtagService :HashtagService,private fb: FormBuilder,private adsService :AdsService,public userService :UserService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
   	    this.createForm();
 
        this.postAdForm.get('city').valueChanges
@@ -60,7 +61,7 @@ formControlValue = '';
           )
         )
       )
-      .subscribe(data => this.filteredCities = data.details);
+      .subscribe(data => this.filteredCities = data);
   }
 
   createForm()
@@ -159,10 +160,7 @@ formControlValue = '';
       err => {
         console.log("hereree",err);
 
-        if(err.length == 0)
-        {
-          this.openSnackBar(err.error,'close');
-        }
+        this.openSnackBar(err.error.message,'close');
 
         this.errors = err.error;
 
@@ -203,33 +201,33 @@ formControlValue = '';
        this.adsService.adDetails(this.id)
       .subscribe( data => {
 
-        if(data.details.ad_image_1 != '')
+        if(data.ad_image_1 != '')
         {
-        	this.imageUrl.push(data.details.ad_image_1)
+        	this.imageUrl.push(data.ad_image_1)
         }
-        if(data.details.ad_image_2 != '')
+        if(data.ad_image_2 != '')
         {
-        	this.imageUrl.push(data.details.ad_image_2)
+        	this.imageUrl.push(data.ad_image_2)
         }
-        if(data.details.ad_image_3 != '')
+        if(data.ad_image_3 != '')
         {
-        	this.imageUrl.push(data.details.ad_image_3)
+        	this.imageUrl.push(data.ad_image_3)
         }
-        if(data.details.ad_image_4 != '')
+        if(data.ad_image_4 != '')
         {
-        	this.imageUrl.push(data.details.ad_image_4)
+        	this.imageUrl.push(data.ad_image_4)
         }
         
-               console.log(data.details);
+               console.log(data);
 
         var adDetails = {
           adtextarea:'',adImages:'',websitelink:'',city:''
         };
 
-        adDetails.adtextarea = data.details.ad_text;
+        adDetails.adtextarea = data.ad_text;
         adDetails.adImages = '';
-        adDetails.websitelink = data.details.websitelink;
-        adDetails.city = data.details.city;
+        adDetails.websitelink = data.websitelink;
+        adDetails.city = data.city;
 
         this.postAdForm.setValue(adDetails);
 
@@ -241,10 +239,33 @@ formControlValue = '';
   }
 
   findChoices(searchText: string) {
-    return this.hashtags.filter(item =>
-      item.toLowerCase().includes(searchText.toLowerCase())
-    );
+    // return this.hashtags.filter(item =>
+    //   item.toLowerCase().includes(searchText.toLowerCase())
+    // );
+
+    this.hashtagService.hashtaglist({'keyword':searchText})
+    .subscribe(
+      data => {    
+        console.log("data",data);
+        let hashtagArray = [];
+        data.forEach(function(item,index)
+        {
+          hashtagArray.push(item.hashtag);
+        })
+        
+        this.hashtags = hashtagArray;
+        return this.hashtags;
+      },
+      err => {
+        console.log("hereree",err);
+  
+      } 
+      );
   }
+
+
+
+  
 
   getChoiceLabel(choice: string) {
     return `#${choice} `;

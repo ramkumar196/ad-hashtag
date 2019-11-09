@@ -80,7 +80,7 @@ export class UserProfileComponent implements OnInit {
         this.openSnackBar(err.error.message);
         //}
 
-        this.errors = err.error;
+        this.errors = err.error.errors;
 
         this.isSubmitting = false;
       }

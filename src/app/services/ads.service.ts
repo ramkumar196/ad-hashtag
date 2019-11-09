@@ -32,7 +32,12 @@ export class AdsService {
    }  
 
     userAdList(data){
-    return this.apiService.post('/ad/mylist',data).pipe(
+      var url = '/ad/mylist';
+     if(data.page != 0 && data.page != undefined )
+     {
+      url = '/ad/mylist?page='+data.page;
+     }
+    return this.apiService.post(url,data).pipe(
      catchError(this.formatErrors))
    }
 

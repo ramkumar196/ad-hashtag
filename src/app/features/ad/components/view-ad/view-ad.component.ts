@@ -37,12 +37,12 @@ this.createForm()
 
        this.adsService.adDetails(this.id)
       .subscribe( data => {
-      	 this.ad = data.details;
-         this.messageList = data.details.messageList;
+      	 this.ad = data;
+         this.messageList = data.messageList;
 
 
       	 console.log(this.ad);
-        //this.postAdForm.setValue(data.details);
+        //this.postAdForm.setValue(data);
       		})
   		})
 		  	if(this.detectDevice())
@@ -70,11 +70,11 @@ this.createForm()
       console.log(inputdata);
       this.adsService.sendMessage(inputdata)
       .subscribe( data => {
-         this.messageList = data.details;
+         this.messageList = data;
          this.messageForm.reset();
 
-         console.log(data.details);
-        //this.postAdForm.setValue(data.details);
+         console.log(data);
+        //this.postAdForm.setValue(data);
        })
     }
 
@@ -108,7 +108,7 @@ this.createForm()
       .subscribe( data => {
       this.adsService.adDetails(this.id)
       .subscribe( data => {
-        this.ad = data.details;
+        this.ad = data;
 
         if(status == 0)
         this.openSnackBar("Added to Favourites",'close');
@@ -132,11 +132,11 @@ this.createForm()
       console.log('herere',{message:Msg,Msgid:id,adid:adID});
       this.adsService.replyMessage({message:Msg,Msgid:id,adid:adID})
       .subscribe( data => {
-         this.messageList = data.details;
+         this.messageList = data;
          this.messageForm.reset();
 
-         console.log(data.details);
-        //this.postAdForm.setValue(data.details);
+         console.log(data);
+        //this.postAdForm.setValue(data);
        })
     }
 

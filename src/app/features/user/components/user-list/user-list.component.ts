@@ -14,6 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 export class UserListComponent implements OnInit {
 
  filterDate = [];
+ paginationMeta;
  adList;
  deviceCols = 1;
  userdetails = {
@@ -83,11 +84,8 @@ export class UserListComponent implements OnInit {
 
     refreshList()
     {
-      this.adservice.userAdList(this.filterDate)
-      .subscribe( data => {
-        this.adList = data.details;
+      this.adListing(0);
 
-      })
       if(this.detectDevice())
       {
         this.deviceCols = 3
@@ -132,7 +130,23 @@ export class UserListComponent implements OnInit {
   {
   this.userservice.profile({userid:this.userid})
       .subscribe( data => {
-        this.userdetails = data.details;
+        this.userdetails = data;
+      })
+    }
+
+    paginateAdListing(event)
+    {
+      let offset = event.pageSize * event.pageIndex
+      this.adListing(offset);
+    }
+
+    adListing(page)
+    {
+      this.adservice.userAdList({userid:this.userid,page:page})
+      .subscribe( data => {
+        this.adList = data.data;
+        this.paginationMeta = data.meta;
+
       })
     }
 
@@ -141,11 +155,7 @@ export class UserListComponent implements OnInit {
     var inputdata = {adid:id,status:status}; 
     this.adservice.updateFav(inputdata)
     .subscribe( data => {
-      this.adservice.userAdList({userid:this.userid})
-      .subscribe( data => {
-        this.adList = data.details;
-
-      })
+      this.adListing(0);
       if(status == 0)
       this.openSnackBar("Added to Favourites",'close');
       else
@@ -158,16 +168,10 @@ export class UserListComponent implements OnInit {
 
     this.sub = this.route.params.subscribe(params => {
        this.userid = params['id']; // (+) converts string 'id' to a number
-
-       console.log('params',params);
-  	 this.adservice.userAdList({userid:this.userid})
-      .subscribe( data => {
-        this.adList = data.details;
-
-      })
+  	    this.adListing(0);
       this.userservice.profile({userid:this.userid})
       .subscribe( data => {
-        this.userdetails = data.details;
+        this.userdetails = data;
       })
       
     });
