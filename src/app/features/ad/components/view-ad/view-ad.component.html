@@ -1,98 +1,120 @@
 <!-- <mat-grid-list cols="3" gutterSize="5px" rowHeight="100px" style="background-color:#b8c0c7">
 <mat-grid-tile [colspan]="3" [rowspan]="rowSpan"> -->
-<div class="row m-2">
+<!-- <div class="row m-2">
   <mat-card class="col-sm rounded mt-10"  >
   <mat-card-header class="m-2">
-    <img [src]="ad.profileImage"  class="border" mat-card-avatar/>
-    <mat-card-title><a href="user/list/{{ad.userid}}">{{ad.username  | titlecase}}</a></mat-card-title>
-    <mat-card-subtitle>{{ad.created_date_format | date:'medium' }}</mat-card-subtitle>
+    <img [src]="userDetails.profile_image"  class="border" mat-card-avatar/>
+    <mat-card-title><a href="user/list/{{userDetails.userid}}">{{userDetails.username  | titlecase}}</a></mat-card-title>
+    <mat-card-subtitle>{{ad.created_date | date:'medium' }}</mat-card-subtitle>
   </mat-card-header>
 </mat-card>
+</div> -->
+<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+     <mat-card  fxFlex>
+        <mat-card-header >
+            <img [src]="userDetails.profile_image"  class="border" mat-card-avatar/>
+            <mat-card-title>Posted by <a href="user/account/{{userDetails.id}}">{{userDetails.username  | titlecase}}</a></mat-card-title>
+            <mat-card-subtitle>{{ad.created_at}}</mat-card-subtitle>
+          </mat-card-header>
+      </mat-card>
 </div>
+    <div class="container mt-2" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+        <div class="item item-1" fxFlex="15%"></div> 
+         <mat-card  fxFlex>
+            <ngb-carousel>
+                <ng-template ngbSlide *ngIf="ad.ad_image_1">
+                  <div class="picsum-img-wrapper" >
+                      <img  class="img-thumbnail"  [src]="ad.ad_image_1" alt="first slide">
+                    </div>
+                </ng-template>
+                <ng-template ngbSlide *ngIf="ad.ad_image_2">
+                    <div class="picsum-img-wrapper" >
+                        <img  class="img-thumbnail"  [src]="ad.ad_image_2" alt="first slide">
+                      </div>
+                  </ng-template>
+                  <ng-template ngbSlide *ngIf="ad.ad_image_3">
+                      <div class="picsum-img-wrapper" >
+                          <img  class="img-thumbnail"  [src]="ad.ad_image_3" alt="first slide">
+                        </div>
+                    </ng-template>
+                    <ng-template ngbSlide *ngIf="ad.ad_image_4">
+                        <div class="picsum-img-wrapper" >
+                            <img  class="img-thumbnail"  [src]="ad.ad_image_4" alt="first slide">
+                          </div>
+                      </ng-template>
+              </ngb-carousel>  
+            </mat-card>
+      <div class="item item-1" fxFlex="15%"></div> 
+</div>
+<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+    <div class="item item-1" fxFlex="15%"></div> 
+  <mat-card  fxFlex>
+     <mat-card-content class="m-2">
+       <p [innerHtml]="ad.show_text">
+       </p>
+       <mat-list class="card-text">
+     <mat-divider *ngIf="ad.websitelink"></mat-divider>
+     <mat-list-item *ngIf="ad.websitelink">
+      <a href="{{ad.websitelink}}" target="_blank"><mat-icon mat-list-icon>link</mat-icon></a>Website Link
+     </mat-list-item> 
+     <mat-divider *ngIf="ad.city"></mat-divider>
+     <mat-list-item *ngIf="ad.city">
+      <mat-icon mat-list-icon>location_on</mat-icon>{{ad.city}}
+     </mat-list-item>
+     <mat-divider *ngIf="ad.hastags"></mat-divider>
+     <mat-list-item *ngIf="ad.hastags">
+      <mat-icon mat-list-icon>style</mat-icon>{{ad.hastags}}
+     </mat-list-item> 
+     <mat-divider *ngIf="ad.ad_text"></mat-divider>
+     <mat-list-item>
+     <button mat-icon-button>
+       <mat-icon title="Views" aria-label="Example icon-button with a heart icon">visibility</mat-icon>{{ad.views}}
+      <!--   matBadge="{{ad.views}}" matBadgeColor="accent" matBadgeSize="medium" matBadgePosition="after" matBadgeOverlap="false"  -->
+     </button>
+      <button mat-icon-button *ngIf="ad.fav_status">
+     <mat-icon color="warn" title="Remove Favourite" (click)="updateFav(1)"  aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
+     </button>
+     <button mat-icon-button *ngIf="!ad.fav_status">
+     <mat-icon title="Add Favourite" (click)="updateFav(0)" aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
+     </button>  
+   
+   </mat-list-item> 
+   </mat-list>
+     </mat-card-content>   
+    <mat-card-actions>
+     <!-- <button mat-icon-button>
+       <a href="whatsapp://send?text={{ad.ad_text}}" data-action="share/whatsapp/share"><mat-icon mat-fab aria-label="Example icon-button with a heart icon">share</mat-icon></a>
+     </button>
+   
+    -->
+   <mat-expansion-panel>
+     <mat-expansion-panel-header matRipple >
+       <mat-panel-title>Share This Ad  &nbsp; <mat-icon>share</mat-icon>
+       </mat-panel-title>
+       </mat-expansion-panel-header>
+   <share-buttons [theme]="'circles-dark'"
+    [include]="['facebook','twitter','pinterest','reddit','messenger','whatsapp','email','print']"
+    [show]="8"
+    [showCount]="false"
+    [size]="2"
+    [url]="'http://www.thehashad.com/ad/view/'+ad.id"
+    [autoSetMeta]="false"
+   ></share-buttons>
+   </mat-expansion-panel>
+      <!--<button mat-icon-button>
+       <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">flag</mat-icon>
+     </button> -->
+     </mat-card-actions>
+   </mat-card>
+   <div class="item item-1" fxFlex="15%"></div> 
+  </div>
+
 <div class="row m-2">
-
-<mat-card class="col-sm-6"  >
-<!-- 
-    <carousel>
-        <slide>
-          <img class="img-thumbnail" [src]="ad.ad_image_1" alt="first slide" style="display: block; width: 100%;">
-        </slide>
-        <slide>
-          <img class="img-thumbnail" [src]="ad.ad_image_2" alt="second slide" style="display: block; width: 100%;">
-        </slide>
-        <slide>
-          <img class="img-thumbnail" [src]="ad.ad_image_3" alt="third slide" style="display: block; width: 100%;">
-        </slide>
-      </carousel> -->
-</mat-card>
-
-<mat-card class="col-sm-6"  >
-   <div class="card-body">
-  <mat-card-content class="m-2">
-    <p [innerHtml]="ad.show_text">
-    </p>
-    <mat-list class="card-text">
-  <mat-divider *ngIf="ad.websitelink"></mat-divider>
-  <mat-list-item *ngIf="ad.websitelink">
-   <a href="{{ad.websitelink}}" target="_blank"><mat-icon mat-list-icon>link</mat-icon></a>Website Link
-  </mat-list-item> 
-  <mat-divider *ngIf="ad.city"></mat-divider>
-  <mat-list-item *ngIf="ad.city">
-   <mat-icon mat-list-icon>location_on</mat-icon>{{ad.city}}
-  </mat-list-item>
-  <mat-divider *ngIf="ad.hastags"></mat-divider>
-  <mat-list-item *ngIf="ad.hastags">
-   <mat-icon mat-list-icon>style</mat-icon>{{ad.hastags}}
-  </mat-list-item> 
-  <mat-divider *ngIf="ad.ad_text"></mat-divider>
-  <mat-list-item>
-  <button mat-icon-button>
-    <mat-icon title="Views" aria-label="Example icon-button with a heart icon">visibility</mat-icon>{{ad.views}}
-   <!--   matBadge="{{ad.views}}" matBadgeColor="accent" matBadgeSize="medium" matBadgePosition="after" matBadgeOverlap="false"  -->
-  </button>
-   <button mat-icon-button *ngIf="ad.favStatus">
-  <mat-icon color="warn" title="Remove Favourite" (click)="updateFav(1)"  aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.favCount}}
-  </button>
-  <button mat-icon-button *ngIf="!ad.favStatus">
-  <mat-icon title="Add Favourite" (click)="updateFav(0)" aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.favCount}}
-  </button>  
-
-</mat-list-item> 
-</mat-list>
-  </mat-card-content>
-</div>
-
-  
- <mat-card-actions>
-  <!-- <button mat-icon-button>
-    <a href="whatsapp://send?text={{ad.ad_text}}" data-action="share/whatsapp/share"><mat-icon mat-fab aria-label="Example icon-button with a heart icon">share</mat-icon></a>
-  </button>
-
- -->
-<mat-expansion-panel>
-  <mat-expansion-panel-header matRipple >
-    <mat-panel-title>Share This Ad  &nbsp; <mat-icon>share</mat-icon>
-    </mat-panel-title>
-    </mat-expansion-panel-header>
-<share-buttons [theme]="'circles-dark'"
- [include]="['facebook','twitter','pinterest','reddit','messenger','whatsapp','email','print']"
- [show]="8"
- [showCount]="false"
- [size]="2"
- [url]="'http://www.thehashad.com/ad/view/'+ad._id"
- [autoSetMeta]="false"
-></share-buttons>
-</mat-expansion-panel>
-   <!--<button mat-icon-button>
-    <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false" aria-label="Example icon-button with a heart icon">flag</mat-icon>
-  </button> -->
-  </mat-card-actions>
-</mat-card>
 <!-- </mat-grid-tile>
 </mat-grid-list> -->
  </div>
-<div class="row"> 
-
+ <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+    <div class="item item-2" fxFlex>
       <div class="chats-wrap col-sm mt-2">
       <!-- Right side topbar -->
       <mat-toolbar color="primary" class="chat-toolbar mb-1">
@@ -139,25 +161,6 @@
 </mat-card>
 </mat-expansion-panel>
 </div>
-
-        <!-- single chat item -->
-      <!--   <div class="single-conversation" fxLayout="row"  *ngFor="let ml of messageList">
-          <a href="" class="toolbar-avatar online">
-            <img mat-card-avatar src="{{ml.profileImage}}" alt="">
-            <span class="status-dot"></span>
-          </a>
-          <div>
-            <h5 class="chat-username text-muted">{{ml.username}}</h5>
-            <div class="conversation-msg">
-              {{ml.message}}
-            </div>
-            <p class="chat-date text-muted">{{ml.message_create_date | date:'medium'}}</p>
-          </div>
-        </div>
-      </div>
-      <mat-divider></mat-divider> -->
-
-      <!-- Input box and send button -->
       <div class="chat-input-actions" >
         <form [formGroup]="messageForm" class="mt-1" (ngSubmit)="sendMessage()">
           <mat-form-field class="full-width mr-1">
@@ -173,4 +176,5 @@
       </div>
 
     </div>
+  </div>
 </div>

@@ -1,40 +1,42 @@
-<div class="card-columns m-2" >
-    <div class="text-center m-2" *ngIf="adList.length == 0">No Listings</div>
-    <div class="card"  *ngFor="let ad of adList" >
-      <img *ngIf="ad.ad_image_1"  class="card-img-top" [src]="ad.ad_image_1" alt="" (click)="viewAd(ad.id)">
-      <div class="card-body">
-        <p class="card-text" [innerHtml]="ad.show_text"></p>
-            <mat-list class="card-text">
-            <mat-list-item *ngIf="ad.websitelink">
-             <a href="{{ad.websitelink}}" target="_blank"><mat-icon mat-list-icon>link</mat-icon><small class="text-muted">Click Link</small></a>
-            </mat-list-item> 
-            <mat-divider *ngIf="ad.websitelink"></mat-divider>
-            <mat-list-item *ngIf="ad.city">
-             <mat-icon mat-list-icon>location_on</mat-icon><small class="text-muted">{{ad.city}}</small>
-            </mat-list-item>
-            <mat-divider *ngIf="ad.city"></mat-divider>
-            <mat-list-item >
-            <button mat-icon-button>
-            <mat-icon title="Views" aria-label="Example icon-button with a heart icon">visibility</mat-icon>{{ad.views}}</button>
-             <button mat-icon-button *ngIf="ad.fav_status">
-              <mat-icon color="warn" title="Remove Favourite" (click)="updateFav(ad.id,1)"  aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
-              </button>
-              <button mat-icon-button *ngIf="!ad.fav_status" >
-              <mat-icon title="Add Favourite" (click)="updateFav(ad.id,0)" aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
-              </button>
-              <button (click)="editAd(ad.id)"  mat-icon-button >
-                  <mat-icon title="Edit Ad" aria-label="Example icon-button with a heart icon">create</mat-icon>
-                  </button> 
-                  <button (click)="deleteAd(ad.id)"  mat-icon-button >
-                  <mat-icon title="Edit Ad" aria-label="Example icon-button with a heart icon">delete</mat-icon>
-                  </button>
-             </mat-list-item>
-          </mat-list>
-      </div>
-    </div>
-    </div>
-    <mat-paginator *ngIf="adList.length > 0" [length]="paginationMeta.total"
-                [pageSize]="paginationMeta.per_page"
-                (page)="paginateAdListing($event)"
-                >
-  </mat-paginator>
+
+
+      <div class="card-columns m-2" >
+          <div class="text-center m-2" *ngIf="adList.length == 0">No Listings</div>
+          <div class="card"  *ngFor="let ad of adList" >
+            <img *ngIf="ad.ad_image_1"  class="card-img-top" [src]="ad.ad_image_1" alt="" (click)="viewAd(ad.id)">
+            <div class="card-body">
+              <p class="card-text" [innerHtml]="ad.show_text"></p>
+                  <mat-list class="card-text">
+                  <mat-list-item *ngIf="ad.websitelink">
+                   <a href="{{ad.websitelink}}" target="_blank"><mat-icon mat-list-icon>link</mat-icon><small class="text-muted">Click Link</small></a>
+                  </mat-list-item> 
+                  <mat-divider *ngIf="ad.websitelink"></mat-divider>
+                  <mat-list-item *ngIf="ad.city">
+                   <mat-icon mat-list-icon>location_on</mat-icon><small class="text-muted">{{ad.city}}</small>
+                  </mat-list-item>
+                  <mat-divider *ngIf="ad.city"></mat-divider>
+                  <mat-list-item >
+                  <button mat-icon-button>
+                  <mat-icon title="Views" aria-label="Example icon-button with a heart icon">visibility</mat-icon>{{ad.views}}</button>
+                   <button mat-icon-button *ngIf="ad.fav_status">
+                    <mat-icon color="warn" title="Remove Favourite" (click)="updateFav(ad.id,1)"  aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
+                    </button>
+                    <button mat-icon-button *ngIf="!ad.fav_status" >
+                    <mat-icon title="Add Favourite" (click)="updateFav(ad.id,0)" aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
+                    </button>
+                    <button (click)="editAd(ad.id)"  mat-icon-button >
+                        <mat-icon title="Edit Ad" aria-label="Example icon-button with a heart icon">create</mat-icon>
+                        </button> 
+                        <button (click)="deleteAd(ad.id)"  mat-icon-button >
+                        <mat-icon title="Edit Ad" aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                        </button>
+                   </mat-list-item>
+                </mat-list>
+            </div>
+          </div>
+          </div>
+          <mat-paginator *ngIf="adList.length > 0" [length]="paginationMeta.total"
+                      [pageSize]="paginationMeta.per_page"
+                      (page)="paginateAdListing($event)"
+                      >
+        </mat-paginator>

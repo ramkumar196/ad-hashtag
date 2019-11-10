@@ -38,6 +38,17 @@ export class UserService {
      catchError(this.formatErrors))
    }
 
+   getprofile(data){
+
+    user_id= '';
+
+     if(typeof(data.user_id) != 'undefined')
+     var user_id = data.user_id;
+
+    return this.apiService.post('/user/profile/'+user_id,{}).pipe(
+     catchError(this.formatErrors))
+   }
+
    sendResetLink(data){
     return this.apiService.post('/user/password/resetlink/',data).pipe(
      catchError(this.formatErrors))
@@ -55,6 +66,11 @@ export class UserService {
 
    follow(data){
     return this.apiService.post('/user/update-follow',data).pipe(
+     catchError(this.formatErrors))
+   }
+
+   followerList(data){
+    return this.apiService.post('/user/follow-list',data).pipe(
      catchError(this.formatErrors))
    }
 

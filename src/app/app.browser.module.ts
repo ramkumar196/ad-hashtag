@@ -20,6 +20,7 @@ import { TextInputAutocompleteMenuComponent } from './modules/textarea-autocompl
 import { TextInputAutocompleteContainerComponent } from './modules/textarea-autocomplete/text-input-autocomplete-container.component';
 import { HashtagPipe } from './pipes/pipes';
 import { HashtagRemovePipe } from './pipes/hashtagremove';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -44,6 +45,7 @@ registerLocaleData(en);
             ShareButtonsModule,
             FlexLayoutModule,
             TextInputAutocompleteModule,
+            NgbModule
         ],
         exports:[
             IconsProviderModule,
@@ -58,6 +60,7 @@ registerLocaleData(en);
             TextInputAutocompleteModule,
             HashtagPipe,
             HashtagRemovePipe,
+            NgbModule
         ],
         entryComponents:[
             TextInputAutocompleteMenuComponent,

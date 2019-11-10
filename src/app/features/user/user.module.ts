@@ -9,6 +9,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { NotificationlistComponent } from '../auth/components/notificationlist/notificationlist.component';
 import { SubscriptionListComponent } from './components/subscription-list/subscription-list.component';
 import { AppBrowserModule } from 'src/app/app.browser.module';
+import { UserAccountComponent } from './components/user-account/user-account.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,9 @@ const routes: Routes = [
    canActivate: [AuthguardService],
    children: [ 
     {path: 'list',component: UserListComponent,data: {title: 'List'}},
-    {path: 'list/:id',component: UserListComponent,data: {title: 'List'}},
+    {path: 'account',component: UserAccountComponent,data: {title: 'Account'}},
+    {path: 'account/:id',component: UserAccountComponent,data: {title: 'Account'}},
+   // {path: 'list/:id',component: UserListComponent,data: {title: 'List'}},
     {path: 'notifications',component: NotificationlistComponent,data: {title: 'Notifications'}},
     {path: 'subscriptions',component: SubscriptionListComponent,data: {title: 'Subscriptions List'}}
    ]
@@ -29,6 +32,7 @@ const routes: Routes = [
     UserListComponent,
     NotificationlistComponent,
     SubscriptionListComponent,
+    UserAccountComponent,
   ],
   providers:[AuthguardService],
   imports: [

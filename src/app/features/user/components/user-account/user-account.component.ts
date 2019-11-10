@@ -7,11 +7,11 @@ import { AdsService } from 'src/app/services/ads.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  selector: 'app-user-account',
+  templateUrl: './user-account.component.html',
+  styleUrls: ['./user-account.component.css']
 })
-export class UserListComponent implements OnInit {
+export class UserAccountComponent implements OnInit {
 
  filterDate = [];
  paginationMeta;
@@ -29,6 +29,7 @@ export class UserListComponent implements OnInit {
    selfStatus:0,
    followStatus:0
  };
+ followList;
  userDetail;
  private sub: any;
  userid;
@@ -61,6 +62,15 @@ export class UserListComponent implements OnInit {
     this.userservice.getprofile({'user_id':user_id})
       .subscribe( data => {
         this.userDetail= data;
+      })
+  }
+
+  followerList(user_id)
+  {
+    this.userservice.followerList({'user_id':user_id})
+      .subscribe( data => {
+        this.followList= data;
+        console.log(this.followList)
       })
   }
 
@@ -138,10 +148,7 @@ export class UserListComponent implements OnInit {
 
   userRefresh()
   {
-  this.userservice.profile({userid:this.userid})
-      .subscribe( data => {
-        this.userdetails = data;
-      })
+    this.fetchUserDetails(this.userid);
     }
 
     paginateAdListing(event)
@@ -180,6 +187,7 @@ export class UserListComponent implements OnInit {
        this.userid = params['id']; // (+) converts string 'id' to a number
         this.adListing(0);
         this.fetchUserDetails(this.userid);
+        this.followerList(this.userid);
       
     });
 
@@ -198,3 +206,4 @@ export class UserListComponent implements OnInit {
 
  
 }
+

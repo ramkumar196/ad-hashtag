@@ -6,6 +6,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSnackBar} from '@angular/material';
 import { DialogInputService } from 'src/app/services/dialoginput.service';
 import { AdsService } from 'src/app/services/ads.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-view-ad',
@@ -17,13 +18,22 @@ export class ViewAdComponent implements  OnInit, OnDestroy {
   id: number;
   private sub: any;
   ad;
+  userDetails;
   messageList;
   rowSpan = 11;
   messageForm :FormGroup;
 
 
-  constructor(private fb: FormBuilder,private dialoginput:DialogInputService,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar, private route: ActivatedRoute ) { 
+  constructor(private fb: FormBuilder,private userservice :UserService,private dialoginput:DialogInputService,private adsService :AdsService,private router :Router, private snackBar :MatSnackBar, private route: ActivatedRoute ) { 
 this.createForm()
+  }
+
+  fetchUserDetails(user_id)
+  {
+    this.userservice.getprofile({'user_id':user_id})
+      .subscribe( data => {
+        this.userDetails = data;
+      })
   }
 
    ngOnInit() {
@@ -33,13 +43,12 @@ this.createForm()
 
        console.log('params',params);
        this.viewCount();
-
-
        this.adsService.adDetails(this.id)
       .subscribe( data => {
-      	 this.ad = data;
-         this.messageList = data.messageList;
+         this.ad = data;
+         this.fetchUserDetails(this.ad.user_id);
 
+         this.messageList = data.messageList;
 
       	 console.log(this.ad);
         //this.postAdForm.setValue(data);

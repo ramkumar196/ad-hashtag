@@ -1,0 +1,73 @@
+<div class="container mt-2" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+     
+      <mat-card fxFlex="20%">
+          <img *ngIf="userDetail.profile_image"  class="card-img-top" [src]="userDetail.profile_image">
+          <h5>@{{userDetail.username | uppercase}}</h5>
+        </mat-card>
+        <mat-card fxFlex>
+        <mat-list>
+            <mat-list-item *ngIf="userDetail.business_name">
+            <mat-icon mat-list-icon>storefront</mat-icon>
+            <span>{{userDetail.business_name}}</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item *ngIf="userDetail.business_address">
+            <mat-icon mat-list-icon>location_on</mat-icon>
+            <span>{{userDetail.business_address}}</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item *ngIf="userDetail.business_description">
+            <mat-icon mat-list-icon>description</mat-icon>
+            <span>{{userDetail.business_description}}</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+               <button mat-raised-button *ngIf="!userDetail.follow_status && userDetail.selfStatus == 0" (click)="followUser(0)" color="accent">Follow</button>
+               <button mat-raised-button *ngIf="userDetail.follow_status && userDetail.selfStatus == 0" (click)="followUser(1)" color="primary">Unfollow</button>
+            </mat-list-item>
+          </mat-list>
+        </mat-card>
+</div>
+<div class="container mt-2" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+<!-- <div class="item item-1" fxFlex="5%"></div> -->
+<mat-tab-group fxFlex>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            Followers
+          </ng-template>
+          Content 1
+        </mat-tab>
+      
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            Followers
+          </ng-template>
+          <div class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+                <mat-card class="mt-1"  fxFlex="100%" *ngFor="let fl of followList">
+                   <mat-card-header >
+                       <img [src]="fl.userDetails.profile_image"  class="border" mat-card-avatar/>
+                       <mat-card-title> <a href="user/account/{{fl.userDetails.id}}">{{fl.userDetails.username  | titlecase}}</a></mat-card-title>
+                     </mat-card-header>
+                 </mat-card>
+           </div>
+        </mat-tab>
+      
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            Followers
+          </ng-template>
+          <div class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+                <mat-card class="mt-1"  fxFlex="100%" *ngFor="let fl of followList">
+                   <mat-card-header >
+                       <img [src]="fl.followerDetails.profile_image"  class="border" mat-card-avatar/>
+                       <mat-card-title> <a href="user/account/{{fl.followerDetails.id}}">{{fl.followerDetails.username  | titlecase}}</a></mat-card-title>
+                     </mat-card-header>
+                 </mat-card>
+           </div>
+        </mat-tab>
+      </mat-tab-group>
+<!-- <div class="item item-1" fxFlex="5%"></div> -->
+</div>
