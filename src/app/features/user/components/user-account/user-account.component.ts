@@ -153,7 +153,8 @@ export class UserAccountComponent implements OnInit {
 
     paginateAdListing(event)
     {
-      let offset = event.pageSize * event.pageIndex
+      console.log('event',event)
+      let offset = event.pageIndex
       this.adListing(offset);
     }
 

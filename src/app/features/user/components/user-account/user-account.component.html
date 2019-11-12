@@ -13,12 +13,12 @@
             <mat-divider></mat-divider>
             <mat-list-item *ngIf="userDetail.business_address">
             <mat-icon mat-list-icon>location_on</mat-icon>
-            <span>{{userDetail.business_address}}</span>
+            <p>{{userDetail.business_address}}</p>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item *ngIf="userDetail.business_description">
             <mat-icon mat-list-icon>description</mat-icon>
-            <span>{{userDetail.business_description}}</span>
+            <p>{{userDetail.business_description}}</p>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item>
@@ -30,42 +30,78 @@
 </div>
 <div class="container mt-2" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
 <!-- <div class="item item-1" fxFlex="5%"></div> -->
-<mat-tab-group fxFlex>
+<mat-tab-group fxFlex style="height:auto">
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-            Followers
+            <mat-icon class="example-tab-icon">list</mat-icon>
+            My List
           </ng-template>
-          Content 1
+          <div class="text-center m-2" *ngIf="adList.length == 0">No Listings</div>
+          <div class="container" fxLayout="row wrap" fxLayout.lt-sm="column"  fxLayoutAlign="flex-start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-card class="mt-1" *ngFor="let ad of adList" fxFlex="0 1 calc(33.3% - 32px)"
+              fxFlex.lt-md="0 1 calc(50% - 32px)"
+              fxFlex.lt-sm="100%">
+                  <img *ngIf="ad.ad_image_1"  mat-card-image [src]="ad.ad_image_1" alt="" (click)="viewAd(ad.id)">
+                  <mat-card-content>
+                      <p [innerHtml]="ad.show_text"></p>
+                    </mat-card-content>
+                  <mat-card-actions>
+                      <button mat-icon-button>
+                      <mat-icon title="Views" aria-label="Example icon-button with a heart icon">visibility</mat-icon>{{ad.views}}</button>
+                      <button mat-icon-button *ngIf="ad.fav_status">
+                      <mat-icon color="warn" title="Remove Favourite" (click)="updateFav(ad.id,1)"  aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
+                      </button>
+                      <button mat-icon-button *ngIf="!ad.fav_status" >
+                      <mat-icon title="Add Favourite" (click)="updateFav(ad.id,0)" aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
+                      </button>
+                      <button (click)="editAd(ad.id)"  mat-icon-button >
+                      <mat-icon title="Edit Ad" aria-label="Example icon-button with a heart icon">create</mat-icon>
+                      </button> 
+                      <button (click)="deleteAd(ad.id)"  mat-icon-button >
+                      <mat-icon title="Edit Ad" aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                      </button>
+                    </mat-card-actions>
+              </mat-card>
+          </div>
+          <mat-paginator *ngIf="adList.length > 0" [length]="paginationMeta.total"
+              [pageSize]="paginationMeta.per_page"
+              (page)="paginateAdListing($event)"
+              >
+</mat-paginator>
         </mat-tab>
       
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            <mat-icon class="example-tab-icon">people</mat-icon>
             Followers
           </ng-template>
-          <div class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
-                <mat-card class="mt-1"  fxFlex="100%" *ngFor="let fl of followList">
+          <div class="text-center m-2" *ngIf="followList.followers.length == 0">No Followers</div>
+          <div class="container" fxLayout fxLayout.xs="column"  *ngFor="let fl of followList.followers" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <mat-card class="mt-1"  fxFlex >
                    <mat-card-header >
-                       <img [src]="fl.userDetails.profile_image"  class="border" mat-card-avatar/>
-                       <mat-card-title> <a href="user/account/{{fl.userDetails.id}}">{{fl.userDetails.username  | titlecase}}</a></mat-card-title>
+                       <img [src]="fl.profile_image"  class="border" mat-card-avatar/>
+                       <mat-card-title> <a [routerLink]="['/user/account/',fl.follower]">{{fl.username  | titlecase}}</a></mat-card-title>
                      </mat-card-header>
                  </mat-card>
+            <div class="item item-1" fxFlex="30%"></div>
            </div>
         </mat-tab>
       
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            <mat-icon class="example-tab-icon">people_outline</mat-icon>
             Followers
           </ng-template>
-          <div class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
-                <mat-card class="mt-1"  fxFlex="100%" *ngFor="let fl of followList">
+          <div class="text-center m-2" *ngIf="followList.following.length == 0">You are not following anyone</div>
+
+          <div class="container" fxLayout fxLayout.xs="column"  *ngFor="let fl of followList.following" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <mat-card class="mt-1"  fxFlex >
                    <mat-card-header >
-                       <img [src]="fl.followerDetails.profile_image"  class="border" mat-card-avatar/>
-                       <mat-card-title> <a href="user/account/{{fl.followerDetails.id}}">{{fl.followerDetails.username  | titlecase}}</a></mat-card-title>
+                       <img [src]="fl.profile_image"  class="border" mat-card-avatar/>
+                       <mat-card-title> <a [routerLink]="['/user/account/',fl.user_id]">{{fl.username  | titlecase}}</a></mat-card-title>
                      </mat-card-header>
                  </mat-card>
+            <div class="item item-1" fxFlex="30%"></div>
            </div>
         </mat-tab>
       </mat-tab-group>

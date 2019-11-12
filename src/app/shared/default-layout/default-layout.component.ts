@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {MatSidenavModule} from '@angular/material/sidenav';
 
@@ -27,7 +27,7 @@ export class DefaultLayoutComponent implements OnInit {
 
      toggleTxt = this.myNav;
   
-  constructor(private userService: UserService,titleService:Title,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private dialog: DialogService,private router: Router,private route: ActivatedRoute,private jwtService: JwtService,) {
+  constructor(private elementRef: ElementRef,private userService: UserService,titleService:Title,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private dialog: DialogService,private router: Router,private route: ActivatedRoute,private jwtService: JwtService,) {
 	this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();this.toggleTxt='';
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -96,6 +96,8 @@ export class DefaultLayoutComponent implements OnInit {
 
 
   ngOnInit() {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#333';
+
   }
 
   ngOnDestroy(): void {
