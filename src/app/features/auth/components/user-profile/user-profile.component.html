@@ -65,7 +65,7 @@
 
 				<mat-form-field *ngIf="editProfileForm.value.user_type" class="full-width mt-2" appearance="outline">
 					<mat-label>Business Name</mat-label>
-					<textarea matInput placeholder="Business Name" formControlName="business_name"></textarea>
+					<textarea maxlength="50" matInput placeholder="Business Name" formControlName="business_name"></textarea>
 					<mat-error align="start"
 						*ngIf="editProfileForm.controls['business_name'].touched && errors.business_name"
 						class="form__error">{{ errors.business_name }}</mat-error>
@@ -76,7 +76,7 @@
 				<mat-form-field *ngIf="editProfileForm.value.user_type" class="full-width" appearance="outline">
 					<mat-label>Business Address</mat-label>
 
-					<textarea matInput placeholder="Business Address" formControlName="business_address"></textarea>
+					<textarea maxlength="200" matInput placeholder="Business Address" formControlName="business_address"></textarea>
 					<mat-error align="start"
 						*ngIf="editProfileForm.controls['business_address'].touched && errors.address"
 						class="form__error">{{ errors.address }}</mat-error>
@@ -87,7 +87,7 @@
 				<mat-form-field *ngIf="editProfileForm.value.user_type" class="full-width" appearance="outline">
 					<mat-label>Business Description</mat-label>
 
-					<textarea matInput placeholder="Business Description"
+					<textarea maxlength="200" matInput placeholder="Business Description"
 						formControlName="business_description"></textarea>
 					<mat-error align="start"
 						*ngIf="editProfileForm.controls['business_description'].touched && errors.description"

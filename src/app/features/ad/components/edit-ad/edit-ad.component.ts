@@ -155,7 +155,7 @@ formControlValue = '';
          this.openSnackBar('success','close');
          this.showHttpLoader = false;
 
-         this.router.navigate(['/user/list'])
+         this.router.navigate(['/user/account'])
       },
       err => {
         console.log("hereree",err);

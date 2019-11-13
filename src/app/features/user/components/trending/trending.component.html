@@ -14,7 +14,7 @@
   <div class="card p-2"  *ngFor="let tl of trendingHashtags"  >
 
       <div class="card-body">
-    <h5 class="card-title"><a [routerLink]="['/ad/list/'+tl.hashtag]" routerLinkActive="active"> {{tl.hashtag | hashtag}}</a></h5>
+    <h5 class="card-title"><a [routerLink]="['/ad/list/'+tl.id]" routerLinkActive="active"> {{tl.hashtag | hashtag}}</a></h5>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">Ads - {{tl.count}}</li>
@@ -22,8 +22,8 @@
   </ul>
   <div class="card-body">
       <p>
-           <button *ngIf="!tl.subStatus" class="float-right" mat-raised-button (click)="Subscribe(tl._id,0,tl.hashtag)" color="accent">Subscribe</button>
-           <button *ngIf="tl.subStatus" class="float-right" mat-raised-button (click)="Subscribe(tl._id,1,tl.hashtag)" color="accent">UnSubscribe</button>
+           <button *ngIf="!tl.subscribedStatus" class="float-right" mat-raised-button (click)="Subscribe(tl.id,0,tl.hashtag)" color="accent">Subscribe</button>
+           <button *ngIf="tl.subscribedStatus" class="float-right" mat-raised-button (click)="Subscribe(tl.id,1,tl.hashtag)" color="accent">UnSubscribe</button>
         </p>
   </div>
   </div>

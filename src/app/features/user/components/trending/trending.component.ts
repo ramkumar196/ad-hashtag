@@ -22,7 +22,7 @@ export class TrendingComponent implements OnInit {
 
   Subscribe(id,status,hashtag)
   {
-     this.hashtagservice.subscribe({adid:id,status:status,hashtag:hashtag})
+     this.hashtagservice.subscribe({status:status,hashtag_id:id})
      .subscribe( data => {
       this.hashtagList();
       if(status == 0)

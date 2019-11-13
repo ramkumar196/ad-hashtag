@@ -10,6 +10,7 @@ import { NotificationlistComponent } from '../auth/components/notificationlist/n
 import { SubscriptionListComponent } from './components/subscription-list/subscription-list.component';
 import { AppBrowserModule } from 'src/app/app.browser.module';
 import { UserAccountComponent } from './components/user-account/user-account.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
     NotificationlistComponent,
     SubscriptionListComponent,
     UserAccountComponent,
+    NotificationsComponent,
   ],
   providers:[AuthguardService],
   imports: [

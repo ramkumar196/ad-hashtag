@@ -74,6 +74,11 @@ export class UserService {
      catchError(this.formatErrors))
    }
 
+   subscriberList(data){
+    return this.apiService.post('/user/subscriptions',data).pipe(
+     catchError(this.formatErrors))
+   }
+
    verifyToken(data){
     return this.apiService.post('/user/verify-token',data).pipe(
   	 catchError(this.formatErrors))

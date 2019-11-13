@@ -16,7 +16,7 @@ export class SubscriptionListComponent implements OnInit {
   subList =[];
     Subscribe(id,status,hashtag)
   {
-     this.hashtagservice.subscribe({adid:id,status:status,hashtag:hashtag})
+     this.hashtagservice.subscribe({status:status,hashtag_id:id})
      .subscribe( data => {
       this.openSnackBar("Unsubscribed",'close');
       this.Profile();
@@ -27,12 +27,10 @@ export class SubscriptionListComponent implements OnInit {
 
     Profile()
   {
-     this.userservice.profile({})
+     this.userservice.subscriberList({})
      .subscribe( data => {
 
-     	this.profileData = data.details;
-     	this.subList = data.details.subList;
-
+     	this.subList = data;
      })
 
   }
