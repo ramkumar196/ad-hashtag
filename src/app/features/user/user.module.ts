@@ -21,8 +21,8 @@ const routes: Routes = [
     {path: 'account',component: UserAccountComponent,data: {title: 'Account'}},
     {path: 'account/:id',component: UserAccountComponent,data: {title: 'Account'}},
    // {path: 'list/:id',component: UserListComponent,data: {title: 'List'}},
-    {path: 'notifications',component: NotificationlistComponent,data: {title: 'Notifications'}},
-    {path: 'subscriptions',component: SubscriptionListComponent,data: {title: 'Subscriptions List'}}
+    {path: 'notifications',component: NotificationsComponent,data: {title: 'Notifications'}},
+    {path: 'subscriptions',component: SubscriptionListComponent,data: {title: 'Subscriptions List'}},
    ]
   }   
 ];

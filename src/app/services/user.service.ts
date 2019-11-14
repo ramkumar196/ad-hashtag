@@ -89,6 +89,11 @@ export class UserService {
   	 catchError(this.formatErrors))
    }
 
+   notifyUpdate(data){
+    return this.apiService.post('/user/notify-update',data).pipe(
+  	 catchError(this.formatErrors))
+   }
+
     checklogin(): Boolean {
       if(window.localStorage['jwtToken'])
       return true;
