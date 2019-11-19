@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { HashtagService } from 'src/app/services/hashtag.service';
+import { UserService } from 'src/app/services/user.service';
+import { MatSnackBar } from '@angular/material';
+import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -8,45 +12,64 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatComponent implements OnInit {
 
-  isSidenavOpen='';
+  messageForm;
 
-  constructor() { }
+  constructor(private fb: FormBuilder,private hashtagservice :HashtagService,private userservice :UserService,private snackBar :MatSnackBar) { 
+    this.createForm()
+  }
 
-    activeChatUser = {
-    name: 'Gevorg Spartak',
-    photo: 'assets/images/face-2.jpg',
-    isOnline: true,
-    lastMsg: 'Hello!'
-  };
+  messageList =[];
+  conversationList =[];
 
-  connectedUsers = [{
-    name: 'Gevorg Spartak',
-    photo: 'assets/images/face-2.jpg',
-    isOnline: true,
-    lastMsg: 'What\'s going!'
-  }, {
-    name: 'Petros Toros',
-    photo: 'assets/images/face-4.jpg',
-    isOnline: true,
-    lastMsg: 'Send me the stories.'
-  }, {
-    name: 'Henrik Gevorg',
-    photo: 'assets/images/face-5.jpg',
-    isOnline: false,
-    lastMsg: 'Great work!!'
-  }, {
-    name: 'Gevorg Spartak',
-    photo: 'assets/images/face-6.jpg',
-    isOnline: false,
-    lastMsg: 'Bye'
-  }, {
-    name: 'Petros Toros',
-    photo: 'assets/images/face-7.jpg',
-    isOnline: true,
-    lastMsg: 'We\'ll talk later'
-  }]
+  createForm()
+  {
+     this.messageForm = this.fb.group({
+      message: ['', [Validators.required]],
+    });;
+  }
+
+    sendMessage(senderID,AdID)
+  {
+     var inputdata = this.messageForm.value;
+     this.userservice.sendMessage({message:inputdata.message,user_id:senderID,ad_id:AdID})
+     .subscribe( data => {
+      this.openSnackBar("sent",'close');
+      //this.messages();
+
+     })
+
+  }
+
+  conversation()
+  {
+     this.userservice.conversationList({})
+     .subscribe( data => {
+
+     	this.conversationList = data;
+     })
+
+  }
+
+  messages(id)
+  {
+     this.userservice.messageList({'conv_id':id})
+     .subscribe( data => {
+
+     	this.messageList = data;
+     })
+
+  }
+
+
+     openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+    }
 
   ngOnInit() {
+
+  	this.conversation()
   }
 
 }

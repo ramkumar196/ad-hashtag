@@ -94,6 +94,31 @@ export class UserService {
   	 catchError(this.formatErrors))
    }
 
+   sendMessage(data){
+    return this.apiService.post('/message/send',data).pipe(
+  	 catchError(this.formatErrors))
+   }
+
+   conversationList(data){
+    return this.apiService.post('/conversation/list',data).pipe(
+  	 catchError(this.formatErrors))
+   }
+
+   messageList(data){
+
+
+    var id= '';
+
+     if(typeof(data.conv_id) != 'undefined')
+      id = data.conv_id;
+
+    return this.apiService.post('/message/list/'+id,data).pipe(
+  	 catchError(this.formatErrors))
+   }
+
+   
+
+
     checklogin(): Boolean {
       if(window.localStorage['jwtToken'])
       return true;

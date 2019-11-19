@@ -79,7 +79,15 @@
      </button>  
    
    </mat-list-item> 
+   <mat-divider></mat-divider>
+   <mat-list-item (click)="contactSeller('-',ad.user_id,ad.id)">
+     Contact Seller 
+      <button mat-icon-button color="accent" aria-label="Example icon-button with a heart icon">
+          <mat-icon>message</mat-icon>
+        </button>
+   </mat-list-item>
    </mat-list>
+   <mat-divider></mat-divider>
      </mat-card-content>   
     <mat-card-actions>
      <!-- <button mat-icon-button>

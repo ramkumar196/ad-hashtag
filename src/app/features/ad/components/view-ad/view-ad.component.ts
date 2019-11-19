@@ -28,6 +28,15 @@ export class ViewAdComponent implements  OnInit, OnDestroy {
 this.createForm()
   }
 
+   contactSeller(message,userID,AdID)
+  {
+     this.userservice.sendMessage({message:message,user_id:userID,ad_id:AdID,'status':1})
+     .subscribe( data => {
+      this.router.navigate(['/user/chat']);
+     })
+
+  }
+
   fetchUserDetails(user_id)
   {
     this.userservice.getprofile({'user_id':user_id})

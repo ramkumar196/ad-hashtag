@@ -11,6 +11,7 @@ import { SubscriptionListComponent } from './components/subscription-list/subscr
 import { AppBrowserModule } from 'src/app/app.browser.module';
 import { UserAccountComponent } from './components/user-account/user-account.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,8 @@ const routes: Routes = [
    // {path: 'list/:id',component: UserListComponent,data: {title: 'List'}},
     {path: 'notifications',component: NotificationsComponent,data: {title: 'Notifications'}},
     {path: 'subscriptions',component: SubscriptionListComponent,data: {title: 'Subscriptions List'}},
+    {path: 'chat',component: ChatComponent,data: {title: 'chat'}},
+
    ]
   }   
 ];
@@ -35,6 +38,7 @@ const routes: Routes = [
     SubscriptionListComponent,
     UserAccountComponent,
     NotificationsComponent,
+    ChatComponent
   ],
   providers:[AuthguardService],
   imports: [
