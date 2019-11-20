@@ -89,6 +89,12 @@
 			  <h4 mat-line>Notifications</h4>
 			</mat-list-item>	</a>
 
+		<a  *ngIf="loginStatus()" [routerLink]="['/user/chat']">
+			<mat-list-item role="listitem">
+				<mat-icon  mat-list-icon>chat</mat-icon>
+				<h4 mat-line>Chats</h4>
+			</mat-list-item>	</a>
+
 		  <mat-list-item *ngIf="loginStatus()" role="listitem"  (click)="logout()">
 		    <mat-icon  mat-list-icon>block</mat-icon>
 		    <h4 mat-line>Logout</h4>

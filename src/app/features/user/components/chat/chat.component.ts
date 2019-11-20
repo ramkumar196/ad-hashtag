@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild} from '@angular/core';
 import { HashtagService } from 'src/app/services/hashtag.service';
 import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { Subscription } from 'rxjs';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { MatSidenav, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-chat',
@@ -14,7 +16,15 @@ export class ChatComponent implements OnInit {
 
   messageForm;
 
-  constructor(private fb: FormBuilder,private hashtagservice :HashtagService,private userservice :UserService,private snackBar :MatSnackBar) { 
+  isMobile;
+  userID;
+  AdID;
+  convID;
+  screenSizeWatcher: Subscription;
+  isSidenavOpen: Boolean = true;
+  @ViewChild(MatSidenav, {static: false}) private sideNave: MatSidenav;
+
+  constructor(private media: MediaObserver,private fb: FormBuilder,private hashtagservice :HashtagService,private userservice :UserService,private snackBar :MatSnackBar) { 
     this.createForm()
   }
 
@@ -28,14 +38,14 @@ export class ChatComponent implements OnInit {
     });;
   }
 
-    sendMessage(senderID,AdID)
+    sendMessage()
   {
      var inputdata = this.messageForm.value;
-     this.userservice.sendMessage({message:inputdata.message,user_id:senderID,ad_id:AdID})
+     this.userservice.sendMessage({message:inputdata.message,user_id:this.userID,ad_id:this.AdID})
      .subscribe( data => {
       this.openSnackBar("sent",'close');
-      //this.messages();
-
+      this.messages(this.convID);
+      this.messageForm.reset();
      })
 
   }
@@ -45,7 +55,19 @@ export class ChatComponent implements OnInit {
      this.userservice.conversationList({})
      .subscribe( data => {
 
-     	this.conversationList = data;
+       this.conversationList = data;
+
+       if(typeof(this.userID) == 'undefined')
+       this.userID = data[0].user_id;
+
+       if(typeof(this.AdID) == 'undefined')
+       this.AdID = data[0].ad_id;
+
+       if(typeof(this.convID) == 'undefined')
+       this.convID =data[0].conversation_key;
+
+       if(typeof(this.convID) == 'undefined')
+       this.messages(this.convID);
      })
 
   }
@@ -55,7 +77,12 @@ export class ChatComponent implements OnInit {
      this.userservice.messageList({'conv_id':id})
      .subscribe( data => {
 
-     	this.messageList = data;
+       this.messageList = data;
+       this.userID = data[0].user_id;
+       console.log(this.userID);
+       this.AdID = data[0].ad_id;
+       this.convID =data[0].conversation_key;
+
      })
 
   }
@@ -67,9 +94,30 @@ export class ChatComponent implements OnInit {
     });
     }
 
+    updateSidenav() {
+      var self = this;
+      setTimeout(() => {
+        self.isSidenavOpen = !self.isMobile;
+        self.sideNave.mode = self.isMobile ? 'over' : 'side';
+      });
+    }
+    chatSideBarInit() {
+      this.isMobile = this.media.isActive('xs') || this.media.isActive('sm');
+      this.updateSidenav();
+      this.screenSizeWatcher = this.media.media$.subscribe((change: MediaChange) => {
+        this.isMobile = (change.mqAlias === 'xs') || (change.mqAlias === 'sm');
+        this.updateSidenav();
+      });
+    }
+
   ngOnInit() {
 
-  	this.conversation()
+    this.conversation();
+    this.chatSideBarInit();
+
+    // setInterval(()=>{
+    //   this.conversation();
+    // },10000)
   }
 
 }

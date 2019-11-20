@@ -1,36 +1,111 @@
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let conv of conversationList"  >
-    <mat-expansion-panel-header (click)='messages(conv.conversation_key)'>
-      <mat-panel-title>
-        {{conv.sender_name}}
-      </mat-panel-title>
-      <mat-panel-description>
-        {{conv.hashtags}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div>
-    <mat-card class="m-3" style="width:50%" *ngFor="let msg of messageList" >
-        <!-- <mat-card-header>
-            <img [src]="msg.profile_image"  class="border " mat-card-avatar>
-            <mat-card-title class="font-14"> {{msg.username | titlecase}}</mat-card-title>
-            <mat-card-subtitle>{{msg.created_at}}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content class="mt-2"> -->
-                          {{msg.message}}
-          <!-- </mat-card-content> -->
-        </mat-card>
+<mat-card class="p-0">
+  <div class="text-center m-2" *ngIf="conversationList.length == 0">No messages</div>
+  <mat-sidenav-container class="chat-container" *ngIf="conversationList.length > 0">
+    <!-- Left sidebar -->
+    <mat-sidenav class="chat-sidenav" #chatSidebar [opened]="isSidenavOpen" mode="side">
+      <!-- Left side topbar -->
+      <mat-toolbar color="primary" class="chat-sidebar-toolbar">
+      </mat-toolbar>
+      <!-- Left side contact list -->
+      <mat-nav-list class="inbox-nav-list" role="list">
+        <mat-list-item *ngFor="let conv of conversationList" (click)="messages(conv.conversation_key)">
+          <p *ngIf="conv.conversation_key == convID" matLine style="color:#2f5e21">{{conv.sender_name}} <mat-icon aria-hidden="false" aria-label="Example home icon">sync_alt</mat-icon>
+            {{conv.username}}</p>
+          <p *ngIf="conv.conversation_key != convID" matLine >{{conv.sender_name}} <mat-icon aria-hidden="false" aria-label="Example home icon">sync_alt</mat-icon>
+              {{conv.username}}</p>
+          <p matLine *ngIf="conv.conversation_key == convID" style="color:#2f5e21">{{conv.hashtags}}</p>
+          <p matLine *ngIf="conv.conversation_key != convID" >{{conv.hashtags}}</p>
 
-    <form [formGroup]="messageForm" class="mt-1" (ngSubmit)="sendMessage(conv.user_id,conv.ad_id)">
-        <mat-form-field class="full-width mr-1">
-        <input
-        formControlName="message"
-        matInput
-         class="form-control" 
-        placeholder="Type your message"
-        value="">
-      </mat-form-field>
-      <button mat-fab [disabled]="!messageForm.valid" type="submit" color="accent"><mat-icon>send</mat-icon></button>
-      </form>
-    </div>
-  </mat-expansion-panel>
-</mat-accordion>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <!-- Right side -->
+    <div class="chats-wrap">
+      <!-- Right side topbar -->
+      <mat-toolbar color="primary" class="chat-toolbar mb-1">
+        <!-- sidebar toggle button -->
+        <button 
+        mat-icon-button
+        [style.alignSelf]="'center'"
+        class="mr-1" 
+        (click)="chatSidebar.toggle()"><mat-icon>short_text</mat-icon>
+        </button>
+
+        <!-- Selected active user -->
+        <div class="active-chat-user" fxLayout="row" fxLayoutAlign="start center">
+          <!-- <a 
+          [ngClass]="{online: activeChatUser.isOnline}" 
+          class="toolbar-avatar mr-1">
+            <img [src]="activeChatUser.photo" alt="">
+            <span class="status-dot"></span>
+          </a> -->
+          <div fxLayout="column">
+            <!-- <h6 class="m-0 font-normal fz-1">sghsgdkjh</h6> -->
+          </div>
+        </div>
+
+        <!-- Right side top menu -->
+        <span fxFlex></span>
+        <button [style.alignSelf]="'center'" mat-icon-button [matMenuTriggerFor]="toolbarDDMenu"
+          class="topbar-button-right hidden-on-open">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #toolbarDDMenu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>account_circle</mat-icon>Contact info
+          </button>
+          <button mat-menu-item>
+            <mat-icon>volume_mute</mat-icon>Mute
+          </button>
+          <button mat-menu-item>
+            <mat-icon>delete</mat-icon>Clear chat
+          </button>
+        </mat-menu>
+      </mat-toolbar>
+
+      <!-- Main chat body -->
+      <div class="conversations-hold">
+        <!-- single chat item -->
+            <mat-card class="single-conversation"         [style.background]="msg.bgColor"
+            *ngFor="let msg of messageList" fxLayout="row">
+                <mat-card-header>
+                    <img mat-card-avatar src="{{msg.sender_image}}" alt="">
+                    <mat-card-title>{{msg.sender_name}}</mat-card-title>
+                  <mat-card-subtitle>{{msg.message}}</mat-card-subtitle>
+                </mat-card-header>
+                <p class="chat-date text-muted"> {{msg.created_at}} </p>
+            </mat-card>
+          <!-- <a href="" class="toolbar-avatar online">
+            <img mat-card-avatar src="{{msg.sender_image}}" alt="">
+          </a>
+          <div>
+            <h5 class="chat-username text-muted">{{msg.sender_name}}</h5>
+            <div class="conversation-msg">
+              {{msg.message}}
+            </div>
+            <p class="chat-date text-muted"> 
+            </p>
+          </div>
+        </div> -->
+        <mat-divider></mat-divider>
+
+        <!-- Input box and send button -->
+        <div class="chat-input-actions" fxLayout="row">
+
+          <form [formGroup]="messageForm" class="mt-1" (ngSubmit)="sendMessage()">
+            <mat-form-field class="full-width mr-1">
+              <input formControlName="message" maxlength="60" matInput class="form-control" placeholder="Type your message" value="">
+            </mat-form-field>
+            <button mat-fab [disabled]="!messageForm.valid" type="submit" color="accent">
+              <mat-icon>send</mat-icon>
+            </button>
+          </form>
+        </div>
+
+      </div>
+      </div>
+  </mat-sidenav-container>
+</mat-card>
