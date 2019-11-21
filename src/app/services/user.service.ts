@@ -116,6 +116,17 @@ export class UserService {
   	 catchError(this.formatErrors))
    }
 
+   deleteConversation(data){
+    var id= '';
+
+     if(typeof(data.conv_id) != 'undefined')
+      id = data.conv_id;
+
+    return this.apiService.delete('/conversation/delete/'+id).pipe(
+  	 catchError(this.formatErrors))
+   }
+
+
    
 
 

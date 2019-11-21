@@ -54,13 +54,13 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #toolbarDDMenu="matMenu">
-          <button mat-menu-item>
+          <!-- <button mat-menu-item>
             <mat-icon>account_circle</mat-icon>Contact info
           </button>
           <button mat-menu-item>
             <mat-icon>volume_mute</mat-icon>Mute
-          </button>
-          <button mat-menu-item>
+          </button> -->
+          <button (click)="clearConversation(convID)" mat-menu-item>
             <mat-icon>delete</mat-icon>Clear chat
           </button>
         </mat-menu>

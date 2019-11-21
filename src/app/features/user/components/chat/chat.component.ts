@@ -58,18 +58,30 @@ export class ChatComponent implements OnInit {
        this.conversationList = data;
 
        if(typeof(this.userID) == 'undefined')
-       this.userID = data[0].user_id;
+       {
+        if(data[0].product_owner_status == 1)
+        this.userID = data[0].sender_id;
+        else
+        this.userID = data[0].user_id;
+       }
 
        if(typeof(this.AdID) == 'undefined')
        this.AdID = data[0].ad_id;
 
-       if(typeof(this.convID) == 'undefined')
        this.convID =data[0].conversation_key;
-
-       if(typeof(this.convID) == 'undefined')
        this.messages(this.convID);
      })
 
+  }
+
+  clearConversation(id)
+  {
+    this.userservice.deleteConversation({'conv_id':id})
+     .subscribe( data => {
+      this.conversation();
+      this.openSnackBar("Conversation Deleted",'close');
+     })
+    
   }
 
   messages(id)
@@ -78,8 +90,12 @@ export class ChatComponent implements OnInit {
      .subscribe( data => {
 
        this.messageList = data;
+
+       if(data[0].product_owner_status == 1)
+       this.userID = data[0].sender_id;
+       else
        this.userID = data[0].user_id;
-       console.log(this.userID);
+
        this.AdID = data[0].ad_id;
        this.convID =data[0].conversation_key;
 
@@ -115,9 +131,9 @@ export class ChatComponent implements OnInit {
     this.conversation();
     this.chatSideBarInit();
 
-    // setInterval(()=>{
-    //   this.conversation();
-    // },10000)
+    setInterval(()=>{
+      this.conversation();
+    },60000)
   }
 
 }
