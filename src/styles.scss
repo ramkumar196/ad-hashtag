@@ -25,17 +25,17 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($candy-app-theme);
+$custom-typography: mat-typography-config(
+    $font-family: 'Capriola'
 
+);
 
 @import '~bootstrap/dist/css/bootstrap.css';
 
 @import '~bootstrap/scss/bootstrap-reboot';
 @import '~bootstrap/scss/bootstrap-grid';
 
-$custom-typography: mat-typography-config(
-    $font-family: 'Roboto'
 
-);
 
 @include mat-core($custom-typography);
 
@@ -49,10 +49,14 @@ mat-sidenav-container.mat-drawer-container {
   overflow: auto;
   flex-grow: 1;
 }
+*
+{
+  font-family: 'Capriola', sans-serif;
+}
 
 body
 {
-   font-size:15px;
+  font-size:15px;
 }
 
 .header
@@ -522,5 +526,5 @@ a:hover { color: #1b5e20;text-decoration:none }
 
 
 
-@import 'tim.css';
-@import 'quill.css';
+//@import 'tim.css';
+//@import 'quill.css';

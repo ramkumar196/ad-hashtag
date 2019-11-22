@@ -289,7 +289,7 @@ export class AdListComponent implements OnInit {
       input.value = '';
     }
 
-    this.hashtagCtrl.setValue(null);
+    this.hashtagCtrl= null;
   }
 
   remove(hashtag: string): void {

@@ -17,6 +17,7 @@ export class ChatComponent implements OnInit {
   messageForm;
 
   isMobile;
+  chatWithUser;
   userID;
   AdID;
   convID;
@@ -60,9 +61,16 @@ export class ChatComponent implements OnInit {
        if(typeof(this.userID) == 'undefined')
        {
         if(data[0].product_owner_status == 1)
+        {
         this.userID = data[0].sender_id;
+        this.chatWithUser = data[0].sender_name;
+        }
         else
+        {
         this.userID = data[0].user_id;
+        this.chatWithUser = data[0].username;
+
+        }
        }
 
        if(typeof(this.AdID) == 'undefined')
@@ -92,9 +100,16 @@ export class ChatComponent implements OnInit {
        this.messageList = data;
 
        if(data[0].product_owner_status == 1)
+       {
        this.userID = data[0].sender_id;
+       this.chatWithUser = data[0].sender_name;
+       }
        else
+       {
        this.userID = data[0].user_id;
+       this.chatWithUser = data[0].username;
+
+       }
 
        this.AdID = data[0].ad_id;
        this.convID =data[0].conversation_key;

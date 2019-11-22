@@ -152,6 +152,8 @@ export class PostAdComponent  implements OnInit {
 
 
         this.errors = err.error;
+        this.showHttpLoader = false;
+
 
         // if(this.errors.username)
         // this.signUpForm.controls['username'].setErrors({'incorrect': true});

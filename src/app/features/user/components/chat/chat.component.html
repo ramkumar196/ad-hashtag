@@ -9,12 +9,9 @@
       <!-- Left side contact list -->
       <mat-nav-list class="inbox-nav-list" role="list">
         <mat-list-item *ngFor="let conv of conversationList" (click)="messages(conv.conversation_key)">
-          <p *ngIf="conv.conversation_key == convID" matLine style="color:#2f5e21">{{conv.sender_name}} <mat-icon aria-hidden="false" aria-label="Example home icon">sync_alt</mat-icon>
+          <p matLine>{{conv.sender_name}} <mat-icon aria-hidden="false" aria-label="Example home icon">sync_alt</mat-icon>
             {{conv.username}}</p>
-          <p *ngIf="conv.conversation_key != convID" matLine >{{conv.sender_name}} <mat-icon aria-hidden="false" aria-label="Example home icon">sync_alt</mat-icon>
-              {{conv.username}}</p>
-          <p matLine *ngIf="conv.conversation_key == convID" style="color:#2f5e21">{{conv.hashtags}}</p>
-          <p matLine *ngIf="conv.conversation_key != convID" >{{conv.hashtags}}</p>
+          <p matLine>{{conv.hashtags | hashtag}}</p>
 
           <mat-divider></mat-divider>
         </mat-list-item>
@@ -43,7 +40,7 @@
             <span class="status-dot"></span>
           </a> -->
           <div fxLayout="column">
-            <!-- <h6 class="m-0 font-normal fz-1">sghsgdkjh</h6> -->
+            <h6 class="m-0 font-normal fz-1"><a [routerLink]="['/user/account/',userID]">{{chatWithUser}}</a></h6>
           </div>
         </div>
 
@@ -69,14 +66,16 @@
       <!-- Main chat body -->
       <div class="conversations-hold">
         <!-- single chat item -->
-            <mat-card class="single-conversation"         [style.background]="msg.bgColor"
+            <mat-card class="single-conversation m-2"         [style.background]="msg.bgColor"
             *ngFor="let msg of messageList" fxLayout="row">
                 <mat-card-header>
                     <img mat-card-avatar src="{{msg.sender_image}}" alt="">
-                    <mat-card-title>{{msg.sender_name}}</mat-card-title>
-                  <mat-card-subtitle>{{msg.message}}</mat-card-subtitle>
+                  <mat-card-subtitle>{{msg.username}}</mat-card-subtitle>
                 </mat-card-header>
+                <mat-card-content>
+                <p>{{msg.message}}</p>
                 <p class="chat-date text-muted"> {{msg.created_at}} </p>
+              </mat-card-content>
             </mat-card>
           <!-- <a href="" class="toolbar-avatar online">
             <img mat-card-avatar src="{{msg.sender_image}}" alt="">
@@ -96,7 +95,8 @@
         <div class="chat-input-actions" fxLayout="row">
 
           <form [formGroup]="messageForm" class="mt-1" (ngSubmit)="sendMessage()">
-            <mat-form-field class="full-width mr-1">
+            <mat-form-field class="full-width mr-1" appearance="outline">
+              <mat-label>Enter Your Message</mat-label>
               <input formControlName="message" maxlength="60" matInput class="form-control" placeholder="Type your message" value="">
             </mat-form-field>
             <button mat-fab [disabled]="!messageForm.valid" type="submit" color="accent">

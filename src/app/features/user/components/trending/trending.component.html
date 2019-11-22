@@ -15,7 +15,7 @@
   <div class="card p-2"  *ngFor="let tl of trendingHashtags"  >
 
       <div class="card-body">
-    <h5 class="card-title"><a [routerLink]="['/ad/list/'+tl.id]" routerLinkActive="active"> {{tl.hashtag | hashtag}}</a></h5>
+    <h5 class="card-title"><a [routerLink]="['/ad/list/'+tl.hashtag]" routerLinkActive="active"> {{tl.hashtag | hashtag}}</a></h5>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">Ads - {{tl.count}}</li>
