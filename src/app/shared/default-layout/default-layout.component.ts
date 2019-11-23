@@ -86,12 +86,16 @@ export class DefaultLayoutComponent implements OnInit {
     return this.userService.checklogin();
   }
 
-    logout()
+    logout() 
   {
+    console.log('jwt toke',this.jwtService.getToken());
+    if(this.jwtService.getToken() != '')
+    {
     this.jwtService.destroyToken();
     this.dialog.confirm({title:'Logout',message:'Logged out Successfully',confirm:false})
 
     this.router.navigate(['/auth/login']);
+    }
   }
 
 

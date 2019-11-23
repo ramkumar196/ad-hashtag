@@ -22,7 +22,7 @@ export class CommonService {
   }
 
     siteSettings(data){
-    return this.apiService.post('/common/settings',data).pipe(
+    return this.apiService.post('/settings',data).pipe(
      catchError(this.formatErrors))
    }
 }

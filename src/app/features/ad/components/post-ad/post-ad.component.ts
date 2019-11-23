@@ -59,7 +59,7 @@ export class PostAdComponent  implements OnInit {
           )
         )
       )
-      .subscribe(data => this.filteredCities = data.details);
+      .subscribe(data => this.filteredCities = data);
   }
 
   createForm()

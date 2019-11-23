@@ -89,7 +89,11 @@ export class HeaderComponent implements OnInit {
     );  } 
   
   ngOnInit() {
+    var token = this.jwtService.getToken()
+    if( token != undefined )
+    {
       this.verifyToken();
+    }
   }
 
     ngOnDestroy(): void {

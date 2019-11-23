@@ -41,8 +41,8 @@ name="adtextarea"
     <mat-label>City</mat-label>
     <input matInput placeholder="City Name" aria-label="City Name" [matAutocomplete]="auto" formControlName="city">
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let city of filteredCities " [value]="city.name">
-        <span>{{city.name}}</span>
+      <mat-option *ngFor="let city of filteredCities " [value]="city.city_name">
+        <span>{{city.city_name}}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

@@ -81,7 +81,7 @@ export class AdListComponent implements OnInit {
           )
         )
       )
-      .subscribe(data => this.filteredCities = data.details);
+      .subscribe(data => this.filteredCities = data);
 
 
   }

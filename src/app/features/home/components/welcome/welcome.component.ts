@@ -17,8 +17,6 @@ export class WelcomeComponent implements OnInit {
   colspanValue = 1;
   color: ThemePalette;
   settings={
-    home_page_text:'',
-    home_page_sub_text:'',
     slider_images:[]
   };
   home_page_text={};
@@ -26,6 +24,16 @@ export class WelcomeComponent implements OnInit {
   showNavigationIndicators =true;
   adList = {};
   showLoader= false;
+
+  stepsToPost = [
+    {text:'Select Your Trending Hashtag',icon : 'feedback'},
+    {text:'Enter your ad text',icon : 'grade'},
+    {text:'Add your ad related images',icon : 'cloud_upload'},
+    {text:'Post Your Ad.....',icon : 'post_add'},
+    {text:'Now your ad is trending around the world',icon : 'language'},
+
+
+  ];
   
   constructor(private hashtagservice : HashtagService,private adservice :AdsService,private commonservice : CommonService,private router: Router,private route: ActivatedRoute ) {  }
 
@@ -54,7 +62,7 @@ export class WelcomeComponent implements OnInit {
        }
       this.adservice.SearchAdList({hashtags:input,city: '',limit:10})
         .subscribe( data => {
-          this.adList = data.details;
+          this.adList = data;
             setTimeout(()=>{   
                   this.showLoader = false;
              }, 2000)
@@ -68,7 +76,7 @@ export class WelcomeComponent implements OnInit {
 
      this.hashtagservice.hashtaglist({keyword:'',all:true})
       .subscribe( data => {
-        this.trendingHashtags = data.details;
+        this.trendingHashtags = data;
         var firstHashtag = this.trendingHashtags[0].hashtag;
         this.adListing(firstHashtag);
 
@@ -76,7 +84,19 @@ export class WelcomeComponent implements OnInit {
 
       this.commonservice.siteSettings({})
       .subscribe( data => {
-        this.settings = data.details;
+        this.settings = data;
+        this.settings.slider_images=[
+          data.banner_image_1,
+          data.banner_image_2,
+          data.banner_image_3,
+          data.banner_image_4
+
+        ];
+        //this.settings.slider_images.push(data.banner_image_2);
+        //this.settings.slider_images.push(data.banner_image_3);
+       // this.settings.slider_images.push(data.banner_image_);
+
+
         console.log('settings',this.settings)
       })
 

@@ -1,20 +1,36 @@
-<!-- <div class="row">
-<div class="col-sm" >
-  <div class="overlay"></div>
-   <ngb-carousel class="sliderwidth" *ngIf="settings.slider_images?.length > 0" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
-    <ng-template ngbSlide *ngFor="let image of settings.slider_images">
-      <img [src]="image.path" class="img-fluid" alt="Random slide">
-      <div class="carousel-caption d-none d-md-block">
-          <a  [routerLink]="['/auth/post-ad']"routerLinkActive="active"><button class="mr-2" mat-raised-button color="accent">Post Ad</button></a>
-           <h3>{{settings.home_page_text}}</h3>
-            <p>{{settings.home_page_sub_text}}</p>
-            <hr class="my-4">
-        <p></p>
-       
-      </div>
-    </ng-template>
-  </ngb-carousel>
+<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+	<div class="item item-2" fxFlex>
+<ngb-carousel *ngIf="settings.slider_images?.length > 0" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+ <div *ngFor="let image of settings.slider_images">
+  <ng-template  ngbSlide *ngIf="image != ''"  >
+    <div class="picsum-img-wrapper" > 
+      <img  class="img-fluid brightness"   [src]="image" alt="Random slide">
+    </div>
+    <div class="carousel-caption">
+      <h3 style="color:white">{{settings.home_page_title}}</h3>
+      <p style="color:white">{{settings.home_page_description}}</p>
+      <button mat-raised-button  type="button" color="accent">Post AD</button>
+    </div>
+  </ng-template>
+</div>
+</ngb-carousel>
+</div>
+</div>
+<mat-toolbar>Steps to Post Ad</mat-toolbar>
+<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+<mat-card *ngFor="let msg of stepsToPost" fxFlex>
+  
+  <button mat-fab aria-label="Example icon-button with a heart icon">
+    <mat-icon>{{msg.icon}}</mat-icon>
+  </button>
+  <p>
+  {{msg.text}}
+  </p>
 
+
+</mat-card>
+</div>
+<!-- 
  <div class="col-sm-1" >
 </div>
 </div>
@@ -50,7 +66,7 @@
     <div class="card" *ngFor="let ad of adList"  (click)="viewAd(ad._id)">
       <img  [src]="ad.ad_image_1"  class="card-img-top colored-shadow" alt="">
         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
+            <h5 class="card-title">Card title</h5> 
         --> <!--   <p class="card-text" [innerHtml]="ad.show_text"></p>
         </div>
     </div>

@@ -50,8 +50,8 @@
     <mat-label>City Name</mat-label>
     <input matInput placeholder="City Name" [matAutocomplete]="auto2" [formControl]="cityCtrl">
     <mat-autocomplete #auto2="matAutocomplete"  (optionSelected)="selectedcity($event)">
-      <mat-option *ngFor="let city of filteredCities " [value]="city.name">
-        <span>{{city.name}}</span>
+      <mat-option *ngFor="let city of filteredCities " [value]="city.city_name">
+        <span>{{city.city_name}}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

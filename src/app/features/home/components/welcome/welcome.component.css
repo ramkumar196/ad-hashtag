@@ -1,0 +1,14 @@
+.sepia {
+    filter: sepia(0.5);
+  }
+  
+  .sepia1 {
+    filter: sepia(100%);
+  }
+
+  .brightness {
+    filter: brightness(0.5);
+  }
+  .brightness1 {
+    filter: brightness(150%);
+  }
