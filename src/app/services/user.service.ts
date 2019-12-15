@@ -40,12 +40,12 @@ export class UserService {
 
    getprofile(data){
 
-    user_id= '';
+    var url= '/user/profile';
 
      if(typeof(data.user_id) != 'undefined')
-     var user_id = data.user_id;
+     var url = '/user/profile/'+data.user_id;
 
-    return this.apiService.post('/user/profile/'+user_id,{}).pipe(
+    return this.apiService.post(url,{}).pipe(
      catchError(this.formatErrors))
    }
 

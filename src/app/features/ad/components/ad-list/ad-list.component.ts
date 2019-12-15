@@ -15,6 +15,8 @@ import {MatSnackBar} from '@angular/material';
 import { AdsService } from 'src/app/services/ads.service';
 import { HashtagService } from 'src/app/services/hashtag.service';
 import { UserService } from 'src/app/services/user.service';
+import { JwtService } from 'src/app/services/jwt.service';
+
 import { NotifyComponent } from 'src/app/templates/notify/notify.component';
 
 
@@ -64,6 +66,7 @@ export class AdListComponent implements OnInit {
     private adservice :AdsService,
     private hashtagservice :HashtagService,
     public userService :UserService,
+    public jwt: JwtService,
     private router :Router ,
      private snackBar :MatSnackBar ,
      private dialog : MatDialog ,
@@ -102,7 +105,17 @@ export class AdListComponent implements OnInit {
  //    });
 
  //  }
-
+  getLoggerInStatus()
+  {
+    if(this.jwt.getToken() != '')
+    {
+      return this.jwt.getToken();
+    }
+    else
+    {
+      return '';
+    }
+  }
 
   detectDevice() { 
    if( navigator.userAgent.match(/Android/i)
@@ -121,7 +134,17 @@ export class AdListComponent implements OnInit {
   }
 
   viewAd(id) {
-         this.router.navigate(['/ad/view/'+id]);
+    if(this.jwt.getToken() != '' && this.jwt.getToken() != undefined)
+    {
+      this.router.navigate(['/ad/view/'+id]);
+    }
+    else{
+      this.openSnackBar("Please login to view ads",'close');
+      setTimeout(()=>{
+        this.router.navigate(['/auth/login']);
+      },3000)
+    }
+
   }
 
   editAd(id)
@@ -181,13 +204,13 @@ export class AdListComponent implements OnInit {
         //this.hashtags= this.hashtags.concat(this.subHashtags);
 
       })
-     this.hashtagservice.hashtaglist({keyword:''})
-      .subscribe( data => {
-        this.filteredHashtags = data;
+    //  this.hashtagservice.hashtaglist({keyword:''})
+    //   .subscribe( data => {
+    //     this.filteredHashtags = data;
 
-        console.log(this.filteredHashtags);
+    //     console.log(this.filteredHashtags);
 
-      })
+    //   })
 
     this.usersForm = this.fb.group({
       hashtags: null
@@ -205,7 +228,10 @@ export class AdListComponent implements OnInit {
           )
         )
       )
-      .subscribe(data => this.filteredHashtags = data);
+      .subscribe(data => {
+        this.filteredHashtags = data;
+         console.log(this.filteredHashtags);
+      });
       if(this.detectDevice())
       {
         this.deviceCols = 3
@@ -243,10 +269,17 @@ export class AdListComponent implements OnInit {
        if(id != '' && typeof(id) != 'undefined')
        {
          this.hashtags.push(id);
+         try
+         {
          this.hashtagInput.nativeElement.value = '';
          this.hashtagCtrl.setValue(null);
+         }
+         catch(err)
+         {
+
+         }
          console.log("herrererere");
-         this.adListing();
+         this.adListing(0);
        }
        else
        {
@@ -261,7 +294,9 @@ export class AdListComponent implements OnInit {
       console.log('hash',this.hashtags);
       var cityname = this.cityCtrl.value;
 
-    this.adservice.SearchAdList({hashtags:this.hashtags,city: cityname , page : page})
+      var id = this.getLoggerInStatus();
+
+    this.adservice.SearchAdList({hashtags:this.hashtags,city: cityname , page : page},id)
       .subscribe( data => {
         this.adList = data.data;
         console.log('ad list',this.adList);
@@ -272,7 +307,7 @@ export class AdListComponent implements OnInit {
       })
     }
 
-  @ViewChild('hashtagInput',{ read: true, static: false }) hashtagInput: ElementRef<HTMLInputElement>;
+  @ViewChild('hashtagInput',{static: false}) hashtagInput: ElementRef<HTMLInputElement>;
 
 
   add(event: MatChipInputEvent): void {
@@ -327,7 +362,12 @@ export class AdListComponent implements OnInit {
       else
       this.openSnackBar("Removed from Favourites",'close');
 
-     })
+     },err => {
+      if(err.status == 401)
+      {
+        this.openSnackBar("Please login to favourite",'close');
+      }
+    })
   }
 
     openSnackBar(message: string, action: string) {
@@ -342,7 +382,8 @@ export class AdListComponent implements OnInit {
   // }
   paginateAdListing(event)
   {
-    let offset = event.pageSize * event.pageIndex
+    console.log(event);
+    let offset = event.pageIndex
     this.adListing(offset);
   }
 }

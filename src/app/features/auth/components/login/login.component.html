@@ -25,7 +25,9 @@
 		  <div class="button-row mt-5">
 			<mat-spinner [diameter]="30" *ngIf="isSubmitting"></mat-spinner>
 			<button *ngIf="!isSubmitting" mat-raised-button [disabled]="!loginForm.valid" type="submit" color="accent">Login</button>
-					<div class="mt-2"><a [routerLink]="['/auth/reset-password']">Forgot Password</a></div>
+			<button [routerLink]="['/auth/signup']" mat-button>Create a Account</button>
+
+			<div class="mt-2"><a [routerLink]="['/auth/reset-password']">Forgot Password</a></div>
   
 		  </div>
   

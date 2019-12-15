@@ -1,13 +1,13 @@
 <mat-progress-bar *ngIf="showHttpLoader" color="accent" mode="indeterminate"></mat-progress-bar>
 <mat-toolbar color="white">Post AD</mat-toolbar>
-<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
-  <div class="item item-1" fxFlex="15%"></div>
-  <div class="item item-2" fxFlex>
+<div [class]='addOverlay()' style="background:white" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+  <div class="item item-1" fxFlex="14%"></div>
+  <div class="item item-2 m-2" fxFlex>
     <form [formGroup]="postAdForm" class="mt-1">
       <mat-form-field class="full-width" appearance="outline">
         <mat-label>Ad Text</mat-label>
         <nz-mention (nzOnSearchChange)="findChoices($event)" [nzSuggestions]="hashtags" [nzPrefix]="['#']"
-          [nzNotFoundContent]="'Not Found'">
+          [nzNotFoundContent]="'Add Your Own Hashtag'">
           <textarea matInput nz-input [nzAutosize]="{ minRows: 6, maxRows: 4 }" formControlName="adtextarea"
             [(ngModel)]="adtextarea" nzMentionTrigger>
   </textarea>
@@ -107,5 +107,5 @@ pattern="[a-zA-Z $#%]*"
       </div>
     </form>
   </div>
-  <div class="item item-1" fxFlex="15%"></div>
+  <div class="item item-1" fxFlex="14%"></div>
 </div>

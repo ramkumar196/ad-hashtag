@@ -24,7 +24,7 @@ export class UserProfileComponent implements OnInit {
     email:'',
     phone:'',
     address:'',
-     businessName:'',
+    business_name:'',
      business_description:'',
      business_address:'',
      userType:''

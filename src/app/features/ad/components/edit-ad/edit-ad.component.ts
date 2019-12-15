@@ -26,7 +26,7 @@ export interface State {
   styleUrls: ['./edit-ad.component.css']
 })
 export class EditAdComponent implements OnInit, OnDestroy {
-
+  adtextarea;
 formControlValue = '';
   postAdForm :FormGroup;
   isSubmitting;
@@ -62,6 +62,18 @@ formControlValue = '';
         )
       )
       .subscribe(data => this.filteredCities = data);
+  }
+ 
+  addOverlay()
+  {
+    if(this.showHttpLoader)
+    {
+      return 'container overlay-hashad';
+    }
+    else
+    {
+      return 'container';
+    }
   }
 
   createForm()

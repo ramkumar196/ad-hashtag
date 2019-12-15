@@ -4,12 +4,12 @@
  <div *ngFor="let image of settings.slider_images">
   <ng-template  ngbSlide *ngIf="image != ''"  >
     <div class="picsum-img-wrapper" > 
-      <img  class="img-fluid brightness"   [src]="image" alt="Random slide">
+      <img  class="img-fluid "   [src]="image" alt="Random slide">
     </div>
     <div class="carousel-caption">
-      <h3 style="color:white">{{settings.home_page_title}}</h3>
-      <p style="color:white">{{settings.home_page_description}}</p>
-      <button mat-raised-button  type="button" color="accent">Post AD</button>
+      <!-- <h3 style="color:white">{{settings.home_page_title}}</h3>
+      <p style="color:white">{{settings.home_page_description}}</p> -->
+      <!-- <button mat-raised-button  type="button" color="accent">Post AD</button> -->
     </div>
   </ng-template>
 </div>
@@ -17,16 +17,18 @@
 </div>
 </div>
 <mat-toolbar>Steps to Post Ad</mat-toolbar>
-<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
-<mat-card *ngFor="let msg of stepsToPost" fxFlex>
-  
-  <button mat-fab aria-label="Example icon-button with a heart icon">
-    <mat-icon>{{msg.icon}}</mat-icon>
-  </button>
-  <p>
+<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center"  fxLayoutGap="10px" fxLayoutGap.xs="0">
+      
+  <mat-card fxFlex *ngFor="let msg of stepsToPost">
+      <mat-toolbar color="primary">
+      <mat-toolbar-row >
+      <mat-icon style="flex: 1 1 auto;
+      text-align: center;" class="img-container-inline" aria-hidden="false" aria-label="Example user verified icon">{{msg.icon}}</mat-icon>
+      </mat-toolbar-row>
+      </mat-toolbar>
+  <p class="text-justify m-2">
   {{msg.text}}
   </p>
-
 
 </mat-card>
 </div>

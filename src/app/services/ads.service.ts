@@ -41,8 +41,12 @@ export class AdsService {
      catchError(this.formatErrors))
    }
 
-    SearchAdList(data){
+    SearchAdList(data,id){
      var url = '/ad/list';
+     if(id != '' && id != undefined)
+     {
+       url = '/ad/list/logged-user'
+     }
      if(data.page != 0 && data.page != undefined )
      {
       url = '/ad/list?page='+data.page;

@@ -1,13 +1,14 @@
-
 <!-- <mat-grid-list cols="3" gutterSize="5px" rowHeight="110px" style="background-color:#b8c0c7">
 <mat-grid-tile [colspan]="3"  [rowspan]="2"> -->
 <!-- </mat-grid-tile>
 <mat-grid-tile [colspan]="deviceCols" [rowspan]="4" *ngFor="let ad of adList"> -->
 <!--   <div class="row mx-md-n5"  style="background: #ffff" >
- -->    <!-- <mat-toolbar color="primary" >
+ -->
+<!-- <mat-toolbar color="primary" >
   <mat-toolbar-row> -->
 <!-- <form [formGroup]='usersForm'>
- --><!--     <mat-form-field class="example-full-width">
+ -->
+<!--     <mat-form-field class="example-full-width">
     <input matInput placeholder="Search" [matAutocomplete]="auto" formControlName='hashtags'>
   </mat-form-field>
  <mat-autocomplete #auto="matAutocomplete" >
@@ -18,47 +19,38 @@
       </mat-option>
     </ng-container>
   </mat-autocomplete> -->
- <mat-form-field  class="col-sm-6 font-14"  color="accent" appearance="outline">
-    <mat-label>Hashtags</mat-label>
-    <mat-chip-list #chipList>
-    <mat-chip
-      *ngFor="let tag of hashtags"
-      [selectable]="selectable"
-      [removable]="removable"
-      (removed)="remove(tag)">
+<div style="background:white">
+<mat-form-field class="col-sm-6 font-14" color="accent" appearance="outline">
+  <mat-label>Hashtags</mat-label>
+  <mat-chip-list #chipList>
+    <mat-chip *ngFor="let tag of hashtags" [selectable]="selectable" [removable]="removable" (removed)="remove(tag)">
       {{tag}}
       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
     </mat-chip>
-    <input
-      placeholder="#"
-      #hashtagInput
-      [formControl]="hashtagCtrl"
-      [matAutocomplete]="auto"
-      [matChipInputFor]="chipList"
-      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      [matChipInputAddOnBlur]="addOnBlur"
-      (matChipInputTokenEnd)="add($event)">
+    <input placeholder="#" #hashtagInput [formControl]="hashtagCtrl" [matAutocomplete]="auto"
+      [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
     <mat-option *ngFor="let list of filteredHashtags " [value]="list.hashtag">
       {{list.hashtag}}
-    </mat-option> 
+    </mat-option>
   </mat-autocomplete>
-  </mat-form-field>
+</mat-form-field>
 
-  <mat-form-field class="col-sm-4 font-14"  color="accent" appearance="outline">
-    <mat-label>City Name</mat-label>
-    <input matInput placeholder="City Name" [matAutocomplete]="auto2" [formControl]="cityCtrl">
-    <mat-autocomplete #auto2="matAutocomplete"  (optionSelected)="selectedcity($event)">
-      <mat-option *ngFor="let city of filteredCities " [value]="city.city_name">
-        <span>{{city.city_name}}</span>
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-   <button class="col-sm-2" mat-icon-button (click)="adListing()">
-    <mat-icon aria-label="">search</mat-icon>
-  </button>
-
+<mat-form-field class="col-sm-4 font-14" color="accent" appearance="outline">
+  <mat-label>City Name</mat-label>
+  <input matInput placeholder="City Name" [matAutocomplete]="auto2" [formControl]="cityCtrl">
+  <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedcity($event)">
+    <mat-option *ngFor="let city of filteredCities " [value]="city.city_name">
+      <span>{{city.city_name}}</span>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<button class="col-sm-2" mat-icon-button (click)="adListing()">
+  <mat-icon aria-label="">search</mat-icon>
+</button>
+</div>
 <!-- 
 <div id="card-container">
 <mat-card  *ngFor="let ad of adList" class="ht-cards" >
@@ -91,9 +83,9 @@
 </mat-card>
 </div> -->
 
-<div class="card-columns m-2" >
+<!-- <div class="card-columns m-1"> -->
   <div class="text-center m-2" *ngIf="adList.length == 0">No Listings</div>
-  <div class="card"  *ngFor="let ad of adList" >
+  <!-- <div class="card"  *ngFor="let ad of adList" >
     <img *ngIf="ad.ad_image_1"  class="card-img-top" [src]="ad.ad_image_1" alt="" (click)="viewAd(ad.id)">
     <div class="card-body">
       <p class="card-text" [innerHtml]="ad.show_text"></p>
@@ -117,11 +109,31 @@
             </button>
            </mat-list-item>
         </mat-list>
-    </div>
+    </div> -->
+  <div class="container" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="flex-start" fxLayoutGap="10px"
+    fxLayoutGap.xs="0">
+    <mat-card class="mt-1" *ngFor="let ad of adList" fxFlex="0 1 calc(33.3% - 10px)" fxFlex.lt-md="0 1 calc(50% - 32px)"
+      fxFlex.lt-sm="100%">
+      <img *ngIf="ad.ad_image_1" mat-card-image [src]="ad.ad_image_1" alt="" (click)="viewAd(ad.id)">
+      <mat-card-content>
+        <p [innerHtml]="ad.show_text"></p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button>
+          <mat-icon title="Views" aria-label="Example icon-button with a heart icon">visibility</mat-icon>{{ad.views}}
+        </button>
+        <button mat-icon-button *ngIf="ad.fav_status">
+          <mat-icon color="warn" title="Remove Favourite" (click)="updateFav(ad.id,1)"
+            aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
+        </button>
+        <button mat-icon-button *ngIf="!ad.fav_status">
+          <mat-icon title="Add Favourite" (click)="updateFav(ad.id,0)"
+            aria-label="Example icon-button with a heart icon">favorite</mat-icon>{{ad.fav_count}}
+        </button>
+      </mat-card-actions>
+    </mat-card>
   </div>
-  </div>
-  <mat-paginator *ngIf="adList.length > 0" [length]="paginationMeta.total"
-              [pageSize]="paginationMeta.per_page"
-              (page)="paginateAdListing($event)"
-              >
+<!-- </div> -->
+<mat-paginator *ngIf="adList.length > 0" [length]="paginationMeta.total" [pageSize]="paginationMeta.per_page"
+  (page)="paginateAdListing($event)">
 </mat-paginator>

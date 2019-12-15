@@ -1,6 +1,6 @@
 <app-header></app-header>
 <header class="header" >
-	<mat-toolbar color="primary" >
+	<mat-toolbar >
   <mat-toolbar-row>
     <button mat-icon-button (click)="snav.toggle()" ><mat-icon>menu</mat-icon></button>
 		<a title="Home" [routerLink]="['/']"routerLinkActive="active">
@@ -22,6 +22,18 @@
 			<use id="AD " href="#img5" x="266" y="63" />
 			</svg>
 		</a>
+		<div style="margin-left:auto;" >
+		<button *ngIf="!mobileQuery.matches && !loginStatus()" mat-flat-button class="ml-2" color="accent"  [routerLink]="['/auth/signup']">Create New Account</button> 
+		<button *ngIf="!mobileQuery.matches" mat-flat-button class="ml-2" color="accent" [routerLink]="['/ad/post']">    <mat-icon>edit</mat-icon>
+			Post AD</button>
+		<button [routerLink]="['/auth/signup']" class="mr-2" *ngIf="mobileQuery.matches && !loginStatus()" mat-mini-fab aria-label="Example icon-button with a heart icon">
+				<mat-icon>account_box</mat-icon>
+				</button>
+		<button [routerLink]="['/ad/post']" class="mr-2" *ngIf="mobileQuery.matches" mat-mini-fab aria-label="Example icon-button with a heart icon">
+				<mat-icon>edit</mat-icon>
+				</button>
+		</div>
+
 <!-- 	<p>
     <mat-form-field   style="" appearance="outline">
     <input matInput placeholder="Search....">
@@ -101,7 +113,7 @@
 		  </mat-list-item>
 </mat-list>
 </mat-sidenav>
-<mat-sidenav-content class="left:5px">
+<mat-sidenav-content class="left:5px"  style="background:rgb(230, 229, 229)">
 	<router-outlet  ></router-outlet>
 </mat-sidenav-content>
 <footer>

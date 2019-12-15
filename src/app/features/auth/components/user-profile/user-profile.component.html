@@ -8,6 +8,7 @@
 				<div fxFlex  *ngIf="profileImage" >
 						<img class="img-thumbnail" src="{{profileImage}}"
 						(click)="fileInput.click()">
+						<span>click to upload new profile</span>
 				</div>
 				<mat-icon fxFlex *ngIf="!profileImage" aria-hidden="false" (click)="fileInput.click()" style="width:100px"
 					aria-label="Example home icon">add_a_photo</mat-icon>

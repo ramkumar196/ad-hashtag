@@ -29,6 +29,7 @@ export interface State {
 
 export class PostAdComponent  implements OnInit {
 
+  adtextarea;
   formControlValue = '';
   postAdForm :FormGroup;
   isSubmitting;
@@ -184,9 +185,9 @@ export class PostAdComponent  implements OnInit {
       );
       }  
   
-   findChoices(searchText: string) {
+   findChoices(searchText: any) {
 
-    this.hashtagService.hashtaglist({'keyword':searchText})
+    this.hashtagService.hashtaglist({'keyword':searchText.value})
     .subscribe(
       data => {    
         console.log("data",data);
@@ -214,6 +215,18 @@ export class PostAdComponent  implements OnInit {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  addOverlay()
+  {
+    if(this.showHttpLoader)
+    {
+      return 'container overlay-hashad';
+    }
+    else
+    {
+      return 'container';
+    }
   }
 
   inputValue: string;

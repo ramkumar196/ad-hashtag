@@ -77,7 +77,7 @@
           </ng-template>
           <div class="text-center m-2" *ngIf="followList.followers.length == 0">No Followers</div>
           <div class="container" fxLayout fxLayout.xs="column"  *ngFor="let fl of followList.followers" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
-            <mat-card class="mt-1 light-grey-bg"  fxFlex >
+            <mat-card class="mt-1"  fxFlex >
                    <mat-card-header >
                        <img [src]="fl.profile_image"  class="border" mat-card-avatar/>
                        <mat-card-title> <a [routerLink]="['/user/account/',fl.follower]">{{fl.username  | titlecase}}</a></mat-card-title>
@@ -95,7 +95,7 @@
           <div class="text-center m-2" *ngIf="followList.following.length == 0">You are not following anyone</div>
 
           <div class="container" fxLayout fxLayout.xs="column"  *ngFor="let fl of followList.following" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
-            <mat-card class="mt-1 light-grey-bg"  fxFlex >
+            <mat-card class="mt-1"  fxFlex >
                    <mat-card-header >
                        <img [src]="fl.profile_image"  class="border" mat-card-avatar/>
                        <mat-card-title> <a [routerLink]="['/user/account/',fl.user_id]">{{fl.username  | titlecase}}</a></mat-card-title>

@@ -1,6 +1,6 @@
  <mat-progress-bar *ngIf="showHttpLoader" color="accent" mode="indeterminate"></mat-progress-bar>
  <mat-toolbar color="white">Post AD</mat-toolbar>
- <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+ <div [class]='addOverlay()'  style="background:white" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
    <div class="item item-1" fxFlex="15%"></div>
    <div class="item item-2" fxFlex>
 <form [formGroup]="postAdForm" class="mt-1" >

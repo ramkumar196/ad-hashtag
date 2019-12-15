@@ -30,7 +30,13 @@ export class TrendingComponent implements OnInit {
       else
       this.openSnackBar("Unsubscribed",'close');
 
-     })
+     },err => {
+      if(err.status == 401)
+      {
+        this.openSnackBar("Please login to subscribe",'close');
+      }
+    })
+     
 
   }
 

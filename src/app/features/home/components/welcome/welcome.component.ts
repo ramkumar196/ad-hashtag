@@ -52,35 +52,35 @@ export class WelcomeComponent implements OnInit {
          this.router.navigate(['/ad/view/'+id]);
      }
 
-     adListing(hashtags='')
-    {
-     this.showLoader = true;
-       let input = [];
-       if(hashtags != '')
-       {
-         input.push(hashtags);
-       }
-      this.adservice.SearchAdList({hashtags:input,city: '',limit:10})
-        .subscribe( data => {
-          this.adList = data;
-            setTimeout(()=>{   
-                  this.showLoader = false;
-             }, 2000)
-        })
+    //  adListing(hashtags='')
+    // {
+    //  this.showLoader = true;
+    //    let input = [];
+    //    if(hashtags != '')
+    //    {
+    //      input.push(hashtags);
+    //    }
+    //   this.adservice.SearchAdList({hashtags:input,city: '',limit:10})
+    //     .subscribe( data => {
+    //       this.adList = data;
+    //         setTimeout(()=>{   
+    //               this.showLoader = false;
+    //          }, 2000)
+    //     })
 
-    }
+    // }
 
 
 
   ngOnInit() {
 
-     this.hashtagservice.hashtaglist({keyword:'',all:true})
-      .subscribe( data => {
-        this.trendingHashtags = data;
-        var firstHashtag = this.trendingHashtags[0].hashtag;
-        this.adListing(firstHashtag);
+    //  this.hashtagservice.hashtaglist({keyword:'',all:true})
+    //   .subscribe( data => {
+    //     this.trendingHashtags = data;
+    //     var firstHashtag = this.trendingHashtags[0].hashtag;
+    //     this.adListing(firstHashtag);
 
-      }) 
+    //   }) 
 
       this.commonservice.siteSettings({})
       .subscribe( data => {
