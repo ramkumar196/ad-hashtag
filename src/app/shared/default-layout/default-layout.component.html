@@ -23,8 +23,8 @@
 			</svg>
 		</a>
 		<div style="margin-left:auto;" >
-		<button *ngIf="!mobileQuery.matches && !loginStatus()" mat-flat-button class="ml-2" color="accent"  [routerLink]="['/auth/signup']">Create New Account</button> 
-		<button *ngIf="!mobileQuery.matches" mat-flat-button class="ml-2" color="accent" [routerLink]="['/ad/post']">    <mat-icon>edit</mat-icon>
+		<button *ngIf="!mobileQuery.matches && !loginStatus()" mat-flat-button class="ml-2 " color="accent"  [routerLink]="['/auth/signup']">Create New Account</button> 
+		<button *ngIf="!mobileQuery.matches"  mat-flat-button class="ml-2 wobble-ver-left" color="accent" [routerLink]="['/ad/post']">    <mat-icon>edit</mat-icon>
 			Post AD</button>
 		<button [routerLink]="['/auth/signup']" class="mr-2" *ngIf="mobileQuery.matches && !loginStatus()" mat-mini-fab aria-label="Example icon-button with a heart icon">
 				<mat-icon>account_box</mat-icon>

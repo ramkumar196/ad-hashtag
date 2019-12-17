@@ -114,7 +114,7 @@
     fxLayoutGap.xs="0">
     <mat-card class="mt-1" *ngFor="let ad of adList" fxFlex="0 1 calc(33.3% - 10px)" fxFlex.lt-md="0 1 calc(50% - 32px)"
       fxFlex.lt-sm="100%">
-      <img *ngIf="ad.ad_image_1" mat-card-image [src]="ad.ad_image_1" alt="" (click)="viewAd(ad.id)">
+      <img class="swing-in-top-fwd" *ngIf="ad.ad_image_1" mat-card-image [src]="ad.ad_image_1" alt="" (click)="viewAd(ad.id)">
       <mat-card-content>
         <p [innerHtml]="ad.show_text"></p>
       </mat-card-content>

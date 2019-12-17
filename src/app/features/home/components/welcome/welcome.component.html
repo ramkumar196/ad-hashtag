@@ -1,19 +1,25 @@
 <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
 	<div class="item item-2" fxFlex>
-<ngb-carousel *ngIf="settings.slider_images?.length > 0" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+<!-- <ngb-carousel *ngIf="settings.slider_images?.length > 0" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
  <div *ngFor="let image of settings.slider_images">
   <ng-template  ngbSlide *ngIf="image != ''"  >
     <div class="picsum-img-wrapper" > 
-      <img  class="img-fluid "   [src]="image" alt="Random slide">
+      <img  class="img-fluid slide-top "   [src]="image" alt="Random slide">
     </div>
     <div class="carousel-caption">
       <!-- <h3 style="color:white">{{settings.home_page_title}}</h3>
       <p style="color:white">{{settings.home_page_description}}</p> -->
       <!-- <button mat-raised-button  type="button" color="accent">Post AD</button> -->
-    </div>
+    <!--</div>
   </ng-template>
 </div>
-</ngb-carousel>
+</ngb-carousel> -->
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Fluid jumbotron</h1>
+    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+  </div>
+</div>
 </div>
 </div>
 <mat-toolbar>Steps to Post Ad</mat-toolbar>
@@ -26,7 +32,7 @@
       text-align: center;" class="img-container-inline" aria-hidden="false" aria-label="Example user verified icon">{{msg.icon}}</mat-icon>
       </mat-toolbar-row>
       </mat-toolbar>
-  <p class="text-justify m-2">
+  <p class="text-justify m-2 ">
   {{msg.text}}
   </p>
 
