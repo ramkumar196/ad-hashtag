@@ -1,5 +1,4 @@
 <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
-	<div class="item item-2" fxFlex>
 <!-- <ngb-carousel *ngIf="settings.slider_images?.length > 0" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
  <div *ngFor="let image of settings.slider_images">
   <ng-template  ngbSlide *ngIf="image != ''"  >
@@ -14,15 +13,22 @@
   </ng-template>
 </div>
 </ngb-carousel> -->
-<div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Fluid jumbotron</h1>
-    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+  <div class="jumbotron mt-2" fxFlex>
+      <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center"  fxLayoutGap="10px" fxLayoutGap.xs="0">
+          <div fxFlex="75%" >
+    <h1 class="display-6 tracking-in-expand">{{settings.home_page_title}}</h1>
+    <p class="lead">{{settings.home_page_description}}</p>
+    <p class="lead">
+        <button [routerLink]="['/ad/post']" class="wobble-ver-left" mat-raised-button color="accent">Post free Ad</button>
+    </p>
   </div>
 </div>
+<mat-card class="primary-md-color fade-in" *ngIf="!mobileQuery.matches" fxFlex="25%">
+  <img mat-card-image src="assets/home.png" />
+</mat-card>
 </div>
 </div>
-<mat-toolbar>Steps to Post Ad</mat-toolbar>
+<mat-toolbar class="mb-2">Steps to Post your Ad</mat-toolbar>
 <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center"  fxLayoutGap="10px" fxLayoutGap.xs="0">
       
   <mat-card fxFlex *ngFor="let msg of stepsToPost">

@@ -24,7 +24,7 @@
 		</a>
 		<div style="margin-left:auto;" >
 		<button *ngIf="!mobileQuery.matches && !loginStatus()" mat-flat-button class="ml-2 " color="accent"  [routerLink]="['/auth/signup']">Create New Account</button> 
-		<button *ngIf="!mobileQuery.matches"  mat-flat-button class="ml-2 wobble-ver-left" color="accent" [routerLink]="['/ad/post']">    <mat-icon>edit</mat-icon>
+		<button *ngIf="!mobileQuery.matches"  mat-flat-button class="ml-2 " color="accent" [routerLink]="['/ad/post']">    <mat-icon>edit</mat-icon>
 			Post AD</button>
 		<button [routerLink]="['/auth/signup']" class="mr-2" *ngIf="mobileQuery.matches && !loginStatus()" mat-mini-fab aria-label="Example icon-button with a heart icon">
 				<mat-icon>account_box</mat-icon>
@@ -111,7 +111,14 @@
 		    <mat-icon  mat-list-icon>block</mat-icon>
 		    <h4 mat-line>Logout</h4>
 		  </mat-list-item>
+
 </mat-list>
+<mat-toolbar style=" position: absolute;
+bottom: 0px;
+right: 0px;align-content: center;">
+		<button [routerLink]="['/ad/post']" mat-raised-button color="accent">Contact Us</button>
+</mat-toolbar>
+
 </mat-sidenav>
 <mat-sidenav-content class="left:5px"  style="background:rgb(230, 229, 229)">
 	<router-outlet  ></router-outlet>

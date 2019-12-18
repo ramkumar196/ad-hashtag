@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { RouterModule, Routes, ActivatedRoute ,Router ,NavigationEnd } from '@angular/router';
 import {ThemePalette} from '@angular/material/core';
 import { HashtagService } from 'src/app/services/hashtag.service';
 import { AdsService } from 'src/app/services/ads.service';
 import { CommonService } from 'src/app/services/common.service';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-welcome',
@@ -11,6 +12,8 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./welcome.component.css']
 })
 export class WelcomeComponent implements OnInit {
+  
+  mobileQuery: MediaQueryList;
 
   sliderImages = [];
   trendingHashtags;
@@ -34,8 +37,14 @@ export class WelcomeComponent implements OnInit {
 
 
   ];
+  private _mobileQueryListener: () => void;
+
   
-  constructor(private hashtagservice : HashtagService,private adservice :AdsService,private commonservice : CommonService,private router: Router,private route: ActivatedRoute ) {  }
+  constructor(private elementRef: ElementRef,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private hashtagservice : HashtagService,private adservice :AdsService,private commonservice : CommonService,private router: Router,private route: ActivatedRoute ) { 
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+   }
 
   redirect(data)
   {
@@ -122,5 +131,8 @@ export class WelcomeComponent implements OnInit {
    else {
       return 0;
     }
+  }
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 }
