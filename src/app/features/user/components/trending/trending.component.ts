@@ -12,6 +12,8 @@ import { HashtagService } from 'src/app/services/hashtag.service';
 export class TrendingComponent implements OnInit {
   colspanValue = 1;
   trendingHashtags = [];
+  paginationMeta;
+  setOffset=0;
    mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
   constructor(private hashtagservice :HashtagService,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private snackBar :MatSnackBar) { 
@@ -24,7 +26,7 @@ export class TrendingComponent implements OnInit {
   {
      this.hashtagservice.subscribe({status:status,hashtag_id:id})
      .subscribe( data => {
-      this.hashtagList();
+      this.hashtagList(this.setOffset);
       if(status == 0)
       this.openSnackBar("Subscribed",'close');
       else
@@ -46,19 +48,24 @@ export class TrendingComponent implements OnInit {
     });
     }
 
-  hashtagList()
+  hashtagList(offset)
   {
-     this.hashtagservice.hashtaglist({keyword:'',all:true})
+     this.hashtagservice.hashtagTrendingList({page : offset})
       .subscribe( data => {
-        this.trendingHashtags = data;
+        this.trendingHashtags = data.data;
+        this.paginationMeta = data.meta;
       }) 
   }
 
+  paginateAdListing(event)
+  {
+    console.log(event);
+    let offset = event.pageIndex +1;
+    this.hashtagList(offset);
+    this.setOffset = offset;
+  }
   ngOnInit() {
-  	     this.hashtagservice.hashtaglist({keyword:'',all:true})
-      .subscribe( data => {
-        this.trendingHashtags = data;
-      }) 
+    this.hashtagList(0);
   }
 
 }

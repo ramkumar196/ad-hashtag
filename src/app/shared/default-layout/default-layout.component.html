@@ -59,7 +59,7 @@
 		  </mat-list-item>	</a>
 		  <a  *ngIf="!loginStatus()" [routerLink]="['/auth/signup']">
 		  <mat-list-item role="listitem">
-		    <mat-icon  mat-list-icon>account_circle</mat-icon>
+		    <mat-icon  mat-list-icon>supervisor_account</mat-icon>
 		    <h4 mat-line>Signup</h4>
 		  </mat-list-item>	</a>
 		  <a  *ngIf="loginStatus()" [routerLink]="['/ad/post']">
@@ -73,7 +73,7 @@
 		    <h4 mat-line>Search Ads</h4>
 		  </mat-list-item>	</a>
 		  <a   [routerLink]="['/trending']">
-		  <mat-list-item role="listitem">
+		  <mat-list-item *ngIf="loginStatus()" role="listitem">
 		    <mat-icon  mat-list-icon>trending_up</mat-icon>
 		    <h4 mat-line>Trending</h4>
 		  </mat-list-item>	</a>
@@ -106,18 +106,17 @@
 				<mat-icon  mat-list-icon>chat</mat-icon>
 				<h4 mat-line>Chats</h4>
 			</mat-list-item>	</a>
-
+			<a   [routerLink]="['/inquiry']">
+				<mat-list-item role="listitem">
+				  <mat-icon  mat-list-icon>contact_support</mat-icon>
+				  <h4 mat-line>Contact Us</h4>
+			</mat-list-item>	</a>
 		  <mat-list-item *ngIf="loginStatus()" role="listitem"  (click)="logout()">
 		    <mat-icon  mat-list-icon>block</mat-icon>
 		    <h4 mat-line>Logout</h4>
 		  </mat-list-item>
 
 </mat-list>
-<mat-toolbar style=" position: absolute;
-bottom: 0px;
-right: 0px;align-content: center;">
-		<button [routerLink]="['/ad/post']" mat-raised-button color="accent">Contact Us</button>
-</mat-toolbar>
 
 </mat-sidenav>
 <mat-sidenav-content class="left:5px"  style="background:rgb(230, 229, 229)">

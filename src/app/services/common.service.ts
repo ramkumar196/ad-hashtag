@@ -25,5 +25,10 @@ export class CommonService {
     return this.apiService.post('/settings',data).pipe(
      catchError(this.formatErrors))
    }
+
+   sendInquiry(data){
+    return this.apiService.post('/inquiry',data).pipe(
+     catchError(this.formatErrors))
+   }
 }
 

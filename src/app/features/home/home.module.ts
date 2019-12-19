@@ -11,12 +11,14 @@ import { HashtagRemovePipe } from 'src/app/pipes/hashtagremove';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DefaultLayoutComponent } from 'src/app/shared/default-layout/default-layout.component';
 import { AppBrowserModule } from 'src/app/app.browser.module';
+import { InquiryComponent } from './components/inquiry/inquiry.component';
 
 const routes: Routes = [
   { path: '', component: DefaultLayoutComponent,
     children: [ 
     {path: '',component: WelcomeComponent,data: {title: 'Welcome'}},
     {path: 'trending',component: TrendingComponent,data: {title: 'Trending'}},
+    {path: 'inquiry',component: InquiryComponent,data: {title: 'Inquiry'}},
     ]
   }
 ];
@@ -26,6 +28,7 @@ const routes: Routes = [
   declarations: [
     WelcomeComponent,
     TrendingComponent,
+    InquiryComponent,
   ],
   imports: [
     CommonModule,

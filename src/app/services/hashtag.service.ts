@@ -21,6 +21,15 @@ export class HashtagService {
     return this.apiService.post('/hashtag/list',data).pipe(
      catchError(this.formatErrors))
    } 
+   hashtagTrendingList(data){
+    var url = '/hashtag/trending';
+    if(data.page != 0 && data.page != undefined )
+    {
+     url = '/hashtag/trending?page='+data.page;
+    }
+    return this.apiService.post(url,data).pipe(
+     catchError(this.formatErrors))
+   } 
      subscribe(data){
     return this.apiService.post('/fav/subscribe',data).pipe(
      catchError(this.formatErrors))

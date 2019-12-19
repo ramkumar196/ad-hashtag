@@ -1,0 +1,41 @@
+<mat-toolbar >
+	Contact Us
+</mat-toolbar>
+<mat-grid-list cols="4" rowHeight="500px" >
+	<mat-grid-tile [colspan]="mobileQuery.matches ? 0 : 1"></mat-grid-tile>
+	  <mat-grid-tile [colspan]="mobileQuery.matches ? 4 : 2" color="primary">
+	  <mat-divider></mat-divider>
+		  <mat-card  color="primary">
+  
+	  <form [formGroup]="inquiryForm" class="mt-1" (ngSubmit)="sendInquiry()">
+		  <mat-form-field color="accent" class="full-width"  appearance="outline">
+		  <mat-label>Your Name</mat-label>
+		  <mat-icon matSuffix>account_box</mat-icon>
+		  <input minlength="4" maxlength="50" matInput placeholder="Your Name" formControlName="inquirer_name">
+		  <mat-error align="start" *ngIf="inquiryForm.controls['inquirer_name'].hasError('required') && inquiryForm.controls['inquirer_name'].touched " class="form__error">Your Name is required</mat-error>
+          </mat-form-field>
+          <mat-form-field color="accent" class="full-width"  appearance="outline">
+            <mat-label>Your Email</mat-label>
+            <mat-icon matSuffix>email</mat-icon>
+            <input minlength="4" maxlength="50" matInput placeholder="Your Name" formControlName="inquirer_email">
+            <mat-error align="start" *ngIf="inquiryForm.controls['inquirer_email'].hasError('required') && inquiryForm.controls['inquirer_email'].touched " class="form__error">Your Email is required</mat-error>
+            </mat-form-field>
+            <mat-form-field color="accent" class="full-width"  appearance="outline">
+                <mat-label>Your Message</mat-label>
+                <mat-icon matSuffix>message</mat-icon>
+                <textarea minlength="4" maxlength="200" formControlName="inquirer_message" matInput placeholder="Your Message"></textarea>
+                <mat-error align="start" *ngIf="inquiryForm.controls['inquirer_message'].hasError('required') && inquiryForm.controls['inquirer_message'].touched " class="form__error">Your Message is required</mat-error>
+            </mat-form-field> 
+		  <div class="button-row mt-5">
+			<mat-spinner [diameter]="30" *ngIf="isSubmitting"></mat-spinner>
+			<button *ngIf="!isSubmitting" mat-raised-button [disabled]="!inquiryForm.valid" type="submit" color="accent">Send</button>
+		  </div>
+	  </form>
+		  </mat-card>
+		  </mat-grid-tile>
+	  <mat-grid-tile [colspan]="mobileQuery.matches ? 0 : 1"></mat-grid-tile>
+  
+  <!-- </div>
+   -->
+   </mat-grid-list>
+  
