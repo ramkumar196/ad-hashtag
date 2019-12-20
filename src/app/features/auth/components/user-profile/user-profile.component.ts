@@ -8,6 +8,7 @@ import {ChangeDetectorRef} from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { JwtService } from 'src/app/services/jwt.service';
 import { DialogService } from 'src/app/services/dialog.service';
+import { CustomValidator } from 'src/app/validators/customvalidator';
 
 @Component({
   selector: 'app-user-profile',
@@ -27,7 +28,9 @@ export class UserProfileComponent implements OnInit {
     business_name:'',
      business_description:'',
      business_address:'',
-     userType:''
+     userType:'',
+     bio:'',
+     website_link:''
 
   };
 
@@ -47,7 +50,8 @@ export class UserProfileComponent implements OnInit {
 		username: ['', Validators.required],
 		email: ['', [Validators.required,Validators.email] ],
 		phone: ['', Validators.required],
-		//password: [''],
+    website_link: ['',[CustomValidator.urlValidator]],
+    bio: [''],
 		business_address: [''],
     business_description: [''],
 		profile_image: ['file'],
@@ -155,7 +159,10 @@ export class UserProfileComponent implements OnInit {
           business_description:'',
           profile_image:'',
           business_name:'',
-          user_type:false
+          user_type:false,
+          bio:'',
+          website_link:''
+
           };
           if(typeof(data.business_address) != 'undefined')
           profileArray.business_address = data.business_address;
@@ -180,6 +187,12 @@ export class UserProfileComponent implements OnInit {
 
           if(typeof(data.user_type) != 'undefined')
           profileArray.user_type = data.user_type;
+
+          if(typeof(data.bio) != 'undefined')
+          profileArray.bio = data.bio;
+
+          if(typeof(data.website_link) != 'undefined')
+          profileArray.website_link = data.website_link;
 
         this.editProfileForm.setValue(profileArray);
 

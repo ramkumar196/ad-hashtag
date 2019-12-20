@@ -2,10 +2,22 @@
      
       <mat-card fxFlex="20%">
           <img *ngIf="userDetail.profile_image"  class="card-img-top" [src]="userDetail.profile_image">
-          <h5>@{{userDetail.username | uppercase}}</h5>
+          <mat-card-header class="m-2">
+              <mat-card-subtitle>@{{userDetail.username | uppercase}}</mat-card-subtitle>
+           </mat-card-header>
         </mat-card>
         <mat-card fxFlex>
         <mat-list>
+            <mat-list-item *ngIf="userDetail.bio">
+                <mat-icon mat-list-icon>info</mat-icon>
+                <span class="light-font">{{userDetail.bio}}</span>
+                </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item *ngIf="userDetail.website_link">
+                <mat-icon mat-list-icon>website</mat-icon>
+                <span class="light-font"><a href="{{userDetail.website_link}}">website link</a></span>
+                </mat-list-item>
+            <mat-divider></mat-divider>
             <mat-list-item *ngIf="userDetail.business_name">
             <mat-icon mat-list-icon>storefront</mat-icon>
             <span class="light-font">{{userDetail.business_name}}</span>
@@ -21,9 +33,9 @@
             <p class="light-font">{{userDetail.business_description}}</p>
             </mat-list-item>
             <mat-divider></mat-divider>
-            <mat-list-item>
-               <button mat-raised-button *ngIf="!userDetail.follow_status && userDetail.selfStatus == 0" (click)="followUser(0)" color="accent">Follow</button>
-               <button mat-raised-button *ngIf="userDetail.follow_status && userDetail.selfStatus == 0" (click)="followUser(1)" color="primary">Unfollow</button>
+            <mat-list-item *ngIf="userDetail.selfStatus == 0" >
+               <button mat-raised-button *ngIf="userDetail.follow_status" (click)="followUser(0)" color="accent">Follow</button>
+               <button mat-raised-button *ngIf="!userDetail.follow_status" (click)="followUser(1)" color="primary">Unfollow</button>
             </mat-list-item>
           </mat-list>
         </mat-card>
@@ -37,8 +49,8 @@
             My List
           </ng-template>
           <div class="text-center m-2" *ngIf="adList.length == 0">No Listings</div>
-          <div class="container" fxLayout="row wrap" fxLayout.lt-sm="column"  fxLayoutAlign="flex-start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-              <mat-card class="mt-1" *ngFor="let ad of adList" fxFlex="0 1 calc(33.3% - 32px)"
+          <div class="container" fxLayout="row wrap" fxLayout.lt-sm="column"  fxLayoutAlign="flex-start" fxLayoutGap="10px" fxLayoutGap.xs="2px">
+              <mat-card class="m-2" *ngFor="let ad of adList" fxFlex="0 1 calc(33.3% - 32px)"
               fxFlex.lt-md="0 1 calc(50% - 32px)"
               fxFlex.lt-sm="100%">
                   <img *ngIf="ad.ad_image_1"  mat-card-image [src]="ad.ad_image_1" alt="" (click)="viewAd(ad.id)">

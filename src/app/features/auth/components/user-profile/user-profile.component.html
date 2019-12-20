@@ -22,6 +22,7 @@
 					<mat-error align="start" *ngIf="errors.username" class="form__error">{{ errors.username }}
 					</mat-error>
 				</mat-form-field>
+				
 			</mat-card>
 			<div class="image-upload">
 				<input #fileInput type="file" formControlName="profile_image" (change)="onFileChanged($event)" />
@@ -49,6 +50,25 @@
 				</mat-form-field>
 				<mat-error align="start" *ngIf="errors.phone" class="form__error">{{ errors.phone[0] }}</mat-error>
 
+				<mat-form-field class="full-width" appearance="outline">
+						<mat-label>Website Link</mat-label>
+						<input minlength="6" maxlength="200" matInput placeholder="Website link" formControlName="website_link">
+						<mat-error align="start"
+							*ngIf="editProfileForm.controls['website_link'].hasError('required') && editProfileForm.controls['website_link'].touched "
+							class="form__error">Your Website is required</mat-error>
+					</mat-form-field>
+				<mat-error align="start" *ngIf="errors.website_link" class="form__error">{{ errors.website_link[0] }}</mat-error>
+	
+				<mat-form-field  class="full-width" appearance="outline">
+						<mat-label>Bio</mat-label>
+	
+						<textarea maxlength="200" matInput placeholder="Bio" formControlName="bio"></textarea>
+						<mat-error align="start"
+							*ngIf="editProfileForm.controls['bio'].touched && errors.bio"
+							class="form__error">{{ errors.bio }}</mat-error>
+					</mat-form-field>
+				<mat-error align="start" *ngIf="errors.bio" class="form__error">{{ errors.bio[0] }}</mat-error>
+	
 
 				<!-- 	<mat-form-field class="full-width">
     	<input minlength="8" maxlength="15" matInput placeholder="Password" type="password" formControlName="password">

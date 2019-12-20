@@ -1,14 +1,15 @@
 <mat-toolbar color="white">Your Subscriptions</mat-toolbar>
   <div class="text-center m-2" *ngIf="subList.length == 0">No Notifications</div>
   <div class="container" fxLayout fxLayout.xs="column" *ngFor="let tl of subList"  fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
-  <mat-card class="mt-1"  fxFlex="80%" >
-          <mat-card-header >
+  <mat-card class="mt-1"  fxFlex="70%" >
+          <mat-card-header style="width:50%;float: left;">
               <mat-card-title>
                  <a [routerLink]="['/ad/list/',tl.hashtag]" routerLinkActive="active"> {{tl.hashtag | hashtag}}</a>
               </mat-card-title>
               </mat-card-header>
+              <mat-card-actions style="width:50%;float:left; ">
+                    <button style="align-content: center;float:right;" mat-raised-button (click)="Subscribe(tl.hashtag_id,1,tl.hashtag)" color="accent">UnSubscribe</button>
+              </mat-card-actions>
           </mat-card>
-  <div class="mt-2" fxFlex="15%">
-      <button style="align-content: center" mat-raised-button (click)="Subscribe(tl.hashtag_id,1,tl.hashtag)" color="accent">UnSubscribe</button>
-  </div>
+          <div fxFlex></div>
   </div>
