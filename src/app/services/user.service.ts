@@ -50,7 +50,7 @@ export class UserService {
    }
 
    sendResetLink(data){
-    return this.apiService.post('/user/password/resetlink/',data).pipe(
+    return this.apiService.post('/user/password/resetlink',data).pipe(
      catchError(this.formatErrors))
    }
 

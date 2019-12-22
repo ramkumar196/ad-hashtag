@@ -169,7 +169,7 @@ export class PostAdComponent  implements OnInit {
       }
     );  }
 
-  ngOnInit() {
+  ngOnInit() {  
 
 
     this.browsersLocation.getLocation(window).subscribe(

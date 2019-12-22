@@ -8,11 +8,12 @@
                         <img [src]="fl.profile_image" class="border" mat-card-avatar />
                         <mat-card-subtitle>
                                 <a
-                                        [routerLink]="['/user/account/',fl.user_id]">{{fl.username  | titlecase}}</a>{{fl.notify_message}}
+                                        [routerLink]="['/user/account/',fl.user_id]">{{fl.username  | titlecase}}</a>   {{fl.notify_message}}
                         </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-actions style="width:50%;float:left; ">
-                        <button style="float:right" (click)='notificationUpdate(fl.id,"B")' mat-icon-button
+                        <button style="margin-right:2px" *ngIf="fl.ad_id" mat-button [routerLink]="['/ad/view',fl.ad_id]" color="accent">View Ad</button>
+                        <button style="float:right;margin-right:2px" (click)='notificationUpdate(fl.id,"B")' mat-icon-button
                                 aria-label="Example icon-button with a heart icon">
                                 <mat-icon>close</mat-icon>
                         </button>

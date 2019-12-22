@@ -80,7 +80,7 @@
    
    </mat-list-item> 
    <mat-divider></mat-divider>
-   <mat-list-item (click)="contactSeller('-',ad.user_id,ad.id)">
+   <mat-list-item *ngIf="userDetails.selfStatus != 1  " (click)="contactSeller('-',ad.user_id,ad.id)">
      Contact Seller 
       <button mat-icon-button color="accent" aria-label="Example icon-button with a heart icon">
           <mat-icon>message</mat-icon>
