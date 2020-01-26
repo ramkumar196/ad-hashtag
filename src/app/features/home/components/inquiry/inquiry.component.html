@@ -23,7 +23,7 @@
             <mat-form-field color="accent" class="full-width"  appearance="outline">
                 <mat-label>Your Message</mat-label>
                 <mat-icon matSuffix>message</mat-icon>
-                <textarea minlength="4" maxlength="200" formControlName="inquirer_message" matInput placeholder="Your Message"></textarea>
+                <textarea minlength="4" rows="6" maxlength="200" formControlName="inquirer_message" matInput placeholder="Your Message"></textarea>
                 <mat-error align="start" *ngIf="inquiryForm.controls['inquirer_message'].hasError('required') && inquiryForm.controls['inquirer_message'].touched " class="form__error">Your Message is required</mat-error>
             </mat-form-field> 
 		  <div class="button-row mt-5">

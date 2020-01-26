@@ -112,9 +112,9 @@
     </div> -->
   <div class="container" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="flex-start" fxLayoutGap="10px"
     fxLayoutGap.xs="0">
-    <mat-card class="mt-1" *ngFor="let ad of adList" fxFlex="0 1 calc(33.3% - 10px)" fxFlex.lt-md="0 1 calc(50% - 32px)"
+    <mat-card (click)="viewAd(ad.id)" class="mt-1" *ngFor="let ad of adList" fxFlex="0 1 calc(33.3% - 10px)" fxFlex.lt-md="0 1 calc(50% - 32px)"
       fxFlex.lt-sm="100%">
-      <img class="swing-in-top-fwd" *ngIf="ad.ad_image_1" mat-card-image [src]="ad.ad_image_1" alt="" (click)="viewAd(ad.id)">
+      <img class="swing-in-top-fwd" *ngIf="ad.ad_image_1" mat-card-image [src]="ad.ad_image_1" alt="">
       <mat-card-content>
         <p [innerHtml]="ad.show_text"></p>
       </mat-card-content>
@@ -134,6 +134,6 @@
     </mat-card>
   </div>
 <!-- </div> -->
-<mat-paginator *ngIf="adList.length > 0" [length]="paginationMeta.total" [pageSize]="paginationMeta.per_page"
+<mat-paginator class="m-2" *ngIf="adList.length > 0" [length]="paginationMeta.total" [pageSize]="paginationMeta.per_page"
   (page)="paginateAdListing($event)">
 </mat-paginator>

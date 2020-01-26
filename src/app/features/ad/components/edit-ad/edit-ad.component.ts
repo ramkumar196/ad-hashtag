@@ -44,31 +44,32 @@ formControlValue = '';
   private sub: any;
   coordinates =[];
   isLoading=false;
-  filteredCities: Observable<State>;
+  filteredOptions: Observable<string[]>;;
+  filteredCities = [];
 
   
 
   constructor(private route: ActivatedRoute,public hashtagService :HashtagService,private fb: FormBuilder,private adsService :AdsService,public userService :UserService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
   	    this.createForm();
 
-       this.postAdForm.get('city').valueChanges
-      .pipe(
-        debounceTime(300),
-        tap(() => this.isLoading = true),
-        switchMap(value => this.userService.cityList({keyword: value})
-        .pipe(
-          finalize(() => this.isLoading = false),
-          )
-        )
-      )
-      .subscribe(data => this.filteredCities = data);
+      //  this.postAdForm.get('city').valueChanges
+      // .pipe(
+      //   debounceTime(300),
+      //   tap(() => this.isLoading = true),
+      //   switchMap(value => this.userService.cityList({keyword: value})
+      //   .pipe(
+      //     finalize(() => this.isLoading = false),
+      //     )
+      //   )
+      // )
+      // .subscribe(data => this.filteredCities = data);
   }
  
   addOverlay()
   {
     if(this.showHttpLoader)
     {
-      return 'container overlay-hashad';
+      return 'container';
     }
     else
     {
@@ -124,7 +125,10 @@ formControlValue = '';
         fileReader.readAsDataURL(event.target.files[0]); // read file as data url
 
 			fileReader.onload = (event: Event) => {
-				this.imageUrl.splice(this.imageno, 0, fileReader.result);
+       // this.imageUrl.splice(this.imageno, 0, fileReader.result);
+       this.imageUrl.push(fileReader.result);
+        console.log('image url',this.imageUrl);
+
 				this.imageno++;
         setTimeout(()=>{   
         this.showImageLoader = false;
@@ -136,11 +140,16 @@ formControlValue = '';
 	removeImage(item :any)
 	{
 			var index = this.imageUrl.indexOf(item);
-			if (index !== -1) this.imageUrl.splice(index, 1);
-			this.imageUrl.sort();
+      //if (index !== -1) this.imageUrl.splice(index, 1);
+      if (index !== -1) this.imageUrl[index] = '';
+
+      console.log("image url..",this.imageUrl);
+      this.imageUrl.sort();
+      console.log("image url..sort",this.imageUrl);
+
 			this.imageno--;
 
-			//this.imageUrl.splice(index, 1);
+			this.imageUrl.splice(index, 1);
   	}
     cancelEdit()
     {
@@ -192,7 +201,25 @@ formControlValue = '';
       }
     );  }
 
+    private _filter(value: string): string[] {
+      const filterValue = value.toLowerCase();
+  
+      return this.filteredCities.filter(option => option.city_name.toLowerCase().indexOf(filterValue) === 0);
+    }
+
   ngOnInit() {
+
+    this.userService.cityList({keyword:''}).subscribe( data => {
+
+      this.filteredCities = data;
+
+    })
+
+    this.filteredOptions = this.postAdForm.get('city').valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+
 
     this.browsersLocation.getLocation(window).subscribe(
         data => {
@@ -231,6 +258,7 @@ formControlValue = '';
         }
         
                console.log(data);
+               console.log('image url',this.imageUrl);
 
         var adDetails = {
           adtextarea:'',adImages:'',websitelink:'',city:''

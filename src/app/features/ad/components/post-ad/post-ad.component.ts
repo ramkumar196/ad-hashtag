@@ -46,21 +46,22 @@ export class PostAdComponent  implements OnInit {
   coordinates =[];
 
   isLoading = true;
-  filteredCities: Observable<State>;
+  filteredOptions: Observable<string[]>;;
+  filteredCities = [];
   constructor( private fb: FormBuilder,private adsService :AdsService,public hashtagService :HashtagService,public userService :UserService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
   	    this.createForm();
         this.hashtags = ['#sale',"#car"];
-        this.postAdForm.get('city').valueChanges
-      .pipe(
-        debounceTime(300),
-        tap(() => this.isLoading = true),
-        switchMap(value => this.userService.cityList({keyword: value})
-        .pipe(
-          finalize(() => this.isLoading = false),
-          )
-        )
-      )
-      .subscribe(data => this.filteredCities = data);
+      //   this.postAdForm.get('city').valueChanges
+      // .pipe(
+      //   debounceTime(300),
+      //   tap(() => this.isLoading = true),
+      //   switchMap(value => this.userService.cityList({keyword: value})
+      //   .pipe(
+      //     finalize(() => this.isLoading = false),
+      //     )
+      //   )
+      // )
+      // .subscribe(data => this.filteredCities = data);
   }
 
   createForm()
@@ -169,7 +170,24 @@ export class PostAdComponent  implements OnInit {
       }
     );  }
 
+    private _filter(value: string): string[] {
+      const filterValue = value.toLowerCase();
+  
+      return this.filteredCities.filter(option => option.city_name.toLowerCase().indexOf(filterValue) === 0);
+    }
+
   ngOnInit() {  
+
+    this.userService.cityList({keyword:''}).subscribe( data => {
+
+      this.filteredCities = data;
+
+    })
+
+    this.filteredOptions = this.postAdForm.get('city').valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
 
 
     this.browsersLocation.getLocation(window).subscribe(
@@ -221,7 +239,7 @@ export class PostAdComponent  implements OnInit {
   {
     if(this.showHttpLoader)
     {
-      return 'container overlay-hashad';
+      return 'container';
     }
     else
     {

@@ -54,7 +54,7 @@ export class InquiryComponent implements OnInit {
       data => {
         console.log("data",data);
         this.openSnackBar("Inquiry message sent!",'close');
-        setInterval(()=>{
+        setTimeout(()=>{
           this.router.navigate(['/'])
         },2000)
       },

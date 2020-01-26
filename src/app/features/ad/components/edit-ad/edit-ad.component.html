@@ -41,13 +41,13 @@ name="adtextarea"
     <mat-label>City</mat-label>
     <input matInput placeholder="City Name" aria-label="City Name" [matAutocomplete]="auto" formControlName="city">
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let city of filteredCities " [value]="city.city_name">
+      <mat-option *ngFor="let city of filteredOptions | async" [value]="city.city_name">
         <span>{{city.city_name}}</span>
-      </mat-option>
+      </mat-option> 
     </mat-autocomplete>
   </mat-form-field>
   <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
-        <mat-card fxFlex="20%" *ngFor="let item of imageUrl">
+        <mat-card fxFlex="20%"  *ngFor="let item of imageUrl"  >
           <mat-progress-spinner *ngIf="showImageLoader" mode="indeterminate" [diameter]="50" color="accent">
           </mat-progress-spinner>
           <img *ngIf="!showImageLoader" [src]="item" mat-card-image>
@@ -94,11 +94,11 @@ name="adtextarea"
 <!-- <button class="m-2" title="Add Links" mat-fab color="accent">
 <mat-icon aria-label="icon-button with a heart icon">link</mat-icon>
 </button> -->
-<button class="m-2" mat-fab title="Post Ad"  [disabled]="!postAdForm.valid" (click)="createAd()" type="submit" color="accent">
-<mat-icon *ngIf="!showHttpLoader" aria-label="icon-button with a heart icon">publish</mat-icon>
-<mat-progress-spinner  *ngIf="showHttpLoader" mode="indeterminate" [diameter]="10" color="accent">
-  </mat-progress-spinner>
+<button class="m-2" *ngIf="!showHttpLoader" mat-fab title="Post Ad"  [disabled]="!postAdForm.valid" (click)="createAd()" type="submit" color="accent">
+<mat-icon  aria-label="icon-button with a heart icon">publish</mat-icon>
 </button>
+<mat-progress-spinner  *ngIf="showHttpLoader" mode="indeterminate" [diameter]="10" color="accent">
+</mat-progress-spinner>
 
 <button class="m-2" mat-fab color="accent">
 <mat-icon aria-label="icon-button with a heart icon" (click)="cancelEdit()">cancel</mat-icon>
