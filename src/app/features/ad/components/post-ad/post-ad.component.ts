@@ -1,10 +1,10 @@
-import { Component, OnInit ,Input, Inject ,ViewEncapsulation} from '@angular/core';
-import {FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Input, Inject, ViewEncapsulation } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatSnackBar} from '@angular/material';
-import {Observable} from 'rxjs';
-import {switchMap, debounceTime, tap, finalize, map, startWith} from 'rxjs/operators';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material';
+import { Observable } from 'rxjs';
+import { switchMap, debounceTime, tap, finalize, map, startWith } from 'rxjs/operators';
 import { AdsService } from 'src/app/services/ads.service';
 import { HashtagService } from 'src/app/services/hashtag.service';
 import { UserService } from 'src/app/services/user.service';
@@ -27,162 +27,174 @@ export interface State {
 })
 
 
-export class PostAdComponent  implements OnInit {
+export class PostAdComponent implements OnInit {
 
   adtextarea;
   formControlValue = '';
-  postAdForm :FormGroup;
+  postAdForm: FormGroup;
   isSubmitting;
   showImageLoader = false;
   showHttpLoader = false;
   errors = {
-    adtextarea:'',
-    websitelink:'',
+    adtextarea: '',
+    websitelink: '',
   };
-  files='';
-  imageUrl=[];
-  imageno=0;
-  hashtags:string[];
-  coordinates =[];
+  files = '';
+  imageUrl = [];
+  imageno = 0;
+  hashtags=[];
+  coordinates = [];
+  suggestions:string[];
 
   isLoading = true;
   filteredOptions: Observable<string[]>;;
   filteredCities = [];
-  constructor( private fb: FormBuilder,private adsService :AdsService,public hashtagService :HashtagService,public userService :UserService,private router :Router, private snackBar :MatSnackBar ,private jwt :JwtService , private browsersLocation : BrowserLocation) { 
-  	    this.createForm();
-        this.hashtags = ['#sale',"#car"];
-      //   this.postAdForm.get('city').valueChanges
-      // .pipe(
-      //   debounceTime(300),
-      //   tap(() => this.isLoading = true),
-      //   switchMap(value => this.userService.cityList({keyword: value})
-      //   .pipe(
-      //     finalize(() => this.isLoading = false),
-      //     )
-      //   )
-      // )
-      // .subscribe(data => this.filteredCities = data);
+  constructor(private fb: FormBuilder, private adsService: AdsService, public hashtagService: HashtagService, public userService: UserService, private router: Router, private snackBar: MatSnackBar, private jwt: JwtService, private browsersLocation: BrowserLocation) {
+    this.createForm();
+    //this.hashtags = ['#sale', "#car"];
+
+    //   this.postAdForm.get('city').valueChanges
+    // .pipe(
+    //   debounceTime(300),
+    //   tap(() => this.isLoading = true),
+    //   switchMap(value => this.userService.cityList({keyword: value})
+    //   .pipe(
+    //     finalize(() => this.isLoading = false),
+    //     )
+    //   )
+    // )
+    // .subscribe(data => this.filteredCities = data);
   }
 
-  createForm()
-  {
-  	this.postAdForm = this.fb.group({
+  createForm() {
+    this.postAdForm = this.fb.group({
       adtextarea: ['', Validators.required],
-      websitelink: ['',[CustomValidator.urlValidator]],
+      websitelink: ['', [CustomValidator.urlValidator]],
       adImages: [''],
-  		city: ['']
-  	  });
+      city: ['']
+    });
   }
 
   validateFile(name: String) {
-  	console.log(name);
+    console.log(name);
     var ext = name.substring(name.lastIndexOf('.') + 1);
-    if (ext.toLowerCase() == 'png' || ext.toLowerCase() == 'jpeg'  || ext.toLowerCase() == 'jpg'  || ext.toLowerCase() == 'gif' ) {
-        return true;
+    if (ext.toLowerCase() == 'png' || ext.toLowerCase() == 'jpeg' || ext.toLowerCase() == 'jpg' || ext.toLowerCase() == 'gif') {
+      return true;
     }
     else {
-        return false;
+      return false;
     }
-	}
-	
-	onFileChanged(event: any) {
+  }
 
-   this.showImageLoader = true;
-	 if(this.imageno > 3)
-	 {
-	 	this.openSnackBar('You have maximum limit for upload','close');
-    this.showImageLoader = false;
-	 	return false;
-	 }
+  onFileChanged(event: any) {
 
-	  if (event.target.files && event.target.files[0]) {
+    this.showImageLoader = true;
+    if (this.imageno > 3) {
+      this.openSnackBar('You have maximum limit for upload', 'close');
+      this.showImageLoader = false;
+      return false;
+    }
 
-	  	if (!this.validateFile(event.target.files[0].name)) {
-	 	this.openSnackBar('File Format not supported','close');
-    this.showImageLoader = false;
+    if (event.target.files && event.target.files[0]) {
 
-		return false;
-		}
+      if (!this.validateFile(event.target.files[0].name)) {
+        this.openSnackBar('File Format not supported', 'close');
+        this.showImageLoader = false;
+
+        return false;
+      }
 
       const fileReader: FileReader = new FileReader();
 
-        fileReader.readAsDataURL(event.target.files[0]); // read file as data url
+      fileReader.readAsDataURL(event.target.files[0]); // read file as data url
 
-			fileReader.onload = (event: Event) => {
-				this.imageUrl.splice(this.imageno, 0, fileReader.result);
-				this.imageno++;
-        setTimeout(()=>{   
-        this.showImageLoader = false;
+      fileReader.onload = (event: Event) => {
+        this.imageUrl.splice(this.imageno, 0, fileReader.result);
+        this.imageno++;
+        setTimeout(() => {
+          this.showImageLoader = false;
         }, 2000)
-			}
-		}
-	}
+      }
+    }
+  }
 
-	removeImage(item :any)
-	{
-			var index = this.imageUrl.indexOf(item);
-			if (index !== -1) this.imageUrl.splice(index, 1);
-			this.imageUrl.sort();
-			this.imageno--;
+  removeImage(item: any) {
+    var index = this.imageUrl.indexOf(item);
+    if (index !== -1) this.imageUrl.splice(index, 1);
+    this.imageUrl.sort();
+    this.imageno--;
 
-			//this.imageUrl.splice(index, 1);
-	}
+    //this.imageUrl.splice(index, 1);
+  }
 
 
-  createAd()
-  {
+  createAd() {
     this.showHttpLoader = true;
-     this.isSubmitting = true;
-     //this.errors = new Errors();
+    this.isSubmitting = true;
+    //this.errors = new Errors();
 
     const inputdata = this.postAdForm.value;
     inputdata.adImages = this.imageUrl;
     inputdata.coordinates = this.coordinates;
     this.adsService
-    .createAd(inputdata)
-    .subscribe(
-      data => {
-        console.log("data",data);
-         this.openSnackBar('success','close');
-         this.showHttpLoader = false;
-         this.router.navigate(['/user/account'])
-      },
-      err => {
-        console.log("hereree",err);
+      .createAd(inputdata)
+      .subscribe(
+        data => {
+          console.log("data", data);
+          this.openSnackBar('success', 'close');
+          this.showHttpLoader = false;
+          this.router.navigate(['/user/account'])
+        },
+        err => {
+          console.log("hereree", err);
 
-        this.openSnackBar(err.error.message,'close');
-
-
-        this.errors = err.error;
-        this.showHttpLoader = false;
+          this.openSnackBar(err.error.message, 'close');
 
 
-        // if(this.errors.username)
-        // this.signUpForm.controls['username'].setErrors({'incorrect': true});
+          this.errors = err.error;
+          this.showHttpLoader = false;
 
-        // if(this.errors.email)
-        // this.signUpForm.controls['email'].setErrors({'incorrect': true});
 
-        // if(this.errors.phone)
-        // this.signUpForm.controls['phone'].setErrors({'incorrect': true});
+          // if(this.errors.username)
+          // this.signUpForm.controls['username'].setErrors({'incorrect': true});
 
-        this.isSubmitting = false;
-      }
-    );  }
+          // if(this.errors.email)
+          // this.signUpForm.controls['email'].setErrors({'incorrect': true});
 
-    private _filter(value: string): string[] {
-      const filterValue = value.toLowerCase();
-  
-      return this.filteredCities.filter(option => option.city_name.toLowerCase().indexOf(filterValue) === 0);
-    }
+          // if(this.errors.phone)
+          // this.signUpForm.controls['phone'].setErrors({'incorrect': true});
 
-  ngOnInit() {  
+          this.isSubmitting = false;
+        }
+      );
+  }
 
-    this.userService.cityList({keyword:''}).subscribe( data => {
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.filteredCities.filter(option => option.city_name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  ngOnInit() {
+
+    this.userService.cityList({ keyword: '' }).subscribe(data => {
 
       this.filteredCities = data;
 
     })
+
+    this.hashtagService.hashtaglist({ 'keyword': '' })
+        .subscribe(
+          data => {
+            console.log("data", data);
+
+            this.hashtags = data;
+          },
+          err => {
+            console.log("hereree", err);
+
+          }
+        );
 
     this.filteredOptions = this.postAdForm.get('city').valueChanges.pipe(
       startWith(''),
@@ -191,64 +203,64 @@ export class PostAdComponent  implements OnInit {
 
 
     this.browsersLocation.getLocation(window).subscribe(
-        data => {
+      data => {
 
-          this.coordinates.push(data.coords.latitude);
-          this.coordinates.push(data.coords.longitude);
-          console.log("data",data.coords);
-        },
-        err => {
-          console.log("hereree",err);
-        }
-      );
-      }  
-  
-   findChoices(searchText: any) {
-
-    this.hashtagService.hashtaglist({'keyword':searchText.value})
-    .subscribe(
-      data => {    
-        console.log("data",data);
-        let hashtagArray = [];
-        data.forEach(function(item,index)
-        {
-          hashtagArray.push(item.hashtag);
-        })
-        
-        this.hashtags = hashtagArray;
-        return this.hashtags;
+        this.coordinates.push(data.coords.latitude);
+        this.coordinates.push(data.coords.longitude);
+        console.log("data", data.coords);
       },
       err => {
-        console.log("hereree",err);
+        console.log("hereree", err);
+      }
+    );
+  }
 
-      } 
-      );
+  findChoices(searchText: any) {
+
+    if (searchText.prefix == '@') {
+
+      let hashtagArray = ['city:','website:','price:'];
+      this.suggestions = hashtagArray;
+    }
+    if (searchText.prefix == '?') {
+
+        let hashtagArray = [];
+        this.filteredCities.forEach(function (item, index) {
+          hashtagArray.push(item.city_name);
+        })
+
+        this.suggestions = hashtagArray;
+    }
+    if (searchText.prefix == '#') {
+
+      let hashtagArray = [];
+      this.hashtags.forEach(function (item, index) {
+        hashtagArray.push(item.hashtag);
+      })
+
+      this.suggestions = hashtagArray;
+    }
   }
 
   getChoiceLabel(choice: string) {
     return `#${choice} `;
   }
 
-    openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
   }
 
-  addOverlay()
-  {
-    if(this.showHttpLoader)
-    {
+  addOverlay() {
+    if (this.showHttpLoader) {
       return 'container';
     }
-    else
-    {
+    else {
       return 'container';
     }
   }
 
   inputValue: string;
-  suggestions = ['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご'];
-
 
 }

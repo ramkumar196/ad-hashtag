@@ -9,6 +9,11 @@ import { UserService } from 'src/app/services/user.service';
 import { JwtService } from 'src/app/services/jwt.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { CustomValidator } from 'src/app/validators/customvalidator';
+import { Observable } from 'rxjs';
+import countryData from '../../../../json/country';
+import {switchMap, debounceTime, tap, finalize, map, startWith} from 'rxjs/operators';
+import { Country } from 'src/app/model/country-model';
+
 
 @Component({
   selector: 'app-user-profile',
@@ -16,6 +21,11 @@ import { CustomValidator } from 'src/app/validators/customvalidator';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
+
+  filteredStates: Observable<Country[]>;
+
+  countryList: Country[] = countryData;
+  filteredCountries: Observable<Country[]>;
 
   editProfileForm :FormGroup;
   isSubmitting;
@@ -30,7 +40,8 @@ export class UserProfileComponent implements OnInit {
      business_address:'',
      userType:'',
      bio:'',
-     website_link:''
+     website_link:'',
+     country_code:''
 
   };
 
@@ -56,9 +67,10 @@ export class UserProfileComponent implements OnInit {
     business_description: [''],
 		profile_image: ['file'],
     business_name:[''],
-    user_type:[false]
+    user_type:[false],
+    country_code:['91', Validators.required]
     });
-  }
+  } 
 
     updateProfile()
   {
@@ -146,8 +158,19 @@ export class UserProfileComponent implements OnInit {
     console.log(this.editProfileForm.value.user_type);
   }
   
+  private _filter(value): Country[] {
+    const filterValue = value.toLowerCase();
+
+    return this.countryList.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
 
   ngOnInit() {
+
+    this.filteredCountries = this.editProfileForm.get('country_code').valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+
      this.userservice.profile({})
       .subscribe( data => {
         this.profileImage = data.profile_image;
@@ -161,11 +184,15 @@ export class UserProfileComponent implements OnInit {
           business_name:'',
           user_type:false,
           bio:'',
-          website_link:''
+          website_link:'',
+          country_code:'91',
 
           };
           if(typeof(data.business_address) != 'undefined')
           profileArray.business_address = data.business_address;
+
+          if(typeof(data.country_code) != 'undefined')
+          profileArray.country_code = data.country_code;
 
           if(typeof(data.business_description) != 'undefined')
           profileArray.business_description = data.business_description;

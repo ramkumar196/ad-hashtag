@@ -27,6 +27,7 @@ import { UserModule } from './features/user/user.module';
 import { SharedModule } from './shared/shared.module';
 import { AppBrowserModule } from './app.browser.module';
 import { AntDesignModule } from './design/ant-design/ant-design.module';
+import { I18nModule } from './modules/i18n/i18n.module';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { AntDesignModule } from './design/ant-design/ant-design.module';
     AdModule,
     UserModule,
     SharedModule,
-    AppBrowserModule
+    AppBrowserModule,
+    I18nModule
   ],
   providers: [ApiService,UserService,JwtService,AuthguardService,BrowserLocation,HashtagService,DialogService,CommonService,DialogInputService,SharedService,SocketService],
   exports:[

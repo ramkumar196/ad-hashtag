@@ -57,6 +57,7 @@ export class AdListComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   hashtagCtrl = new FormControl();
   cityCtrl = new FormControl();
+  sortBy = new FormControl();
   hashtags = [];
   showLoader = false;
 
@@ -73,21 +74,9 @@ export class AdListComponent implements OnInit {
      private fb: FormBuilder,
      private bottomSheet: MatBottomSheet
      ) { 
-       this.cityCtrl
-      .valueChanges
-      .pipe(
-        debounceTime(300),
-        tap(() => this.isLoading = true),
-        switchMap(value => this.userService.cityList({keyword: value})
-        .pipe(
-          finalize(() => this.isLoading = false),
-          )
-        )
-      )
-      .subscribe(data => this.filteredCities = data);
-
-
+      
   }
+  
 
   openBottomSheet(data): void {
     this.bottomSheet.open(NotifyComponent);
@@ -177,6 +166,21 @@ export class AdListComponent implements OnInit {
 
 
   ngOnInit() {
+
+    this.cityCtrl
+    .valueChanges
+    .pipe(
+      debounceTime(300),
+      tap(() => this.isLoading = true),
+      switchMap(value => this.userService.cityList({keyword: value})
+      .pipe(
+        finalize(() => this.isLoading = false),
+        )
+      )
+    )
+    .subscribe(data => this.filteredCities = data);
+
+
 
     this.userService.notifyList({}).subscribe( data => {
     this.notifyList = data.details;
@@ -293,10 +297,12 @@ export class AdListComponent implements OnInit {
       this.showLoader = true;
       console.log('hash',this.hashtags);
       var cityname = this.cityCtrl.value;
+      var sortBy = this.sortBy.value;
+
 
       var id = this.getLoggerInStatus();
 
-    this.adservice.SearchAdList({hashtags:this.hashtags,city: cityname , page : page},id)
+    this.adservice.SearchAdList({hashtags:this.hashtags,city: cityname ,sort_by:sortBy, page : page},id)
       .subscribe( data => {
         this.adList = data.data;
         console.log('ad list',this.adList);

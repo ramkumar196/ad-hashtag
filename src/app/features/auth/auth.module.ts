@@ -13,6 +13,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AppBrowserModule } from 'src/app/app.browser.module';
+import { I18nModule } from 'src/app/modules/i18n/i18n.module';
 
 
 const routes: Routes = [
@@ -43,7 +44,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     AngularMaterialModule,
     SharedModule,
-    AppBrowserModule
+    AppBrowserModule,
+    I18nModule
   ],
   exports:[
     RouterModule

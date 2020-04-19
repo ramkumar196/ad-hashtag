@@ -8,6 +8,7 @@ import { DefaultLayoutComponent } from './default-layout/default-layout.componen
 import { AppBrowserModule } from '../app.browser.module';
 import { AngularMaterialModule } from '../design/angular-material/angular-material.module';
 import { AntDesignModule } from '../design/ant-design/ant-design.module';
+import { SelectLanguageComponent } from './select-language/select-language.component';
 
 const routes: Routes = [
 ];
@@ -19,7 +20,8 @@ const routes: Routes = [
       LoggedLayoutComponent,
       HeaderComponent,
       FooterComponent,
-      DefaultLayoutComponent
+      DefaultLayoutComponent,
+      SelectLanguageComponent
   ],
   imports: [
     CommonModule,

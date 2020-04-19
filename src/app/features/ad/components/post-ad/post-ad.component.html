@@ -6,12 +6,12 @@
     <form [formGroup]="postAdForm" class="mt-1">
       <mat-form-field class="full-width" appearance="outline">
         <mat-label>Ad Text</mat-label>
-        <nz-mention (nzOnSearchChange)="findChoices($event)" [nzSuggestions]="hashtags" [nzPrefix]="['#']"
+        <nz-mention (nzOnSearchChange)="findChoices($event)" [nzSuggestions]="suggestions" [nzPrefix]="['#','@','?']"
           [nzNotFoundContent]="'Add Your Own Hashtag'">
           <textarea matInput nz-input [nzAutosize]="{ minRows: 6, maxRows: 4 }" formControlName="adtextarea"
             [(ngModel)]="adtextarea" nzMentionTrigger>
   </textarea>
-        </nz-mention>
+        </nz-mention> 
         <!-- <mwl-text-input-autocomplete-container class="dropdown-hashtag">
 <textarea  matInput class="rounded" 
 maxlength="500"

@@ -34,8 +34,8 @@
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item *ngIf="userDetail.selfStatus == 0" >
-               <button mat-raised-button *ngIf="userDetail.follow_status" (click)="followUser(0)" color="accent">Follow</button>
-               <button mat-raised-button *ngIf="!userDetail.follow_status" (click)="followUser(1)" color="primary">Unfollow</button>
+               <button mat-raised-button *ngIf="!userDetail.follow_status" (click)="followUser(0)" color="accent">Follow</button>
+               <button mat-raised-button *ngIf="userDetail.follow_status" (click)="followUser(1)" color="primary">Unfollow</button>
             </mat-list-item>
           </mat-list>
         </mat-card>
@@ -46,7 +46,7 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon class="example-tab-icon">list</mat-icon>
-            My List
+           AD List
           </ng-template>
           <div class="text-center m-2" *ngIf="adList.length == 0">No Listings</div>
           <div class="container" fxLayout="row wrap" fxLayout.lt-sm="column"  fxLayoutAlign="flex-start" fxLayoutGap="10px" fxLayoutGap.xs="2px">

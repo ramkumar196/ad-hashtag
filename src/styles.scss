@@ -16,7 +16,7 @@ $candy-app-primary: mat-palette($mat-grey,400);
 $candy-app-accent:  mat-palette($mat-green,900);
 
 // The warn palette is optional (defaults to red).
-$candy-app-warn:    mat-palette($mat-red);
+$candy-app-warn:    mat-palette($mat-pink);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
@@ -67,7 +67,7 @@ input,
 textarea,
 [contenteditable] {
   color: #666;
-  caret-color: #1b5e20;
+  caret-color: #e2f3e3;
 }
 .footer {
   position: relative;

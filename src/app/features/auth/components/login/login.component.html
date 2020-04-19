@@ -1,5 +1,4 @@
-<mat-toolbar >
-Login 
+<mat-toolbar >{{'login' | translate}}
 </mat-toolbar>
 <mat-grid-list cols="4" rowHeight="500px" class="login-background">
 	<mat-grid-tile [colspan]="mobileQuery.matches ? 0 : 1"></mat-grid-tile>
@@ -9,23 +8,23 @@ Login
   
 	  <form [formGroup]="loginForm" class="mt-1" (ngSubmit)="SubmitLogin()">
 		  <mat-form-field color="accent" class="full-width"  appearance="outline">
-		  <mat-label>Username or Phone</mat-label>
+		  <mat-label>{{'username' | translate}} / {{'phone' | translate}}</mat-label>
 		  <mat-icon matSuffix>account_box</mat-icon>
-		  <input minlength="4" maxlength="50" matInput placeholder="Username or Phone" formControlName="username">
-		  <mat-error align="start" *ngIf="loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched " class="form__error">Your Username is required</mat-error>
+		  <input minlength="4" maxlength="50" matInput placeholder="{{'username' | translate}} / {{'phone' | translate}}" formControlName="username">
+		  <mat-error align="start" *ngIf="loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched " class="form__error">{{'username_required' | translate}}</mat-error>
 		  </mat-form-field>
 		  <mat-form-field color="accent" class="full-width"  appearance="outline">
-		  <mat-label>Password</mat-label>
-		  <input minlength="8" maxlength="15" matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password">
+		  <mat-label>{{'password' | translate}}</mat-label>
+		  <input minlength="8" maxlength="15" matInput [type]="hide ? 'password' : 'text'" placeholder="{{'password' | translate}}" formControlName="password">
 		  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-		  <mat-error align="start" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched " class="form__error">Password is required</mat-error>
+		  <mat-error align="start" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched " class="form__error">{{'password_required' | translate}}</mat-error>
 		  </mat-form-field>
 		  <div class="button-row mt-5">
 			<mat-spinner [diameter]="30" *ngIf="isSubmitting"></mat-spinner>
 			<button *ngIf="!isSubmitting" mat-raised-button [disabled]="!loginForm.valid" type="submit" color="accent">Login</button>
-			<button [routerLink]="['/auth/signup']" mat-button>Create a Account</button>
+			<button [routerLink]="['/auth/signup']" mat-button>{{'create_account' | translate}}</button>
 
-			<div class="mt-2"><a [routerLink]="['/auth/reset-password']">Forgot Password</a></div>
+			<div class="mt-2"><a [routerLink]="['/auth/reset-password']">{{'forgot_password' | translate}}</a></div>
   
 		  </div>
   

@@ -4,14 +4,14 @@
 	<div class="item item-2" fxFlex>
 		<mat-divider></mat-divider>
 		<form [formGroup]="editProfileForm" (ngSubmit)="updateProfile()">
-			<mat-card class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center" fxLayoutGap="5px" fxLayoutGap.xs="1" class="mt-1">
-				<div fxFlex  *ngIf="profileImage" >
-						<img class="img-thumbnail" src="{{profileImage}}"
-						(click)="fileInput.click()">
-						<span>click to upload new profile</span>
+			<mat-card class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center" fxLayoutGap="5px"
+				fxLayoutGap.xs="1" class="mt-1">
+				<div fxFlex *ngIf="profileImage">
+					<img class="img-thumbnail" src="{{profileImage}}" (click)="fileInput.click()">
+					<span>click to upload new profile</span>
 				</div>
-				<mat-icon fxFlex *ngIf="!profileImage" aria-hidden="false" (click)="fileInput.click()" style="width:100px"
-					aria-label="Example home icon">add_a_photo</mat-icon>
+				<mat-icon fxFlex *ngIf="!profileImage" aria-hidden="false" (click)="fileInput.click()"
+					style="width:100px" aria-label="Example home icon">add_a_photo</mat-icon>
 				<mat-form-field fxFlex="60%" appearance="outline">
 					<mat-label>Username</mat-label>
 					<input minlength="3" maxlength="15" matInput placeholder="User Name" [readonly]="true"
@@ -22,7 +22,7 @@
 					<mat-error align="start" *ngIf="errors.username" class="form__error">{{ errors.username }}
 					</mat-error>
 				</mat-form-field>
-				
+
 			</mat-card>
 			<div class="image-upload">
 				<input #fileInput type="file" formControlName="profile_image" (change)="onFileChanged($event)" />
@@ -40,37 +40,51 @@
 						class="form__error">Your email is not valid</mat-error>
 				</mat-form-field>
 				<mat-error align="start" *ngIf="errors.email" class="form__error">{{ errors.email[0] }}</mat-error>
-
-				<mat-form-field class="full-width" appearance="outline">
-					<mat-label>Phone</mat-label>
-					<input minlength="6" maxlength="15" matInput placeholder="Mobile" formControlName="phone">
+					<mat-form-field class="full-width" appearance="outline">
+						<mat-label>Country Code</mat-label>
+						<span matPrefix>+</span>
+						<input type="text" placeholder="Pick one country" aria-label="Number" matInput
+							formControlName="country_code" [matAutocomplete]="auto">
+						<mat-autocomplete #auto="matAutocomplete">
+							<mat-option *ngFor="let cl of filteredCountries | async" [value]="cl.dial">
+								+{{cl.dial}} - {{cl.name}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
 					<mat-error align="start"
-						*ngIf="editProfileForm.controls['phone'].hasError('required') && editProfileForm.controls['phone'].touched "
-						class="form__error">Your Mobile Number is required</mat-error>
-				</mat-form-field>
-				<mat-error align="start" *ngIf="errors.phone" class="form__error">{{ errors.phone[0] }}</mat-error>
+							*ngIf="editProfileForm.controls['country_code'].hasError('required') && editProfileForm.controls['country_code'].touched "
+							class="form__error">Country code is required</mat-error>
+					<mat-form-field class="full-width" appearance="outline">
+						<mat-label>Phone</mat-label>
+						<input minlength="6" maxlength="15" matInput placeholder="Mobile" formControlName="phone">
+						<mat-error align="start"
+							*ngIf="editProfileForm.controls['phone'].hasError('required') && editProfileForm.controls['phone'].touched "
+							class="form__error">Your Mobile Number is required</mat-error>
+					</mat-form-field>
+					<mat-error align="start" *ngIf="errors.phone" class="form__error">{{ errors.phone[0] }}</mat-error>
 
-				<mat-form-field class="full-width" appearance="outline">
+					<mat-form-field class="full-width" appearance="outline">
 						<mat-label>Website Link</mat-label>
-						<input minlength="6" maxlength="200" matInput placeholder="Website link" formControlName="website_link">
+						<input minlength="6" maxlength="200" matInput placeholder="Website link"
+							formControlName="website_link">
 						<mat-error align="start"
 							*ngIf="editProfileForm.controls['website_link'].hasError('required') && editProfileForm.controls['website_link'].touched "
 							class="form__error">Your Website is required</mat-error>
 					</mat-form-field>
-				<mat-error align="start" *ngIf="errors.website_link" class="form__error">{{ errors.website_link[0] }}</mat-error>
-	
-				<mat-form-field  class="full-width" appearance="outline">
+					<mat-error align="start" *ngIf="errors.website_link" class="form__error">
+						{{ errors.website_link[0] }}</mat-error>
+
+					<mat-form-field class="full-width" appearance="outline">
 						<mat-label>Bio</mat-label>
-	
+
 						<textarea maxlength="200" matInput placeholder="Bio" formControlName="bio"></textarea>
-						<mat-error align="start"
-							*ngIf="editProfileForm.controls['bio'].touched && errors.bio"
+						<mat-error align="start" *ngIf="editProfileForm.controls['bio'].touched && errors.bio"
 							class="form__error">{{ errors.bio }}</mat-error>
 					</mat-form-field>
-				<mat-error align="start" *ngIf="errors.bio" class="form__error">{{ errors.bio[0] }}</mat-error>
-	
+					<mat-error align="start" *ngIf="errors.bio" class="form__error">{{ errors.bio[0] }}</mat-error>
 
-				<!-- 	<mat-form-field class="full-width">
+
+					<!-- 	<mat-form-field class="full-width">
     	<input minlength="8" maxlength="15" matInput placeholder="Password" type="password" formControlName="password">
     	<mat-error align="start" *ngIf="editProfileForm.controls['password'].hasError('required') && editProfileForm.controls['password'].touched " class="form__error">Your Password is required</mat-error>
     	<mat-error align="start" *ngIf="errors.password" class="form__error">{{ errors.password }}</mat-error>
@@ -86,35 +100,40 @@
 
 				<mat-form-field *ngIf="editProfileForm.value.user_type" class="full-width mt-2" appearance="outline">
 					<mat-label>Business Name</mat-label>
-					<textarea maxlength="50" matInput placeholder="Business Name" formControlName="business_name"></textarea>
+					<textarea maxlength="50" matInput placeholder="Business Name"
+						formControlName="business_name"></textarea>
 					<mat-error align="start"
 						*ngIf="editProfileForm.controls['business_name'].touched && errors.business_name"
 						class="form__error">{{ errors.business_name }}</mat-error>
 				</mat-form-field>
-				<mat-error align="start" *ngIf="errors.business_name" class="form__error">{{ errors.business_name[0] }}</mat-error>
+				<mat-error align="start" *ngIf="errors.business_name" class="form__error">{{ errors.business_name[0] }}
+				</mat-error>
 
 
 				<mat-form-field *ngIf="editProfileForm.value.user_type" class="full-width" appearance="outline">
 					<mat-label>Business Address</mat-label>
 
-					<textarea maxlength="200" matInput placeholder="Business Address" formControlName="business_address"></textarea>
+					<textarea maxlength="200" matInput placeholder="Business Address"
+						formControlName="business_address"></textarea>
 					<mat-error align="start"
 						*ngIf="editProfileForm.controls['business_address'].touched && errors.address"
 						class="form__error">{{ errors.address }}</mat-error>
 				</mat-form-field>
-				<mat-error align="start" *ngIf="errors.business_address" class="form__error">{{ errors.business_address[0] }}</mat-error>
+				<mat-error align="start" *ngIf="errors.business_address" class="form__error">
+					{{ errors.business_address[0] }}</mat-error>
 
 
 				<mat-form-field *ngIf="editProfileForm.value.user_type" class="full-width" appearance="outline">
 					<mat-label>Business Description</mat-label>
 
-					<textarea maxlength="200" matInput placeholder="Business Description"
+					<textarea maxlength="400" matInput placeholder="Business Description"
 						formControlName="business_description"></textarea>
 					<mat-error align="start"
 						*ngIf="editProfileForm.controls['business_description'].touched && errors.description"
 						class="form__error">{{ errors.description }}</mat-error>
 				</mat-form-field>
-				<mat-error align="start" *ngIf="errors.business_description" class="form__error">{{ errors.business_description[0] }}</mat-error>
+				<mat-error align="start" *ngIf="errors.business_description" class="form__error">
+					{{ errors.business_description[0] }}</mat-error>
 
 
 				<div class="button-row mt-5">
